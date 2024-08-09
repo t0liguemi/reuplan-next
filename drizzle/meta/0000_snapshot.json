@@ -1,0 +1,1218 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "6",
+  "dialect": "postgresql",
+  "tables": {
+    "public.django_migrations": {
+      "name": "django_migrations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "app": {
+          "name": "app",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "applied": {
+          "name": "applied",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.django_content_type": {
+      "name": "django_content_type",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "app_label": {
+          "name": "app_label",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "model": {
+          "name": "model",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "django_content_type_app_label_model_76bd3d3b_uniq": {
+          "columns": [
+            "app_label",
+            "model"
+          ],
+          "nullsNotDistinct": false,
+          "name": "django_content_type_app_label_model_76bd3d3b_uniq"
+        }
+      }
+    },
+    "public.api_evento": {
+      "name": "api_evento",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(250)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lugar": {
+          "name": "lugar",
+          "type": "varchar(250)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "inicio": {
+          "name": "inicio",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "final": {
+          "name": "final",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duracion": {
+          "name": "duracion",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "descripcion": {
+          "name": "descripcion",
+          "type": "varchar(2000)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "privacidad1": {
+          "name": "privacidad1",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "privacidad2": {
+          "name": "privacidad2",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "privacidad3": {
+          "name": "privacidad3",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "privacidad4": {
+          "name": "privacidad4",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "requisitos1": {
+          "name": "requisitos1",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "requisitos2": {
+          "name": "requisitos2",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "requisitos3": {
+          "name": "requisitos3",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "requisitos4": {
+          "name": "requisitos4",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "respondidos": {
+          "name": "respondidos",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mapsQuery": {
+          "name": "mapsQuery",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "organizador_id": {
+          "name": "organizador_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "api_evento_organizador_id_cb70ff0a": {
+          "name": "api_evento_organizador_id_cb70ff0a",
+          "columns": [
+            "organizador_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "api_evento_organizador_id_api_user_id_fk": {
+          "name": "api_evento_organizador_id_api_user_id_fk",
+          "tableFrom": "api_evento",
+          "tableTo": "api_user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "organizador_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.api_respuesta": {
+      "name": "api_respuesta",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "fecha": {
+          "name": "fecha",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "inicio": {
+          "name": "inicio",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "final": {
+          "name": "final",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "evento_id": {
+          "name": "evento_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "invitado_id": {
+          "name": "invitado_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "api_respuesta_idEvento_id_c70dd406": {
+          "name": "api_respuesta_idEvento_id_c70dd406",
+          "columns": [
+            "evento_id"
+          ],
+          "isUnique": false
+        },
+        "api_respuesta_idInvitado_id_95ef906a": {
+          "name": "api_respuesta_idInvitado_id_95ef906a",
+          "columns": [
+            "invitado_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "api_respuesta_evento_id_api_evento_id_fk": {
+          "name": "api_respuesta_evento_id_api_evento_id_fk",
+          "tableFrom": "api_respuesta",
+          "tableTo": "api_evento",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "evento_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "api_respuesta_invitado_id_api_user_id_fk": {
+          "name": "api_respuesta_invitado_id_api_user_id_fk",
+          "tableFrom": "api_respuesta",
+          "tableTo": "api_user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "invitado_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.api_rechazado": {
+      "name": "api_rechazado",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "evento_id": {
+          "name": "evento_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "invitado_id": {
+          "name": "invitado_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "api_rechazado_idEvento_id_2b3e32a4": {
+          "name": "api_rechazado_idEvento_id_2b3e32a4",
+          "columns": [
+            "evento_id"
+          ],
+          "isUnique": false
+        },
+        "api_rechazado_idInvitado_id_3fa5012d": {
+          "name": "api_rechazado_idInvitado_id_3fa5012d",
+          "columns": [
+            "invitado_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "api_rechazado_evento_id_api_evento_id_fk": {
+          "name": "api_rechazado_evento_id_api_evento_id_fk",
+          "tableFrom": "api_rechazado",
+          "tableTo": "api_evento",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "evento_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "api_rechazado_invitado_id_api_user_id_fk": {
+          "name": "api_rechazado_invitado_id_api_user_id_fk",
+          "tableFrom": "api_rechazado",
+          "tableTo": "api_user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "invitado_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.api_invitacion": {
+      "name": "api_invitacion",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "imprescindible": {
+          "name": "imprescindible",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "evento_id": {
+          "name": "evento_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "invitado_id": {
+          "name": "invitado_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "api_invitacion_idEvento_id_14c8ab7c": {
+          "name": "api_invitacion_idEvento_id_14c8ab7c",
+          "columns": [
+            "evento_id"
+          ],
+          "isUnique": false
+        },
+        "api_invitacion_idInvitado_id_f4b1fd2c": {
+          "name": "api_invitacion_idInvitado_id_f4b1fd2c",
+          "columns": [
+            "invitado_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "api_invitacion_evento_id_api_evento_id_fk": {
+          "name": "api_invitacion_evento_id_api_evento_id_fk",
+          "tableFrom": "api_invitacion",
+          "tableTo": "api_evento",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "evento_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "api_invitacion_invitado_id_api_user_id_fk": {
+          "name": "api_invitacion_invitado_id_api_user_id_fk",
+          "tableFrom": "api_invitacion",
+          "tableTo": "api_user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "invitado_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.django_admin_log": {
+      "name": "django_admin_log",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "action_time": {
+          "name": "action_time",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "object_id": {
+          "name": "object_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "object_repr": {
+          "name": "object_repr",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "action_flag": {
+          "name": "action_flag",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "change_message": {
+          "name": "change_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "content_type_id": {
+          "name": "content_type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "django_admin_log_content_type_id_c4bce8eb": {
+          "name": "django_admin_log_content_type_id_c4bce8eb",
+          "columns": [
+            "content_type_id"
+          ],
+          "isUnique": false
+        },
+        "django_admin_log_user_id_c564eba6": {
+          "name": "django_admin_log_user_id_c564eba6",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "django_admin_log_content_type_id_django_content_type_id_fk": {
+          "name": "django_admin_log_content_type_id_django_content_type_id_fk",
+          "tableFrom": "django_admin_log",
+          "tableTo": "django_content_type",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "content_type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.authtoken_token": {
+      "name": "authtoken_token",
+      "schema": "",
+      "columns": {
+        "key": {
+          "name": "key",
+          "type": "varchar(40)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "created": {
+          "name": "created",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "authtoken_token_key_10f0b77e_like": {
+          "name": "authtoken_token_key_10f0b77e_like",
+          "columns": [
+            "key"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "authtoken_token_user_id_key": {
+          "columns": [
+            "user_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "authtoken_token_user_id_key"
+        }
+      }
+    },
+    "public.auth_permission": {
+      "name": "auth_permission",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "content_type_id": {
+          "name": "content_type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "codename": {
+          "name": "codename",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "auth_permission_content_type_id_2f476e4b": {
+          "name": "auth_permission_content_type_id_2f476e4b",
+          "columns": [
+            "content_type_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "auth_permission_content_type_id_django_content_type_id_fk": {
+          "name": "auth_permission_content_type_id_django_content_type_id_fk",
+          "tableFrom": "auth_permission",
+          "tableTo": "django_content_type",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "content_type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "auth_permission_content_type_id_codename_01ab375a_uniq": {
+          "columns": [
+            "content_type_id",
+            "codename"
+          ],
+          "nullsNotDistinct": false,
+          "name": "auth_permission_content_type_id_codename_01ab375a_uniq"
+        }
+      }
+    },
+    "public.auth_group": {
+      "name": "auth_group",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "auth_group_name_a6ea08ec_like": {
+          "name": "auth_group_name_a6ea08ec_like",
+          "columns": [
+            "name"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "auth_group_name_key": {
+          "columns": [
+            "name"
+          ],
+          "nullsNotDistinct": false,
+          "name": "auth_group_name_key"
+        }
+      }
+    },
+    "public.auth_group_permissions": {
+      "name": "auth_group_permissions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "group_id": {
+          "name": "group_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "permission_id": {
+          "name": "permission_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "auth_group_permissions_group_id_b120cbf9": {
+          "name": "auth_group_permissions_group_id_b120cbf9",
+          "columns": [
+            "group_id"
+          ],
+          "isUnique": false
+        },
+        "auth_group_permissions_permission_id_84c5c92e": {
+          "name": "auth_group_permissions_permission_id_84c5c92e",
+          "columns": [
+            "permission_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "auth_group_permissions_group_id_auth_group_id_fk": {
+          "name": "auth_group_permissions_group_id_auth_group_id_fk",
+          "tableFrom": "auth_group_permissions",
+          "tableTo": "auth_group",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "group_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "auth_group_permissions_permission_id_auth_permission_id_fk": {
+          "name": "auth_group_permissions_permission_id_auth_permission_id_fk",
+          "tableFrom": "auth_group_permissions",
+          "tableTo": "auth_permission",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "permission_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "auth_group_permissions_group_id_permission_id_0cd325b0_uniq": {
+          "columns": [
+            "group_id",
+            "permission_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "auth_group_permissions_group_id_permission_id_0cd325b0_uniq"
+        }
+      }
+    },
+    "public.api_user_groups": {
+      "name": "api_user_groups",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "group_id": {
+          "name": "group_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "api_customuser_groups_customuser_id_9eb4b783": {
+          "name": "api_customuser_groups_customuser_id_9eb4b783",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        },
+        "api_customuser_groups_group_id_f049027c": {
+          "name": "api_customuser_groups_group_id_f049027c",
+          "columns": [
+            "group_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "api_user_groups_user_id_api_user_id_fk": {
+          "name": "api_user_groups_user_id_api_user_id_fk",
+          "tableFrom": "api_user_groups",
+          "tableTo": "api_user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "api_user_groups_group_id_auth_group_id_fk": {
+          "name": "api_user_groups_group_id_auth_group_id_fk",
+          "tableFrom": "api_user_groups",
+          "tableTo": "auth_group",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "group_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "api_customuser_groups_customuser_id_group_id_d5b0c2ab_uniq": {
+          "columns": [
+            "user_id",
+            "group_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "api_customuser_groups_customuser_id_group_id_d5b0c2ab_uniq"
+        }
+      }
+    },
+    "public.api_user": {
+      "name": "api_user",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_login": {
+          "name": "last_login",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_superuser": {
+          "name": "is_superuser",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(254)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_staff": {
+          "name": "is_staff",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_joined": {
+          "name": "date_joined",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "username": {
+          "name": "username",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "api_customuser_email_18215455_like": {
+          "name": "api_customuser_email_18215455_like",
+          "columns": [
+            "email"
+          ],
+          "isUnique": false
+        },
+        "api_customuser_username_f5ae5d7f_like": {
+          "name": "api_customuser_username_f5ae5d7f_like",
+          "columns": [
+            "username"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "api_customuser_email_key": {
+          "columns": [
+            "email"
+          ],
+          "nullsNotDistinct": false,
+          "name": "api_customuser_email_key"
+        },
+        "api_customuser_username_key": {
+          "columns": [
+            "username"
+          ],
+          "nullsNotDistinct": false,
+          "name": "api_customuser_username_key"
+        }
+      }
+    },
+    "public.api_user_user_permissions": {
+      "name": "api_user_user_permissions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "permission_id": {
+          "name": "permission_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "api_customuser_user_permissions_customuser_id_5365c9ba": {
+          "name": "api_customuser_user_permissions_customuser_id_5365c9ba",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        },
+        "api_customuser_user_permissions_permission_id_8735d73e": {
+          "name": "api_customuser_user_permissions_permission_id_8735d73e",
+          "columns": [
+            "permission_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "api_user_user_permissions_user_id_api_user_id_fk": {
+          "name": "api_user_user_permissions_user_id_api_user_id_fk",
+          "tableFrom": "api_user_user_permissions",
+          "tableTo": "api_user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "api_user_user_permissions_permission_id_auth_permission_id_fk": {
+          "name": "api_user_user_permissions_permission_id_auth_permission_id_fk",
+          "tableFrom": "api_user_user_permissions",
+          "tableTo": "auth_permission",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "permission_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "api_customuser_user_perm_customuser_id_permission_9deacd8d_uniq": {
+          "columns": [
+            "user_id",
+            "permission_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "api_customuser_user_perm_customuser_id_permission_9deacd8d_uniq"
+        }
+      }
+    },
+    "public.django_session": {
+      "name": "django_session",
+      "schema": "",
+      "columns": {
+        "session_key": {
+          "name": "session_key",
+          "type": "varchar(40)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "session_data": {
+          "name": "session_data",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expire_date": {
+          "name": "expire_date",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "django_session_session_key_c0390e0f_like": {
+          "name": "django_session_session_key_c0390e0f_like",
+          "columns": [
+            "session_key"
+          ],
+          "isUnique": false
+        },
+        "django_session_expire_date_a5c62663": {
+          "name": "django_session_expire_date_a5c62663",
+          "columns": [
+            "expire_date"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.api_signupkey": {
+      "name": "api_signupkey",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "created": {
+          "name": "created",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "varchar(16)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "api_signupkey_user_id_afc8c36b": {
+          "name": "api_signupkey_user_id_afc8c36b",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "api_signupkey_user_id_api_user_id_fk": {
+          "name": "api_signupkey_user_id_api_user_id_fk",
+          "tableFrom": "api_signupkey",
+          "tableTo": "api_user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.api_recoverykey": {
+      "name": "api_recoverykey",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "created": {
+          "name": "created",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "varchar(8)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "attempts": {
+          "name": "attempts",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "successful_attempt": {
+          "name": "successful_attempt",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "api_recoverykey_user_id_e4905ea1": {
+          "name": "api_recoverykey_user_id_e4905ea1",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "api_recoverykey_user_id_api_user_id_fk": {
+          "name": "api_recoverykey_user_id_api_user_id_fk",
+          "tableFrom": "api_recoverykey",
+          "tableTo": "api_user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {}
+  }
+}
