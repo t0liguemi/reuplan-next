@@ -1,18 +1,23 @@
 "use client";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
-
-const queryClient = new QueryClient();
+import { Provider } from "jotai"
 
 export const QueryUserClientProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
+  const [queryClient] = React.useState(() => new QueryClient());
+
   return (
-    <UserProvider>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </UserProvider>
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <Provider>
+        {children}
+        </Provider>
+      </UserProvider>
+    </QueryClientProvider>
   );
 };

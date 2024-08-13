@@ -3,12 +3,13 @@ import React from "react";
 import UserList from "./userList";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
+import { getUsers } from "~/server/actions";
 
 
 export default async function OwnEventsPage() {
 
 
-  const users = await db.query.api_user.findMany();
+  const users = await getUsers();
 
   return (
     <div className="my-4 flex flex-col px-12">

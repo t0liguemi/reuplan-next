@@ -9,7 +9,7 @@ export default async function HomePage() {
     <div className="min-w-screen my-8 flex flex-col items-center justify-center gap-8 px-12">
       <div className="flex items-start justify-start gap-12">
         <div className="flex flex-col items-start justify-start gap-4 py-5 text-xl max-w-[32em]">
-            <div className="text-2xl">
+            <div className="text-4xl">
               <span className="font-bold">Bienvenidx a </span>
               <span className="font-extrabold text-primary">Reu</span>
               <span className="text-success font-extrabold">Plan</span>
@@ -34,7 +34,7 @@ export default async function HomePage() {
           src="/assets/Calendarios.svg"
           alt="Calendarios"
           width={300}
-          height={200}
+          height={500}
           className="align-middle"
         />
       </div>

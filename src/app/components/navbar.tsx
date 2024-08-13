@@ -11,20 +11,33 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { Button } from "~/components/ui/button";
+import { User } from "auth0";
+import { Claims } from "@auth0/nextjs-auth0";
 
 export default function Navbar({
   isAdmin,
   isPremium,
+
 }: {
   isAdmin: boolean;
   isPremium: boolean;
+
 }) {
   const { user, error, isLoading } = useUser();
 
   if (!user) {
     return (
       <nav className="flex h-14 w-screen items-center justify-between px-6 py-4">
-        <div className="flex items-baseline gap-2 text-2xl font-extrabold">
+        <div className="flex items-center gap-2 text-xl font-extrabold">
+          <Link href="/" className="mx-0 flex items-center px-0">
+            <Image
+              src="/logo.svg"
+              alt="logo"
+              width={26}
+              height={26}
+              className="mx-0 px-0"
+            />
+          </Link>
           <div>
             <span className="text-primary">Reu</span>
             <span className="text-success">Plan</span>
@@ -38,16 +51,27 @@ export default function Navbar({
     );
   } else if (user) {
     return (
-      <nav className="flex h-14 w-screen items-center justify-between px-6 py-4">
-        <div className="flex items-baseline gap-2 text-2xl font-extrabold">
-          <Link href="/">
+      <nav className="flex h-14 w-screen items-center justify-between px-4 py-4">
+        <div className="flex items-center text-xl font-extrabold">
+          <Link href="/" className="mx-0 flex items-center px-0">
+            <Image
+              src="/logo.svg"
+              alt="logo"
+              width={26}
+              height={26}
+              className="mx-0 px-0"
+            />
+          </Link>
+          <Link href="/" className="mx-0 px-0">
             <div>
               <span className="text-primary">Reu</span>
               <span className="text-success">Plan</span>
             </div>
           </Link>
-          {isAdmin ? <span className="font-mono">Admin</span> : null}
-          {isPremium && !isAdmin ? <span className="font-normal text-secondary">Premium</span> : null}
+          {isAdmin ? <span className="font-light mx-1">Admin</span> : null}
+          {isPremium && !isAdmin ? (
+            <span className="font-normal text-secondary">Premium</span>
+          ) : null}
         </div>
         <div className="flex items-center gap-2"></div>
         <div>
@@ -73,7 +97,7 @@ export default function Navbar({
               </Link>
               <Link href="/events">
                 <DropdownMenuItem>Events</DropdownMenuItem>
-                </Link>
+              </Link>
               <Link href="/calendar">
                 <DropdownMenuItem>Calendar</DropdownMenuItem>
               </Link>

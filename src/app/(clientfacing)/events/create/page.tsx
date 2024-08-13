@@ -28,6 +28,10 @@ import { cn } from "~/lib/utils";
 import { Switch } from "~/components/ui/switch";
 
 import { Slider } from "~/components/ui/slider";
+import { postEvent } from "~/server/actions";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(4, { message: "Name is too short" }).max(100),
@@ -45,6 +49,9 @@ const formSchema = z.object({
 });
 
 export default function NewEventPage() {
+
+  const router = useRouter();
+  const user = useUser();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,9 +66,29 @@ export default function NewEventPage() {
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-  };
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (user.user?.sub){
+      try{
+    const newEvent = await postEvent({
+      name: values.name,
+      location: values.location??"",
+      from: values.dateRange.from,
+      to: values.dateRange.to,
+      description: values.description??"",
+      privacy_level: values.privacyLevel,
+      maps_query: values.mapsQuery,
+      created_at: new Date(),
+      updated_at: new Date(),
+      host_id: user.user.sub
+    });
+    if (newEvent){
+      toast.success("Event created successfully");
+      router.push(`/events/${newEvent}`);
+
+    }
+  }catch(e){
+    toast.error("Event creation failed");
+  }}}
 
   return (
     <div className="mb-8 flex flex-col px-4 md:px-12 lg:my-4">
