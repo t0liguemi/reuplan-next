@@ -24,14 +24,12 @@ import {
 import { CalendarIcon } from "lucide-react";
 import { addDays, format } from "date-fns";
 import { cn } from "~/lib/utils";
-
 import { Switch } from "~/components/ui/switch";
-
 import { Slider } from "~/components/ui/slider";
 import { postEvent } from "~/server/actions";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const formSchema = z.object({
   name: z.string().min(4, { message: "Name is too short" }).max(100),
@@ -51,7 +49,7 @@ const formSchema = z.object({
 export default function NewEventPage() {
 
   const router = useRouter();
-  const user = useUser();
+  const session = useSession()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -67,7 +65,7 @@ export default function NewEventPage() {
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    if (user.user?.sub){
+    if (session.status === "authenticated"){
       try{
     const newEvent = await postEvent({
       name: values.name,
@@ -79,7 +77,7 @@ export default function NewEventPage() {
       maps_query: values.mapsQuery,
       created_at: new Date(),
       updated_at: new Date(),
-      host_id: user.user.sub
+      host_id: session.data.user.id
     });
     if (newEvent){
       toast.success("Event created successfully");
@@ -154,7 +152,7 @@ export default function NewEventPage() {
                             mode="range"
                             selected={field.value}
                             onSelect={field.onChange}
-                            numberOfMonths={2}
+                            numberOfMonths={1}
                           />
                         </PopoverContent>
                       </Popover>

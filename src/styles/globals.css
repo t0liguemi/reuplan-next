@@ -2,29 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth !important;
+}
+
 @layer base {
+
   :root {
-    letter-spacing: -0.025em; 
-    --background: 0 0% 100%;
+    letter-spacing: -0.025em;
+    --bgcolortop: 0 20% 99%;
+    --bgcolorbottom: 15 2% 75%;
+    --background: 0 0% 92%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 33 96% 48%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 40 98% 47%;
+    --primary-foreground: 210 40% 99%;
+    --secondary: 40 95% 47%;
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted-foreground: 215.4 16.3% 38.9%;
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 14 68% 54%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 210 40% 99%;
     --success: 144 15% 55%;
-    --success-foreground: 222.2 47.4% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --success-foreground: 222.2 47.4% 99%;
+    --success-light: 144 15% 60%;
+    --border: 214.3 31.8% 80.0%;
+    --input: 214.3 31.8% 81.4%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
     --chart-1: 12 76% 61%;
@@ -32,35 +40,62 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --glowing-inner: black;
+    --glowing-outer: rgb(255, 149, 0);
+    .svg-contrast {
+      filter: drop-shadow(0px 0px 25px rgba(0, 0, 0, 0.20) )
+        }
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --bgcolortop: 210 70% 5.5%;
+    --bgcolorbottom: 16 6% 14%;
+    --background: 20 5% 4%;
+    --foreground: 210 40% 95%;
+    --card: 20 5% 30%;
+    --card-foreground: 210 40% 95%;
+    --popover: 20 5% 20%;
+    --popover-foreground: 210 40% 95%;
+    --primary: 33 96% 48%;
+    --primary-foreground: 210 40% 95%;
+    --secondary: 40 95% 47%;
+    --secondary-foreground: 210 40% 95%;
+    --muted: 12 2% 27%;
+    --muted-foreground: 215 2.2% 85.1%;
+    --accent: 40 50% 30%;
+    --accent-foreground: 210 40% 95%;
+    --destructive: 14 68% 54%;
+    --destructive-foreground: 210 40% 95%;
     --success: 144 15% 55%;
-    --success-foreground: 222.2 47.4% 11.2%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
+    --success-foreground: 210 40% 95%;
+    --success-light: 144 15% 45%;
+    --border: 217.2 10% 35%;
+    --input: 217.2 5% 20%;
+    --ring: 212.7 2.8% 83.9%;
+    --chart-1: 220 75% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --glowing-inner: white;
+    --glowing-outer: rgb(255, 149, 1);
+    .svg-contrast {
+      filter: drop-shadow(0px 0px 25px rgba(255, 255, 255, 0.2) )
+        }
+  }
+
+
+
+
+  .call-to-action-glow {
+    animation: glowing-animation 1.5s 1;
+    animation-delay: 0.5s;
+  }
+
+  @keyframes glowing-animation {
+    50% {
+      filter: brightness(1.2) drop-shadow(0px 0px 5px white) drop-shadow( 0px 0px 10px var(--glowing-outer)) ;
+    }
   }
 }
 

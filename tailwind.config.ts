@@ -19,6 +19,8 @@ const config = {
     },
     extend: {
       colors: {
+        bgcolortop: "hsl(var(--bgcolortop))",
+        bgcolorbottom: "hsl(var(--bgcolorbottom))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -55,6 +57,7 @@ const config = {
         success: {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
+          light: "hsl(var(--success-light))",
         },
       },
       borderRadius: {

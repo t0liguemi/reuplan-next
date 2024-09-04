@@ -1,8 +1,7 @@
 import React from "react";
 import { db } from "~/server/db";
 import { eq } from "drizzle-orm";
-import { event  } from "~/server/db/schema";
-import { getUser, getUsers } from "~/server/actions";
+import { event, users  } from "~/server/db/schema";
 
 import MainEventView from "./mainEventView";
 
@@ -14,26 +13,25 @@ export default async function EventPage({
 }: {
   params: { id: string };
 }) {
+  
   const queryEvent = await db.query.event.findFirst({
     where: eq(event.id, id),
   });
+
+
+
   if (queryEvent) {
-
-  const allUsers = await getUsers()
-  const organizer = allUsers.find((user) => user.user_id === queryEvent.host_id);
-
-
-  if (queryEvent && organizer) {
-    return (
-      <div className="container">
+    const organizer = await db.query.users.findFirst({where: eq(users.id,queryEvent.host_id)})
+    
+    if (organizer) return (
+      <div className="md:px-6 px-2 lg:px-12 mb-16 w-screen">
         <MainEventView
           event={queryEvent}
           organizer={organizer}
-          allUsers={allUsers}
         />
       </div>
     ); }
     else{
       permanentRedirect("/events");
     }
-}}
+}

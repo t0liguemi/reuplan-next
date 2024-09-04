@@ -1,63 +1,92 @@
-"use client";
-type scheduleObject = {
-  id: number;
-  user_id: number;
-  event_id: number;
-  start: [number,number,number,number,number];
-  end: [number,number,number,number,number];
-};
-import * as set from "../lib/setPolyfill"
+import { addDays, format } from "date-fns";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
+import React, { useEffect } from "react";
+import { toast } from "sonner";
+import { useAtom, useSetAtom } from "jotai";
+import { notificationAtom } from "~/app/(clientfacing)/events/[id]/(eventComponents)/responses";
+
+type schedule = { start: Date; end: Date };
 
 export default function CalendarResults(props: {
-  user_id: number;
-  schedules: scheduleObject[];
+  start: Date;
+  schedules: schedule[];
 }) {
-  type scheduleTimes = [number, number];
+  //receives data for the schedules within a day and displays them in a calendar
+  const [wasNotified, setNotification] = useAtom(notificationAtom);
+  const [timesRendered, setTimesRendered] = React.useState<number>(0);
+  const { schedules } = props;
+  const start = new Date(props.start.setHours(0, 0, 0, 0));
 
-  let schedulesSet = new Set<scheduleTimes>();
-
-  function scheduleToSet(schedule: scheduleObject, user_id: number): void {
-    if (schedule.user_id !== user_id) {
-      return;
-    }
-    const setStart = new Date(schedule.start[0], schedule.start[1], schedule.start[2], schedule.start[3], schedule.start[4]);
-    const setEnd = new Date(schedule.end[0], schedule.end[1], schedule.end[2], schedule.end[3], schedule.end[4]);
-    while (true) {
-      const times : [number, number] = [setStart.getHours(), setStart.getMinutes()];
-      schedulesSet = set.addUnique(schedulesSet, times);
-      setStart.setMinutes(setStart.getMinutes() + 30);
-      if (setStart > setEnd) {
-        break;
-      }
-    }
-
-
+  function getPercentualTime(targetTime: Date) {
+    //calculates the percentage of the day that time corresponds to, where dayStart is 0 and dayStart+24h is 100}
+    const dayEnd = addDays(start, 1);
+    const percentualTime =
+      (targetTime.getTime() - start.getTime()) /
+      (dayEnd.getTime() - start.getTime());
+    return Math.round(percentualTime * 100);
   }
 
-  function turnSchedulesIntoSets(
-    schedules: scheduleObject[],
-    user_id: number,
-  ): void {
-    for (const schedule of schedules) {
-      scheduleToSet(schedule, user_id);
+  function calculateHeight(end:Date, start:Date):number{
+    const height = (getPercentualTime(end) - getPercentualTime(start)) * 5;
+    if (height < 20 && !wasNotified && timesRendered === 0) {
+      setNotification(true);
+      toast("Click on a small unlabeled schedule to see its details");
+      setTimesRendered(timesRendered+1);
     }
+    return height;
   }
 
-  turnSchedulesIntoSets(props.schedules, props.user_id);
-  const schedulesArray = Array.from(schedulesSet);
-
-
-  return  (
-    <div className="flex w-max flex-col items-center justify-center font-mono text-lg">
-      <h2>Schedules for user {props.user_id}</h2>
-      <ul>
-        {schedulesArray.map(([s, e], i) => (
-          <li key={i}>
-            {s}:{e == 0 ? "00" : e}
-          </li>
-        ))}
-      </ul>
+  return (
+    <div className="flex flex-col">
+      <p className="text-ellipsis text-center text-xs font-light my-1">
+        {format(start, "E dd/MM/y")}
+      </p>
+      <div className="relative h-[500px] w-[100px] rounded-md bg-zinc-300 dark:bg-zinc-800 my-1 border-2 border-card">
+        {schedules.map((interval) =>
+          calculateHeight(interval.end, interval.start) >= 20 
+          ? (
+            <div
+              key={interval.start.toString()}
+              style={{ top: `${getPercentualTime(interval.start)}%` }}
+              className="absolute left-0 w-full rounded-sm bg-success text-center text-xs text-success-foreground hover:bg-success/80"
+            >
+              <div
+                className="text-xs py-[0.1rem]"
+                style={{
+                  height: `${calculateHeight(interval.end,interval.start)}px`,
+                }}
+              >
+                <span>
+                  {format(interval.start, "HH:mm")} -{" "}
+                  {format(interval.end, "HH:mm")}
+                </span>
+              </div>
+            </div>
+          ) : (<Popover key={interval.start.toString()}>
+              <PopoverTrigger asChild>
+                <div
+                className="absolute left-0 bg-success hover:bg-success-light"
+                  style={{
+                    width: "100%",
+                    top: `${getPercentualTime(interval.start)*5}px`,
+                    height: `${(getPercentualTime(interval.end) - getPercentualTime(interval.start)) * 5}px`,
+                  }}
+                ></div>
+              </PopoverTrigger>
+              <PopoverContent className="p-2 backdrop-blur-md bg-background/30 w-fit">
+                <div className="text-sm text-foreground w-fit">
+                  {format(interval.start, "HH:mm")}{" - "}
+                  {format(interval.end, "HH:mm")}
+                </div>
+              </PopoverContent>
+            </Popover>
+          ),
+        )}
+      </div>
     </div>
-  ) 
-
+  );
 }

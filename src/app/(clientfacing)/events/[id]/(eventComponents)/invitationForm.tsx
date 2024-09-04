@@ -6,6 +6,8 @@ import { useDebounce } from "use-debounce";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
@@ -22,6 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import UserQuery from "./invitationQuery";
 import { atom,useAtom, useAtomValue, useSetAtom } from "jotai";
+import { PlusIcon } from "lucide-react";
 
 export const invitationDialogOpen = atom(false)
 export const queryValue = atom("")
@@ -49,12 +52,17 @@ export default function InvitationForm(props: { eventId: string }) {
     <div className="flex flex-col gap-2">
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button>Invite</Button>
+          <Button id="invite-button" className="sm:text-xl text-lg">Send new invite <PlusIcon className="ml-2 h-5 w-5" /></Button>
         </DialogTrigger>
-        <DialogContent aria-describedby="invite-modal">
-          <DialogTitle asChild>
-            <p>Invite a user: {debouncedEmail}</p>
+        <DialogContent aria-describedby="invite-modal" className="bg-background/60 dark:bg-muted/20 backdrop-blur-lg">
+          <DialogHeader><DialogTitle asChild>
+            <p>Create new invitation</p>
           </DialogTitle>
+          <DialogDescription>
+            Invite a user to the event. This user will be able to reject or accept the invitation by adding a response.
+            This user muser be registered in ReuPlan to be able to receive an invitation.
+          </DialogDescription></DialogHeader>
+          
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(handleSubmit)}
@@ -69,9 +77,6 @@ export default function InvitationForm(props: { eventId: string }) {
                     <FormControl>
                       <Input placeholder="invitee's email" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      This user must be registered in ReuPlan.
-                    </FormDescription>
                   </FormItem>
                 )}
               />

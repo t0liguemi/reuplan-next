@@ -20,10 +20,8 @@ export const env = createEnv({
       // Since NextAuth.js automatically uses the VERCEL_URL if present.
       (str) => process.env.VERCEL_URL ?? str,
       // VERCEL_URL doesn't include `https` so it cant be validated as a URL
-      process.env.VERCEL ? z.string() : z.string().url()
+      process.env.VERCEL ? z.string() : z.string().url(),
     ),
-    AUTH_DISCORD_ID: z.string(),
-    AUTH_DISCORD_SECRET: z.string(),
     AUTH_GOOGLE_ID: z.string(),
     AUTH_GOOGLE_SECRET: z.string(),
     AUTH_FACEBOOK_ID: z.string(),
@@ -52,14 +50,12 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    AUTH_DISCORD_ID: process.env.AUTH_DISCORD_ID,
-    AUTH_DISCORD_SECRET: process.env.AUTH_DISCORD_SECRET,
     AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,
     AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
     AUTH_FACEBOOK_ID: process.env.AUTH_FACEBOOK_ID,
     AUTH_FACEBOOK_SECRET: process.env.AUTH_FACEBOOK_SECRET,
     AUTH_AUTH0_ID: process.env.AUTH_AUTH0_ID,
-    AUTH_AUTH0_SECRET: process.env.AUTH_AUTH0_SECRET,
+    AUTH_AUTH0_SECRET: process.env.AUTH_AUTH0_SECRET
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
