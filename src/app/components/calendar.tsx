@@ -4,9 +4,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
-import React, { useEffect } from "react";
+import React from "react";
 import { toast } from "sonner";
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import { notificationAtom } from "~/app/(clientfacing)/events/[id]/(eventComponents)/responses";
 
 type schedule = { start: Date; end: Date };

@@ -212,8 +212,10 @@ export default function MainEventView(props: {
               Event:{" "}
             </p>
             <h1 className="text-wrap text-start text-5xl font-bold">
-              {event.name}{" "}
-              {event.host_id === currentUser.id && (
+              {event.name}
+
+            </h1>
+            {event.host_id === currentUser.id && (
                 <Badge variant={"outline"} className="border-primary">
                   Host 👑
                 </Badge>
@@ -230,7 +232,6 @@ export default function MainEventView(props: {
                   Pending ❗
                 </Badge>
               }
-            </h1>
           </div>
           <div className="mb-[0.4rem] flex min-h-max flex-col-reverse justify-between gap-2 sm:flex-row">
             {currentUser.id === event.host_id && (
@@ -269,6 +270,7 @@ export default function MainEventView(props: {
                 Rejected
               </Button>
             ) : (
+              event.host_id != currentUser?.id &&
               <Button
                 variant={"destructive"}
                 className="text-md px-2 py-2 font-light sm:px-4 sm:text-xl"

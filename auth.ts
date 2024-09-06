@@ -1,4 +1,5 @@
 import NextAuth, {type DefaultSession} from "next-auth";
+import Nodemailer from "next-auth/providers/nodemailer"
 import Google from "next-auth/providers/google";
 import { db } from "~/server/db/index";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
@@ -8,6 +9,7 @@ import {
   users,
   verificationTokens,
 } from "~/server/db/schema";
+import { env } from "~/env";
 
 declare module "next-auth"{
   interface Session {
@@ -25,7 +27,7 @@ declare module "next-auth"{
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google,
-  ],
+     ],
   adapter: DrizzleAdapter(db,{
     usersTable: users,
     accountsTable: accounts,
