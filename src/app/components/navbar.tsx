@@ -41,10 +41,9 @@ export default function Navbar() {
       {
         queryKey: ["userInvitations", session.data?.user?.id],
         queryFn: () => getCurrentUserInvitations(session.data?.user?.id ?? ""),
-      }
+      },
     ],
   });
-
 
   const pendingInvitations = React.useMemo(() => {
     let counter = 0;
@@ -53,7 +52,10 @@ export default function Navbar() {
         const response = userQueries[0].data?.find(
           (resp) => resp.event_id === event.id,
         );
-        if (response === undefined && userQueries[2].data?.some((inv) => inv.event_id === event.id)) {
+        if (
+          response === undefined &&
+          userQueries[2].data?.some((inv) => inv.event_id === event.id)
+        ) {
           counter += 1;
         }
       }
@@ -64,8 +66,7 @@ export default function Navbar() {
   React.useEffect(() => {
     if (pendingInvitations === 1) {
       toast(`You have one pending invitation!`);
-    }
-    else if (pendingInvitations > 0) {
+    } else if (pendingInvitations > 0) {
       toast(`You have ${pendingInvitations} pending invitations!`);
     }
   }, [pendingInvitations]);
@@ -86,7 +87,7 @@ export default function Navbar() {
           <Link href="/" className="mx-0 px-0">
             <div>
               <span className="text-primary">Reu</span>
-              <span className="text-success">Plan</span>
+              <span className="text-success">plan</span>
             </div>
           </Link>
           {session.data.user.isAdmin && (
@@ -110,29 +111,53 @@ export default function Navbar() {
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <div className="relative">
-                <Avatar className={pendingInvitations > 0 ? "border-2 border-destructive" : "border-2 border-border"}>
-                  <AvatarImage src={session.data.user.image??undefined} />
-                  <AvatarFallback>{session.data.user.name.charAt(0)}</AvatarFallback>
-                </Avatar> {pendingInvitations!=0 &&<Badge variant="destructive" className="absolute right-[-5px] bottom-0">
-                    {pendingInvitations}
-                  </Badge>}</div>
+                  <Avatar
+                    className={
+                      pendingInvitations > 0
+                        ? "border-2 border-destructive"
+                        : "border-2 border-border"
+                    }
+                  >
+                    <AvatarImage src={session.data.user.image ?? undefined} />
+                    <AvatarFallback>
+                      {session.data.user.name.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>{" "}
+                  {pendingInvitations != 0 && (
+                    <Badge
+                      variant="destructive"
+                      className="absolute bottom-0 right-[-5px]"
+                    >
+                      {pendingInvitations}
+                    </Badge>
+                  )}
+                </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-muted/20 backdrop-blur-lg">
                 <DropdownMenuLabel asChild>
-                  <Link href={"/account"}>My account</Link>
+                  <Link href="/events">
+                    Events{" "}
+                    {pendingInvitations != 0 && (
+                      <Badge variant="destructive" className="mx-2">
+                        {pendingInvitations}
+                      </Badge>
+                    )}{" "}
+                  </Link>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator />
+
                 <Link href="/">
                   <DropdownMenuItem>Home</DropdownMenuItem>
                 </Link>
-                <Link href="/events">
-                  <DropdownMenuItem>Events {pendingInvitations!=0 && <Badge variant="destructive" className="mx-2">{pendingInvitations}</Badge>} </DropdownMenuItem>
-                </Link>
+
                 {session.data.user.isAdmin ? (
                   <Link href="/users">
                     <DropdownMenuItem>Users</DropdownMenuItem>
                   </Link>
                 ) : null}
+                
+                <DropdownMenuItem asChild>
+                  <Link href={"/account"}>Account</Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <button onClick={() => signOut()}>Logout</button>
@@ -159,7 +184,7 @@ export default function Navbar() {
           <Link href="/" className="mx-0 px-0">
             <div>
               <span className="text-primary">Reu</span>
-              <span className="text-success">Plan</span>
+              <span className="text-success">plan</span>
             </div>
           </Link>
         </div>
@@ -189,7 +214,7 @@ export default function Navbar() {
           <Link href="/" className="mx-0 px-0">
             <div>
               <span className="text-primary">Reu</span>
-              <span className="text-success">Plan</span>
+              <span className="text-success">plan</span>
             </div>
           </Link>
         </div>

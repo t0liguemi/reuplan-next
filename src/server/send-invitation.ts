@@ -25,14 +25,6 @@ export default async function sendInvitationEmail(
 
   try {
     if (user && event && host) {
-      console.log(
-        "Sending invitation email to",
-        user.email,
-        "to event",
-        event.name,
-        "hosted by",
-        host.email,
-      );
       const { data, error } = await resend.emails.send({
         from: "noreply <noreply@reuplan.lol>",
         to: [user.email ?? ""],

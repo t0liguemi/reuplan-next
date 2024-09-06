@@ -9,6 +9,7 @@ import { ThemeProvider } from "next-themes";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "../lib/get-query-client";
 import { Providers } from "~/components/ui/providers";
+import Footer from "../components/footer";
 
 export const metadata: Metadata = {
   title: "Reuplan",
@@ -30,12 +31,13 @@ export default async function RootLayout({
   return (
 
       <html lang="en" className={inter.className} suppressHydrationWarning>
-        <body className="min-h-screen bg-gradient-to-t from-bgcolorbottom to-bgcolortop bg-fixed bg-center bg-no-repeat pb-8 antialiased">
+        <body className="min-h-screen bg-gradient-to-t from-bgcolorbottom to-bgcolortop bg-fixed bg-center bg-no-repeat antialiased">
         <Providers>
             <ThemeProvider attribute="class" storageKey="theme">
             <HydrationBoundary state={dehydrate(queryClient)}>
               <Navbar />
               {children}
+              <Footer />
               <Toaster />
               <Toaster2 />
               </HydrationBoundary>
