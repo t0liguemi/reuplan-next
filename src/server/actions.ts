@@ -1,10 +1,9 @@
 "use server";
 import { db } from "./db/index";
-import { and, eq, } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { event, invitation, response, users } from "./db/schema";
 import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "auth";
-
 
 export async function loginAttempt(provider: string) {
   await signIn(provider);
@@ -17,7 +16,6 @@ export async function logoutAttempt() {
 export async function revalidateFromServer(path: string) {
   revalidatePath(path);
 }
-
 
 export async function getUser(
   id: string,
@@ -88,9 +86,7 @@ export async function updateUserNames(userData: {
 }) {
   const user = await db
     .update(users)
-    .set(
-      userData
-    )
+    .set(userData)
     .where(eq(users.id, userData.id))
     .returning({
       id: users.id,
@@ -105,30 +101,23 @@ export async function updateUserNames(userData: {
   return user;
 }
 
-export async function postEvent(targetEvent:
-  {
-    name: string;
-    location: string | null;
-    from: Date;
-    to: Date;
-    description: string | null;
-    privacy_level: number;
-    maps_query: boolean;
-    host_id: string;
-    updated_at: Date;
-    created_at: Date;
-  }
-) {
+export async function postEvent(targetEvent: {
+  name: string;
+  location: string | null;
+  from: Date;
+  to: Date;
+  description: string | null;
+  privacy_level: number;
+  maps_query: boolean;
+  host_id: string;
+  updated_at: Date;
+  created_at: Date;
+}) {
   const newEvent = await db
     .insert(event)
     .values(targetEvent)
     .returning({ id: event.id });
-  if (newEvent[0]) {
-    console.log(newEvent);
-    return newEvent[0].id;
-  } else {
-    return false;
-  }
+    return newEvent
 }
 
 export async function postInvitation(
@@ -145,16 +134,14 @@ export async function postInvitation(
   return newInvitation;
 }
 
-export async function postResponse(
-  targetResponse:{
-    event_id: string;
-    invitee_id: string;
-    is_accepted: boolean;
-    date: Date;
-    start_time: Date;
-    end_time: Date;
-  }
-) {
+export async function postResponse(targetResponse: {
+  event_id: string;
+  invitee_id: string;
+  is_accepted: boolean;
+  date: Date;
+  start_time: Date;
+  end_time: Date;
+}) {
   const newResponse = await db
     .insert(response)
     .values(targetResponse)
@@ -267,11 +254,18 @@ export async function getCurrentUserInvitations(
 }
 
 export async function rejectEvent(id: string, invitee_id: string) {
-  const rejectedEvent = await db.insert(response).values({
-    event_id: id,
-    invitee_id: invitee_id,
-    is_accepted: false,
-  }).returning({ id: response.id }).catch((err) => {console.log(err);return false})
+  const rejectedEvent = await db
+    .insert(response)
+    .values({
+      event_id: id,
+      invitee_id: invitee_id,
+      is_accepted: false,
+    })
+    .returning({ id: response.id })
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
   return rejectedEvent;
 }
 

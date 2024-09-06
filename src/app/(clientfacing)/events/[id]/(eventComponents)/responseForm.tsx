@@ -27,7 +27,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner"
-import { addHours, format, set, setDate, setDay, setDayOfYear } from "date-fns";
+import { addHours, format, getHours, getMinutes, getTime, set, setDate, setDay, setDayOfYear } from "date-fns";
 import type { event } from "~/server/db/schema";
 import { TimePickerInput } from "~/components/ui/time-picker-input";
 import { postResponse } from "~/server/actions";
@@ -52,12 +52,14 @@ export default function ResponseInput(props: {
   type FormSchemaType = z.infer<typeof formSchema>;
 
   const form = useForm<FormSchemaType>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema),defaultValues:{
+      date:currentEvent.from
+    }
   });
 
   async function onSubmit(data: FormSchemaType) {
     setSubmitting(true)
-    if (data.timeStart >= data.timeEnd){
+    if (getHours(data.timeStart)+getMinutes(data.timeStart) >= getHours(data.timeEnd)+getMinutes(data.timeEnd)){
       toast("End time must be after start time!");
       setSubmitting(false)
       return

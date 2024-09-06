@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { promise, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -30,6 +30,7 @@ import { postEvent } from "~/server/actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useMutation } from "@tanstack/react-query";
 
 const formSchema = z.object({
   name: z.string().min(4, { message: "Name is too short" }).max(100),
@@ -47,9 +48,8 @@ const formSchema = z.object({
 });
 
 export default function NewEventPage() {
-
   const router = useRouter();
-  const session = useSession()
+  const session = useSession();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -64,29 +64,39 @@ export default function NewEventPage() {
     },
   });
 
-  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    if (session.status === "authenticated"){
-      try{
-    const newEvent = await postEvent({
+  const submitMutation = useMutation({
+    mutationFn: (values: z.infer<typeof formSchema>) => {
+      return handlePostEvent(values);
+    },
+  });
+
+  async function handlePostEvent(values: z.infer<typeof formSchema>) {
+    return await postEvent({
       name: values.name,
-      location: values.location??"",
+      location: values.location ?? "",
       from: values.dateRange.from,
       to: values.dateRange.to,
-      description: values.description??"",
+      description: values.description ?? "",
       privacy_level: values.privacyLevel,
       maps_query: values.mapsQuery,
       created_at: new Date(),
       updated_at: new Date(),
-      host_id: session.data.user.id
+      host_id: session.data?.user.id ?? "",
     });
-    if (newEvent){
-      toast.success("Event created successfully");
-      router.push(`/events/${newEvent}`);
+  }
 
+  async function submitHandler(values: z.infer<typeof formSchema>) {
+    let eventID=""
+    try {
+      const newEvent = await submitMutation.mutateAsync(values);
+      if (newEvent[0]){eventID=newEvent[0].id}
+    } catch {
+      toast.error("Error creating event, try again later...");
+    } finally {
+      toast.success("Event created successfully");
+      router.push(`/events/${eventID}`);
     }
-  }catch(e){
-    toast.error("Event creation failed");
-  }}}
+  }
 
   return (
     <div className="mb-8 flex flex-col px-4 md:px-12 lg:my-4">
@@ -95,7 +105,7 @@ export default function NewEventPage() {
       </div>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(handleSubmit)}
+          onSubmit={form.handleSubmit(submitHandler)}
           className="flex flex-col gap-6"
         >
           <div className="grid gap-4 md:grid-cols-2">
@@ -241,7 +251,11 @@ export default function NewEventPage() {
                       <FormControl>
                         <Slider
                           value={[field.value]}
-                          onValueChange={(e)=>typeof e[0]=="number"?form.setValue("privacyLevel",e[0]):form.setValue("privacyLevel",0)}
+                          onValueChange={(e) =>
+                            typeof e[0] == "number"
+                              ? form.setValue("privacyLevel", e[0])
+                              : form.setValue("privacyLevel", 0)
+                          }
                           min={0}
                           max={3}
                           step={1}
@@ -282,7 +296,14 @@ export default function NewEventPage() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          {submitMutation.isPending && (
+            <Button type="submit" disabled>
+              Creating...
+            </Button>
+          )}
+          {(submitMutation.isError || submitMutation.isIdle) && (
+            <Button type="submit">Create</Button>
+          )}
         </form>
       </Form>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 import Link from "next/link";
 import { Badge } from "~/components/ui/badge";
 import { Skeleton } from "~/components/ui/skeleton";
@@ -76,9 +77,9 @@ export default function EventList(props: { userID: string }) {
                   </h2>
                 </div>
                 <div className="min flex min-w-[150px] flex-col">
-                  <p className="text-sm">
-                    {new Date(event.from).toLocaleDateString()} -{" "}
-                    {new Date(event.to).toLocaleDateString()}
+                  <p className="text-sm text-wrap">
+                    {format(event.from,"dd/MM/yy")}{" - "}
+                    {format(event.to,"dd/MM/yy")}
                   </p>
                 </div>
               </Link>
