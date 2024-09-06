@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import ReuPlanInvitationMail from "react-email-starter/emails/reuplan-invitation";
+import ReuPlanInvitationMail from "./reuplan-invitation";
 import { Button } from "~/components/ui/button";
 import { db } from "~/server/db";
 import type { event as eventSchema, users } from "~/server/db/schema";
