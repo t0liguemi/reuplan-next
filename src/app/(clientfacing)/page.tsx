@@ -18,24 +18,26 @@ export default async function HomePage() {
       <div className="flex md:flex-row flex-col  md:items-start md:justify-start items-center  gap-6">
         <div className="flex flex-col max-w-[640px] gap-4 items-start justify-start py-5 text-foreground">
             <div className="text-4xl">
-              <span className="font-bold">Bienvenidx a </span>
+              <span className="font-bold">Welcome to </span>
               <span className="font-extrabold text-primary">Reu</span>
-              <span className="text-success font-extrabold">Plan</span>
+              <span className="text-success font-extrabold">plan</span>
               <span className="font-bold">
-                , una aplicación web minimalista con un único propósito: Facilitar
-                los encuentros.
+                , a minimalist web app with a single focus: Ease meeting planning.
               </span>
             </div>
             <p className="font-bold text-muted-foreground text-2xl">
-              Con Reuplan puedes organizar tus reuniones en tiempo récord, sin
-              tener que ocuparte personalmente de la disponibilidad de tus
-              invitados. Solamente indica en qué periodo debe ocurrir tu evento y
-              tus invitados agregarán sus disponibilidades.
+              With Reuplan you can plan your meetings in record time, without
+              having to personally worry about the availability of your
+              attendees. Just let each invitee enter their availabilities and
+              the app will find show the intersection of all availabilities.
             </p>
             <Separator className="w-full" />
             <p className="font-light text-muted-foreground text-xl">
-              La app sigue en fase de desarollo, es gratis, pero puedes aportar o
-              pagar una suscripción para usarla de forma más potente y apoyar a su mantenimiento y mejora 🎉.
+              Inspired in the now decadent Doodle app, this app is still in development, it is free of use, but you can contribute or
+              pay a subscription (soon) to use it more powerfully and support its maintenance and improvement 🎉.
+              <br/>
+              Translations coming soon! A lot of features still to be implemented, but it is already usable. Soon I will add a contact form to report bugs or request new features, or just spam me idk
+
             </p>
         </div>
         <Image

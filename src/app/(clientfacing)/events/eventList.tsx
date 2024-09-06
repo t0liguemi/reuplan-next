@@ -53,35 +53,51 @@ export default function EventList(props: { userID: string }) {
                 <div className="flex flex-col">
                   <h2 className="flex items-center gap-2 text-2xl font-bold">
                     {event.name}
-
                     {event.host_id === userID && (
-                      <Badge variant={"outline"} className="border-primary w-fit">Own👑</Badge>
+                      <Badge
+                        variant={"outline"}
+                        className="w-fit border-primary"
+                      >
+                        Host👑
+                      </Badge>
                     )}
-
                     {!userResponses.data?.some(
                       (resp) => resp.event_id === event.id,
-                    )
-                    &&
+                    ) &&
                     userInvitations.data?.some(
                       (inv) => inv.invitee_id === userID,
                     ) ? (
-                      <Badge variant={"outline"} className="border-destructive">Pending❗</Badge>
-                    ) : userResponses.data?.some(
-                        (resp) =>
-                          resp.event_id === event.id && !resp.is_accepted,
-                      ) ? (
-                      <Badge variant={"outline"} className="border-destructive w-fit">Rejected❌</Badge>
-                    ) : (
-                      <Badge variant={"outline"} className="border-success w-fit">Answered✅</Badge>
-
+                      <Badge variant={"outline"} className="border-destructive">
+                        Pending❗
+                      </Badge>
+                    ) : null}
+                    {userResponses.data?.some(
+                      (resp) => resp.event_id === event.id && !resp.is_accepted,
+                    ) && (
+                      <Badge
+                        variant={"outline"}
+                        className="w-fit border-destructive"
+                      >
+                        Rejected❌
+                      </Badge>
+                    )}{" "}
+                    {userResponses.data?.some(
+                      (resp) => resp.event_id === event.id && resp.is_accepted,
+                    ) && (
+                      <Badge
+                        variant={"outline"}
+                        className="w-fit border-success"
+                      >
+                        Answered✅
+                      </Badge>
                     )}
-
                   </h2>
                 </div>
                 <div className="min flex min-w-[150px] flex-col">
-                  <p className="text-sm text-wrap">
-                    {format(event.from,"dd/MM/yy")}{" - "}
-                    {format(event.to,"dd/MM/yy")}
+                  <p className="text-wrap text-sm">
+                    {format(event.from, "dd/MM/yy")}
+                    {" - "}
+                    {format(event.to, "dd/MM/yy")}
                   </p>
                 </div>
               </Link>
