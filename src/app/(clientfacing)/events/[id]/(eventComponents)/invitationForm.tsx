@@ -25,11 +25,11 @@ import { z } from "zod";
 import UserQuery from "./invitationQuery";
 import { atom,useAtom, useAtomValue, useSetAtom } from "jotai";
 import { PlusIcon } from "lucide-react";
-
+import type { event as eventType } from "~/server/db/schema";
 export const invitationDialogOpen = atom(false)
 export const queryValue = atom("")
 
-export default function InvitationForm(props: { eventId: string }) {
+export default function InvitationForm(props: { eventId: string, event: typeof eventType.$inferSelect }) {
   const [isOpen, setIsOpen] = useAtom(invitationDialogOpen);
   const FormSchema = z.object({
     email: z.string(),
@@ -81,7 +81,7 @@ export default function InvitationForm(props: { eventId: string }) {
                 )}
               />
 
-              <UserQuery userEmail={debouncedEmail} eventId={props.eventId} /> 
+              <UserQuery userEmail={debouncedEmail} eventId={props.eventId} event={props.event} /> 
             </form>
           </Form>
         </DialogContent>

@@ -55,12 +55,13 @@ export default function EventList(props: { userID: string }) {
                     {event.name}
 
                     {event.host_id === userID && (
-                      <Badge variant={"outline"} className="border-primary">Own👑</Badge>
+                      <Badge variant={"outline"} className="border-primary w-fit">Own👑</Badge>
                     )}
 
                     {!userResponses.data?.some(
                       (resp) => resp.event_id === event.id,
-                    ) &&
+                    )
+                    &&
                     userInvitations.data?.some(
                       (inv) => inv.invitee_id === userID,
                     ) ? (
@@ -69,9 +70,10 @@ export default function EventList(props: { userID: string }) {
                         (resp) =>
                           resp.event_id === event.id && !resp.is_accepted,
                       ) ? (
-                      <Badge variant={"outline"} className="border-destructive">Rejected❌</Badge>
+                      <Badge variant={"outline"} className="border-destructive w-fit">Rejected❌</Badge>
                     ) : (
-                      <Badge variant={"outline"} className="border-success">Answered✅</Badge>
+                      <Badge variant={"outline"} className="border-success w-fit">Answered✅</Badge>
+
                     )}
 
                   </h2>

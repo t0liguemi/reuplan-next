@@ -19,10 +19,10 @@ export default async function Page() {
           {users.map((user, index) => (
             <div
               key={index}
-              className={`flex flex-col gap-2 rounded-md border-2 bg-muted p-2 ${!user.isAdmin ? "border-border" : "border-secondary"}`}
+              className={`flex flex-col w-fit gap-2 rounded-md border-2 bg-muted p-2 ${!user.isAdmin ? "border-border" : "border-secondary"}`}
             >
               <p className="flex gap-2"><Avatar><AvatarImage src={user.image??undefined}/><AvatarFallback/></Avatar>{user.nickname}</p> <p>{user.email}</p> <p>{user.name}</p>
-              {user.isPremium && <p>Premium</p>} {user.isAdmin && <p>Admin</p>}
+              {user.isPremium && <p>Premium</p>} {user.isAdmin && <p>Admin</p>} <p>{user.id}</p>
             </div>
           ))}
         </div>

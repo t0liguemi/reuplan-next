@@ -216,19 +216,19 @@ export default function MainEventView(props: {
 
             </h1>
             {event.host_id === currentUser.id && (
-                <Badge variant={"outline"} className="border-primary">
+                <Badge variant={"outline"} className="border-primary w-fit">
                   Host 👑
                 </Badge>
               )}
               {wasRejected && (
-                <Badge variant="outline" className="border-destructive">
+                <Badge variant="outline" className="border-destructive w-fit">
                   Rejected ❌
                 </Badge>
               )}
               {
-                !eventData[0].data?.some(res=>res.invitee_id===currentUser?.id && res.is_accepted)
+                !wasRejected && !eventData[0].data?.some(res=>res.invitee_id===currentUser?.id)
                 && eventData[1].data?.some(inv=>inv.invitee_id===currentUser?.id) &&
-                <Badge variant="outline" className="border-destructive">
+                <Badge variant="outline" className="border-destructive w-fit">
                   Pending ❗
                 </Badge>
               }
@@ -334,6 +334,7 @@ export default function MainEventView(props: {
           eventId={event.id}
           invitees={eventData[2]}
           event={event}
+          responses={eventData[0]}
         />
 
         <Separator orientation="horizontal" className="my-4 w-full sm:my-8" />
