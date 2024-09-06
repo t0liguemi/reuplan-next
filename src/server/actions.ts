@@ -4,6 +4,7 @@ import { and, eq } from "drizzle-orm";
 import { event, invitation, response, users } from "./db/schema";
 import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "auth";
+import sendInvitationEmail from "./send-invitation";
 
 export async function loginAttempt(provider: string) {
   await signIn(provider);

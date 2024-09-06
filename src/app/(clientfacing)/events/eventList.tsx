@@ -50,10 +50,12 @@ export default function EventList(props: { userID: string }) {
                 key={index}
                 className="border-border-/20 flex flex-row items-center justify-between rounded-md border-2 bg-muted/30 p-4 hover:border-secondary hover:bg-muted/80"
               >
-                <div className="flex flex-col">
-                  <h2 className="flex items-center gap-2 text-2xl font-bold">
+                <div className="flex flex-col gap-2">
+                  <h2 className="flex items-center gap-2 text-2xl font-bold overflow-ellipsis">
                     {event.name}
-                    {event.host_id === userID && (
+                  </h2>
+                  <div className="flex flex-row gap-2">
+                  {event.host_id === userID && (
                       <Badge
                         variant={"outline"}
                         className="w-fit border-primary"
@@ -91,7 +93,7 @@ export default function EventList(props: { userID: string }) {
                         Answered✅
                       </Badge>
                     )}
-                  </h2>
+                  </div>
                 </div>
                 <div className="min flex min-w-[150px] flex-col">
                   <p className="text-wrap text-sm">
