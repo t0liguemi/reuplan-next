@@ -11,7 +11,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { Button } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { MoonIcon, SunIcon } from "lucide-react";
+import { Calendar, Home, LogOut, Mail, MoonIcon, SunIcon, User, Users } from "lucide-react";
 import { signIn, useSession, signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { Switch } from "~/components/ui/switch";
@@ -135,32 +135,44 @@ export default function Navbar() {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-muted/20 backdrop-blur-lg">
                 <DropdownMenuLabel asChild>
-                  <Link href="/events">
-                    Events{" "}
+                  <p className="text-sm font-bold">{session.data.user.email}</p>
+                </DropdownMenuLabel>
+
+                <DropdownMenuItem asChild>
+                  <Link href="/events" className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4"/> Events
                     {pendingInvitations != 0 && (
                       <Badge variant="destructive" className="mx-2">
                         {pendingInvitations}
                       </Badge>
                     )}{" "}
                   </Link>
-                </DropdownMenuLabel>
+                </DropdownMenuItem>
 
-                <Link href="/">
-                  <DropdownMenuItem>Home</DropdownMenuItem>
-                </Link>
+                <DropdownMenuItem asChild>
+                  <Link href="/" className="flex items-center gap-2"><Home className="w-4 h-4"/> Home</Link>
+                </DropdownMenuItem>
 
                 {session.data.user.isAdmin ? (
-                  <Link href="/users">
-                    <DropdownMenuItem>Users</DropdownMenuItem>
-                  </Link>
+                  <DropdownMenuItem asChild>
+                    <Link href="/users" className="flex items-center gap-2">
+                      <Users className="w-4 h-4"/> Users
+                    </Link>
+                  </DropdownMenuItem>
                 ) : null}
-                
+
                 <DropdownMenuItem asChild>
-                  <Link href={"/account"}>Account</Link>
+                  <Link href={"/account"} className="flex items-center gap-2"><User className="w-4 h-4"/> Account</Link>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
+
+                <DropdownMenuItem asChild>
+                  <Link href={"/contact"} className="flex items-center gap-2"><Mail className="w-4 h-4"/> Contact</Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuSeparator className="bg-border" />
+
                 <DropdownMenuItem>
-                  <button onClick={() => signOut()}>Logout</button>
+                  <button onClick={() => signOut()} className="flex items-center gap-2"><LogOut className="w-4 h-4"/>Logout</button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

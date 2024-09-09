@@ -31,13 +31,17 @@ export default async function RootLayout({
   return (
 
       <html lang="en" className={inter.className} suppressHydrationWarning>
-        <body className="min-h-screen bg-gradient-to-t from-bgcolorbottom to-bgcolortop bg-fixed bg-center bg-no-repeat antialiased">
+        <body className="bg-gradient-to-t from-bgcolorbottom to-bgcolortop bg-fixed bg-center bg-no-repeat antialiased">
         <Providers>
             <ThemeProvider attribute="class" storageKey="theme">
             <HydrationBoundary state={dehydrate(queryClient)}>
-              <Navbar />
-              {children}
+              <div className="flex flex-col justify-between min-h-screen w-screen">
+              <div>
+                <Navbar />
+                {children}
+              </div>
               <Footer />
+              </div>
               <Toaster />
               <Toaster2 />
               </HydrationBoundary>

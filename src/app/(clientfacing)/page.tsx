@@ -29,7 +29,7 @@ export default async function HomePage() {
               With Reuplan you can plan your meetings in record time, without
               having to personally worry about the availability of your
               attendees. Just let each invitee enter their availabilities and
-              the app will find show the intersection of all availabilities.
+              the app will show the intersection of all availabilities.
             </p>
             <Separator className="w-full" />
             <p className="font-light text-muted-foreground text-xl">

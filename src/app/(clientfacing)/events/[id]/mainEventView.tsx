@@ -322,8 +322,8 @@ export default function MainEventView(props: {
             </p>
           )}
           {event.location && event.maps_query && (
-            <div className="my-2 flex max-w-full flex-col text-2xl sm:flex-row sm:items-baseline">
-              <h2 className="text-2xl font-light">Location: </h2>
+            <div className="my-2 flex max-w-full flex-col text-2xl sm:flex-row sm:items-baseline gap-2">
+              <h2 className="text-2xl font-light">Location:</h2>
               <MapsDrawer location={event.location} />
             </div>
           )}
