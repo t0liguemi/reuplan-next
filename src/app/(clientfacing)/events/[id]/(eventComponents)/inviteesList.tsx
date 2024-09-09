@@ -91,11 +91,11 @@ export default function InviteesList(props: {
   }
   if (invitations.data && invitees.data && currentUser) {
     return (
-      <div className="flex flex-col items-center gap-2 sm:flex-row">
-        <h2 className="text-2xl font-light">Invitees:</h2>
-        <div className="flex flex-row flex-wrap items-baseline gap-2 text-2xl font-light">
+      <div className="flex flex-col items-start gap-2 sm:flex-row justify-start">
+        
           {invitations.data.length > 0 ? (
             <div className="flex flex-row flex-wrap items-baseline gap-1 sm:gap-2">
+              <h2 className="text-2xl font-light">Invitees:</h2>
               {event.privacy_level>1 && invitations.data.map((invitation, index) => (
                 <Popover key={index}>
                   <PopoverTrigger asChild>
@@ -165,9 +165,10 @@ export default function InviteesList(props: {
                   </PopoverContent>
                 </Popover>
               ))}
-              {event.host_id == currentUser.id && (
+                            {event.host_id == currentUser.id && (
                 <InvitationForm eventId={eventId} event={event} />
               )}
+
             </div>
           ) : (
             (event.privacy_level>1 || event.host_id == currentUser.id) &&<div className="flex flex-row flex-wrap items-center gap-2">
@@ -178,7 +179,6 @@ export default function InviteesList(props: {
             </div>
           )}
         </div>
-      </div>
     );
   }
 }

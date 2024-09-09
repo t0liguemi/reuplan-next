@@ -15,7 +15,7 @@ export default async function Page() {
           This will be a list of all users in the app with their roles, with
           exclusive access to admins
         </p>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 flex-wrap">
           {users.map((user, index) => (
             <div
               key={index}

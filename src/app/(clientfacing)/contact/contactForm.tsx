@@ -57,7 +57,7 @@ export default function ContactForm(props: { name?: string; email?: string }) {
       data.message,
     );
     if (email) {
-      toast("Email sent");
+      toast("Contact form submitted succesfully! 🎉");
       setIsOpen(false);
     } else {
       toast(

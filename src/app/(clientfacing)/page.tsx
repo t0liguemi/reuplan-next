@@ -31,11 +31,13 @@ export default async function HomePage() {
               attendees. Just let each invitee enter their availabilities and
               the app will show the intersection of all availabilities.
             </p>
+            {session?.user &&
+      <MainActionButtons />}
             <Separator className="w-full" />
             <p className="font-light text-muted-foreground text-xl">
-              Inspired in the now decadent Doodle app, this app is still in development, it is free of use, but you can contribute or
+              Based on the core function of the now decadent Doodle app, this app is still in development, it is free of use, but you can contribute or
               pay a subscription (soon) to use it more powerfully and support its maintenance and improvement 🎉.
-              <br/>
+              <br/><br/>
               Translations coming soon! A lot of features still to be implemented, but it is already usable. Soon I will add a contact form to report bugs or request new features, or just spam me idk
 
             </p>
@@ -48,8 +50,7 @@ export default async function HomePage() {
           className="align-middle svg-contrast"
         />
       </div>
-      {session?.user &&
-      <MainActionButtons />}
+     
     </div>
   );
 }
