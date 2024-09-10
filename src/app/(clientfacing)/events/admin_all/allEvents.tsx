@@ -59,7 +59,6 @@ export default function AllEventsPage(props: {
   const { users, events, deleteInvitation, deleteResponse } = props;
 
   const [selectedUser, setSelectedUser] = React.useState<string>("");
-  const [selectedEvent, setSelectedEvent] = React.useState<string>("");
 
   const filteredEvents = React.useMemo(() => {
     if (selectedUser === "") {
@@ -87,7 +86,7 @@ export default function AllEventsPage(props: {
         {filteredEvents.map((event) => (
           <div
             key={event.id}
-            className="flex flex-row justify-between rounded-md border-2 border-border bg-muted/60 p-2 font-light"
+            className="flex flex-row flex-wrap justify-between rounded-md border-2 border-border bg-muted/60 p-2 font-light"
           >
             <div
               className="flex flex-col gap-2"
