@@ -26,6 +26,7 @@ import { useSession } from "next-auth/react";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Badge } from "~/components/ui/badge";
+import InvitationForm from "./(eventComponents)/invitationForm";
 
 export default function MainEventView(props: {
   event: typeof eventType.$inferSelect;
@@ -329,13 +330,27 @@ export default function MainEventView(props: {
           )}
         </div>
 
-        <InviteesList
+
+        {event.privacy_level===1
+        ?
+        <div>
+          <p className="text-2xl font-light">{eventData[2].data.length} Invitation{eventData[2].data.length === 0 ? "s" : ""} sent</p>
+          {currentUser?.id === event.host_id && <InvitationForm eventId={event.id} event={event} />}
+           </div>
+        :event.privacy_level===0 &&
+        currentUser?.id === event.host_id ? <InviteesList
+        invitations={eventData[1]}
+        eventId={event.id}
+        invitees={eventData[2]}
+        event={event}
+        responses={eventData[0]}
+      /> : <InviteesList
           invitations={eventData[1]}
           eventId={event.id}
           invitees={eventData[2]}
           event={event}
           responses={eventData[0]}
-        />
+        />}
 
         <Separator orientation="horizontal" className="my-4 w-full sm:my-8" />
         {event.description ? (

@@ -93,16 +93,16 @@ export default function InviteesList(props: {
     return (
       <div className="flex flex-col items-start gap-2 sm:flex-row justify-start">
         
-          {invitations.data.length > 0 ? (
+          {((event.privacy_level > 0 || currentUser.id === event.host_id) && invitations.data.length > 0  ) ? (
             <div className="flex flex-row flex-wrap items-baseline gap-1 sm:gap-2">
               <h2 className="text-2xl font-light">Invitees:</h2>
-              {event.privacy_level>1 && invitations.data.map((invitation, index) => (
+              {(event.privacy_level>1 || event.host_id == currentUser.id) && invitations.data.map((invitation, index) => (
                 <Popover key={index}>
                   <PopoverTrigger asChild>
                     <Button
                       variant={"outline"}
                       className={`bg-muted px-1 text-lg font-light hover:bg-muted/40 sm:text-xl ${
-                        event.privacy_level === 3 &&
+                        (event.privacy_level === 3 || event.host_id == currentUser.id) &&
                         responses.data?.some(
                           (resp) =>
                             resp.invitee_id === invitation.invitee_id &&
@@ -170,14 +170,14 @@ export default function InviteesList(props: {
               )}
 
             </div>
-          ) : (
-            (event.privacy_level>1 || event.host_id == currentUser.id) &&<div className="flex flex-row flex-wrap items-center gap-2">
-              <p>No invitees yet</p>
+          ) : 
+            (event.privacy_level>1 || event.host_id == currentUser.id) ? <div className="flex flex-row flex-wrap items-center gap-2">
+              <p className="text-2xl font-light">No invitees yet</p>
               {event.host_id == currentUser.id && (
                 <InvitationForm eventId={eventId} event={event} />
               )}
             </div>
-          )}
+          : null}
         </div>
     );
   }
