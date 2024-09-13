@@ -125,7 +125,8 @@
         "contact": "Contact",
         "logout": "Logout",
         "events": "Events",
-        "signin": "Login"
+        "signin": "Login",
+        "pendingToast": "You have {count,plural,=1{a pending invitation} other{# pending invitations}}"
     },
     "Footer": {
         "credits": "Reuplan by ",
@@ -135,6 +136,6 @@
     },
     "LocaleSwitcher": {
         "label": "Language",
-        "locale": "{locale, select, es {🇪🇸 Español} en {🇺🇸 English} other {Unbekannt}}"
+        "locale": "{locale, select, es {🇪🇸 Español} en {🇬🇧 English} other {Unbekannt}}"
     }
 }

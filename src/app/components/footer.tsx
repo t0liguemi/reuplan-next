@@ -31,7 +31,6 @@ export default function Footer() {
       </p>
 
       <div className="flex flex-row gap-4 items-center">
-        <LocaleSwitcher />
         <Link href="/contact">{t("contact")}</Link>
         <Dialog>
           <DialogTrigger>{t("howto")}</DialogTrigger>

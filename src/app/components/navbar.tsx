@@ -25,6 +25,7 @@ import React from "react";
 import { toast } from "sonner";
 import { Badge } from "~/components/ui/badge";
 import { useTranslations } from "next-intl";
+import LocaleSwitcher from "./localeSwitcher";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -66,10 +67,8 @@ export default function Navbar() {
   }, [userQueries]);
 
   React.useEffect(() => {
-    if (pendingInvitations === 1) {
-      toast(`You have one pending invitation!`);
-    } else if (pendingInvitations > 0) {
-      toast(`You have ${pendingInvitations} pending invitations!`);
+    if (pendingInvitations > 0) {
+      toast(t("pendingToast", {count: pendingInvitations}));
     }
   }, [pendingInvitations]);
 
@@ -108,6 +107,7 @@ export default function Navbar() {
 
             <Switch checked={theme === "light"} />
             <SunIcon className="h-4 w-4" />
+
           </div>
           <div>
             <DropdownMenu>
@@ -171,6 +171,10 @@ export default function Navbar() {
                   <Link href={"/contact"} className="flex items-center gap-2"><Mail className="w-4 h-4"/> {t("contact")}</Link>
                 </DropdownMenuItem>
 
+                <DropdownMenuItem asChild>
+                  <LocaleSwitcher/>
+                </DropdownMenuItem>
+
                 <DropdownMenuSeparator className="bg-border" />
 
                 <DropdownMenuItem>
@@ -202,6 +206,9 @@ export default function Navbar() {
             </div>
           </Link>
         </div>
+        <div className="flex flex-row gap-2">
+                  <LocaleSwitcher/>
+                
         <div
           className="flex items-center gap-2"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -209,7 +216,7 @@ export default function Navbar() {
           <MoonIcon className="h-4 w-4" />
           <Switch checked={theme === "light"} />
           <SunIcon className="h-4 w-4" />
-        </div>
+        </div></div>
       </nav>
     );
   } else {
@@ -233,6 +240,7 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="flex flex-row gap-2">
+          <LocaleSwitcher/>
           <div
             className="flex items-center gap-2"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

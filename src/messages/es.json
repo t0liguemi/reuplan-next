@@ -15,7 +15,9 @@
         "contact": "Contacto",
         "logout": "Cerrar sesión",
         "signin": "Ingresar",
-        "events": "Eventos"
+        "events": "Eventos",
+                "pendingToast": "Tienes {count,plural,=1{una invitación pendiente} other{# invitaciones pendientes}}"
+        
     },
     "EventListPage": {
         "title": "Eventos",
@@ -137,6 +139,6 @@
     },
     "LocaleSwitcher": {
         "label": "Idioma",
-        "locale": "{locale, select, es {🇪🇸 Español} en {🇺🇸 English} other {Unbekannt}}"
+        "locale": "{locale, select, es {🇪🇸 Español} en {🇬🇧 English} other {Unbekannt}}"
     }
 }
