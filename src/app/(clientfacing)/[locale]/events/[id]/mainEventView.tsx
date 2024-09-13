@@ -216,12 +216,12 @@ export default function MainEventView(props: {
               {event.name}
             </h1>
             {event.host_id === currentUser.id && (
-              <Badge variant={"outline"} className="w-fit border-primary">
+              <Badge variant={"outline"} className="w-fit border-primary my-2">
                 {t("hostBadge")}
               </Badge>
             )}
             {wasRejected && (
-              <Badge variant="outline" className="w-fit border-destructive">
+              <Badge variant="outline" className="w-fit border-destructive my-2">
                 {t("declined")}
               </Badge>
             )}
@@ -232,7 +232,7 @@ export default function MainEventView(props: {
               eventData[1].data?.some(
                 (inv) => inv.invitee_id === currentUser?.id,
               ) && (
-                <Badge variant="outline" className="w-fit border-destructive">
+                <Badge variant="outline" className="w-fit border-destructive my-2">
                   {t("pending")}
                 </Badge>
               )}
