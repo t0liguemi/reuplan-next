@@ -17,6 +17,7 @@ import { useSession } from "next-auth/react";
 import { PopoverClose } from "@radix-ui/react-popover";
 import React from "react";
 import { Badge } from "~/components/ui/badge";
+import { useTranslations } from "next-intl";
 
 export default function InviteesList(props: {
   invitations: UseQueryResult<(typeof invitation.$inferSelect)[], Error>;
@@ -26,6 +27,7 @@ export default function InviteesList(props: {
   responses: UseQueryResult<(typeof response.$inferSelect)[], Error>;
 }) {
   const queryClient = useQueryClient();
+  const t = useTranslations("EventPage");
   const { invitations, eventId, event, invitees, responses } = props;
   const currentUser = useSession()?.data?.user;
 
@@ -39,10 +41,10 @@ export default function InviteesList(props: {
 
   React.useEffect(() => {
     if (!isInvited && event.host_id !== currentUser?.id) {
-      toast("You are not invited to this event!");
+      toast(t("notInvitedToast"));
     }
     if (invitations.data?.length === 0) {
-      toast("This event has no invitees yet. Start by inviting someone!");
+      toast(t("noInviteesEffectToast"));
     }
   }, [isInvited, invitations.data, currentUser, event]);
 
@@ -52,7 +54,7 @@ export default function InviteesList(props: {
       const deletedUser = await getUser(deletedInvitation);
       if (deletedUser) {
         toast.success(
-          `Invitation deleted. User ${deletedUser?.nickname ?? deletedUser?.name ?? ""} was uninvited.`,
+          t("uninviteSuccessToast1")+ deletedUser?.nickname ?? deletedUser?.name ?? "" +t("uninviteSuccessToast2")
         );
       }
       await queryClient.invalidateQueries({ queryKey: ["invitees"] });
@@ -62,19 +64,19 @@ export default function InviteesList(props: {
       await queryClient.invalidateQueries({ queryKey: ["userResponses"] });
       await queryClient.invalidateQueries({ queryKey: ["userInvitations"] });
     } else {
-      toast.error(`Error deleting invitation`);
+      toast.error(t("uninviteErrorToast"));
     }
   }
 
   if (invitations.error ?? invitees.error) {
     return (
-      <div className="my-4 text-2xl font-light">Invitees: Error loading</div>
+      <div className="my-4 text-2xl font-light">{t("invitees")}:{t("genericErrorLoading")}</div>
     );
   }
   if (invitations.isLoading || invitees.isLoading) {
     return (
       <div className="align-center flex flex-row flex-wrap justify-start gap-2">
-        <h2 className="text-2xl font-light">Invitees:</h2>
+        <h2 className="text-2xl font-light">{t("invitees")}:</h2>
         <Skeleton className="h-[40px] w-[128px]" />
         <Skeleton className="h-[40px] w-[148px]" />
         <Skeleton className="h-[40px] w-[96px]" />
@@ -95,7 +97,7 @@ export default function InviteesList(props: {
         
           {((event.privacy_level > 0 || currentUser.id === event.host_id) && invitations.data.length > 0  ) ? (
             <div className="flex flex-row flex-wrap items-baseline gap-1 sm:gap-2">
-              <h2 className="text-2xl font-light">Invitees:</h2>
+              <h2 className="text-2xl font-light">{t("invitees")}:</h2>
               {(event.privacy_level>1 || event.host_id == currentUser.id) && invitations.data.map((invitation, index) => (
                 <Popover key={index}>
                   <PopoverTrigger asChild>
@@ -124,9 +126,9 @@ export default function InviteesList(props: {
                   </PopoverTrigger>
 
                   <PopoverContent
-                    className={`flex w-fit flex-col items-center justify-start gap-2 bg-muted/40 backdrop-blur-lg ${event.privacy_level === 3 && responses.data?.some((resp) => resp.invitee_id === invitation.invitee_id && resp.is_accepted) ? "bg-success/30" 
+                    className={`flex w-fit flex-col items-center justify-start gap-2 bg-muted/40 backdrop-blur-lg ${event.privacy_level === 3 && responses.data?.some((resp) => resp.invitee_id === invitation.invitee_id && resp.is_accepted) ? "bg-success/15 border-success" 
                       :  responses.data?.some(resp=>resp.invitee_id === invitation.invitee_id && !resp.is_accepted)
-                      ? "bg-destructive/60"
+                      ? "bg-destructive/15 border-destructive"
                       : ""}`}
                   >
                     <p>{invitees.data[index]?.name}</p>
@@ -138,11 +140,11 @@ export default function InviteesList(props: {
                           resp.is_accepted,
                       ) ? (
                         <Badge variant={"success"} className="border-success bg-muted w-fit">
-                          Accepted ✅
+                          {t("accepted")} 
                         </Badge>
                       ): responses.data?.some(resp=>resp.invitee_id === invitation.invitee_id && !resp.is_accepted)
                       ? <Badge variant={"destructive"} className="border-destructive bg-muted w-fit">
-                      Rejected ❌
+                      {t("declined")} 
                     </Badge>
                       : ""}
                     <PopoverClose asChild>
@@ -155,10 +157,10 @@ export default function InviteesList(props: {
                             )
                           }
                           variant="outline"
-                          className="text-md bg-muted px-1 font-bold text-destructive hover:bg-muted/40"
+                          className="text-md bg-muted font-bold text-destructive hover:bg-muted/40 px-2"
                         >
                           <Trash className="mx-1 text-destructive" />
-                          <p>Uninvite</p>
+                          <p>{t("uninvite")}</p>
                         </Button>
                       ) : null}
                     </PopoverClose>

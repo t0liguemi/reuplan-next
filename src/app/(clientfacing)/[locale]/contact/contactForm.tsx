@@ -20,23 +20,27 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { Separator } from "~/components/ui/separator";
+import { Input } from "~/components/ui/input";  
 import { Textarea } from "~/components/ui/textarea";
 import React from "react";
 import { toast } from "sonner";
 import sendContactMail from "~/server/send-contact-mail";
+import { useTranslations } from "next-intl";
 
-const contactSchema = z.object({
-  name: z.string().min(2, { message: "Name too short" }),
-  subject: z.string().min(5, { message: "Subject too short" }),
-  message: z.string().min(20, {
-    message: "Message too short, explain your issue as thoroughly as possible",
-  }),
-  email: z.string().email({ message: "Invalid email address" }),
-});
+
 
 export default function ContactForm(props: { name?: string; email?: string }) {
+
+  const t = useTranslations("ContactPage");
+  const contactSchema = z.object({
+    name: z.string().min(2, { message: t("formErrorName") }),
+    subject: z.string().min(5, { message: t("formErrorSubject") }),
+    message: z.string().min(20, {
+      message: t("formErrorMessage"),
+    }),
+    email: z.string().email({ message: t("formErrorEmail") }),
+  });
+
   const [isCorrect, setIsCorrect] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
   const checkMessage = "send contact message";
@@ -57,12 +61,10 @@ export default function ContactForm(props: { name?: string; email?: string }) {
       data.message,
     );
     if (email) {
-      toast("Contact form submitted succesfully! 🎉");
+      toast(t("successToast"));
       setIsOpen(false);
     } else {
-      toast(
-        "Error submitting contact form, send an email to merengueconjamon@gmail.com instead",
-      );
+      toast(t("errorToast"));
     }
   }
 
@@ -82,7 +84,7 @@ export default function ContactForm(props: { name?: string; email?: string }) {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>{t("name")}</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -96,7 +98,7 @@ export default function ContactForm(props: { name?: string; email?: string }) {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t("email")}</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -111,7 +113,7 @@ export default function ContactForm(props: { name?: string; email?: string }) {
           name="subject"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Subject</FormLabel>
+              <FormLabel>{t("subject")}</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -125,7 +127,7 @@ export default function ContactForm(props: { name?: string; email?: string }) {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message</FormLabel>
+              <FormLabel>{t("message")}</FormLabel>
               <FormControl>
                 <Textarea {...field} />
               </FormControl>
@@ -135,7 +137,7 @@ export default function ContactForm(props: { name?: string; email?: string }) {
         />
 
         <Button type="submit" className="w-full">
-          Send
+          {t("send")}
         </Button>
 
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -143,7 +145,9 @@ export default function ContactForm(props: { name?: string; email?: string }) {
             <DialogHeader>
               <DialogTitle>Submit contact form</DialogTitle>
               <DialogDescription className="select-none">
-                Type <strong>{checkMessage}</strong> to send
+                {t.rich("checkMessage", {
+                  strong: (chunk) => <strong>{chunk}</strong>,
+                })}
               </DialogDescription>
             </DialogHeader>
             <Input

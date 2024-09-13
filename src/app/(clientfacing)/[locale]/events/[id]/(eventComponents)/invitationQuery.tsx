@@ -10,6 +10,7 @@ import React from "react";
 import sendInvitationEmail from "~/server/send-invitation";
 import { useSession } from "next-auth/react";
 import type { event as eventType } from "~/server/db/schema";
+import { useTranslations } from "next-intl";
 
 export default function UserQuery(props: {
   eventId: string;
@@ -17,6 +18,7 @@ export default function UserQuery(props: {
   event: typeof eventType.$inferSelect;
 }) {
   const session = useSession();
+  const t = useTranslations("EventPage");
   const queryClient = useQueryClient();
   const setIsOpen = useSetAtom(invitationDialogOpen);
   const [isInviting, setIsInviting] = React.useState(false);
@@ -38,7 +40,7 @@ export default function UserQuery(props: {
           invitee_id: data.id,
         });
         if (newInvite === false) {
-          toast("User already invited");
+          toast(t("alreadyInvitedToast"));
           setIsInviting(false);
           return;
         }
@@ -59,14 +61,14 @@ export default function UserQuery(props: {
             const emailSent = await sendInvitationEmail(data.id, props.eventId, session.data.user.id);
             if (emailSent) {
               toast.success(
-              "Invitation sent!" + " Invited user " + invitedUser?.name + ", also sent an email 📧.",
+              t("invitationSuccessToast1") + invitedUser?.name + t("invitationSuccessToast2"),
             );}
             else{
-              toast.success("Invitation sent!" + " Invited user " + invitedUser?.name + ". Email could not be sent.")
+              toast.success(t("invitationSuccessToast1") + invitedUser?.name + t("invitationSuccessEmailFailed"))
             }
           }
         } else {
-          toast.error("Invitation failed!");
+          toast.error(t("invitationErrorToast"));
           setIsInviting(false);
         }
       }
@@ -76,7 +78,7 @@ export default function UserQuery(props: {
   if (isLoading) {
     return (
       <Button className="min-w-28" disabled>
-        Searching...
+        {t("searching")}
       </Button>
     );
   }
@@ -88,13 +90,13 @@ export default function UserQuery(props: {
         className="min-w-28"
         disabled={isInviting}
       >
-        Invite
+        {t("invite")}
       </Button>
     );
   } else {
     return (
       <Button className="min-w-28" disabled>
-        Not found
+        {t("notFound")}
       </Button>
     );
   }

@@ -26,6 +26,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
+import { useTranslations } from "next-intl";
 
 type ScheduleInResponses = { start: Date; end: Date };
 type AcceptedResponse = typeof response.$inferSelect & {
@@ -42,6 +43,7 @@ export default function Responses(props: {
   invitees: UseQueryResult<(typeof users.$inferSelect)[], Error>;
   invitations: UseQueryResult<(typeof invitation.$inferSelect)[], Error>;
 }) {
+  const t = useTranslations("EventPage");
   const queryClient = useQueryClient();
   const currentUser = useSession()?.data?.user;
   const [selectedDay, setSelectedDay] = React.useState<Date>();
@@ -63,7 +65,9 @@ export default function Responses(props: {
       await queryClient.invalidateQueries({ queryKey: ["responses"] });
       await queryClient.invalidateQueries({ queryKey: ["userResponses"] });
       await queryClient.invalidateQueries({ queryKey: ["userInvitations"] });
-      toast.success("Response deleted");
+      toast.success(t("responseDeletionSuccessToast"));
+    } else{
+      toast.error(t("responseDeletionErrorToast"));
     }
   }
 
@@ -91,9 +95,9 @@ export default function Responses(props: {
 
     if (responses.isLoading || invitations.isLoading || invitees.isLoading) {
       <div className="my-4">
-        <h2>Responses :Loading...</h2>
+        <h2>{t("responses")}</h2>
         <div className="my-4 flex flex-col flex-wrap justify-start gap-2 align-baseline">
-          <h2 className="text-2xl font-light">Responses:</h2>
+          <h2 className="text-2xl font-light">{t("responses")}</h2>
           <Skeleton className="h-[24px] w-[512px]" />
           <Skeleton className="h-[24px] w-[512px]" />
           <Skeleton className="h-[24px] w-[512px]" />
@@ -105,7 +109,7 @@ export default function Responses(props: {
     if (responses.data && invitations.data && invitees.data) {
       return (
         <div className="flex flex-col items-center gap-2">
-          <h3 className="text-3xl font-light">Survey results:</h3>
+          <h3 className="text-3xl font-light">{t("surveyResults")}</h3>
           <div className="flex w-[90vw] flex-row justify-start gap-1 overflow-scroll">
             {availableDays.map((day) => (
               <CalendarResults
@@ -116,14 +120,10 @@ export default function Responses(props: {
             ))}
           </div>
           <p className="text-sm font-light text-muted-foreground">
-            These are the resulting time overlaps on which all
-            <span className="font-bold"> attendees</span> can participate. Take
-            into account that these are not times on which all{" "}
-            <span className="font-bold">invitees</span> can attend, some may
-            still have to answer the invitation.
+            {t.rich("calendarExplanation", {strong: (chunks) => <span className="font-extrabold">{chunks}</span>})}
           </p>
           <p className="text-sm font-extrabold text-muted-foreground">
-            Attendees ≠ Invitees
+            {t("attendees")} ≠ {t("invitees")}
           </p>
 
           {/* <Select onValueChange={(e) => setSelectedDay(new Date(e))}>
@@ -208,7 +208,7 @@ export default function Responses(props: {
 
           <Separator orientation="horizontal" className="my-4 w-full" />
 
-          {(invitations.data.some(inv=>inv.invitee_id===currentUser?.id) || responses.data.some(resp=>resp.invitee_id===currentUser?.id)) && <h3 className="mb-4 text-3xl font-light">Your responses:</h3>}
+          {(invitations.data.some(inv=>inv.invitee_id===currentUser?.id) || responses.data.some(resp=>resp.invitee_id===currentUser?.id)) && <h3 className="mb-4 text-3xl font-light">{t("yourResponses")}</h3>}
 
           <div className="my-4 flex flex-row gap-2 md:gap-4">
             {responses.data
@@ -245,7 +245,7 @@ export default function Responses(props: {
     }
     if (responses.error ?? invitations.error ?? invitees.error) {
       return (
-        <div className="my-4 text-2xl font-light">Error loading responses</div>
+        <div className="my-4 text-2xl font-light">{t("genericErrorLoading")} {t("responses")}</div>
       );
     }
   }

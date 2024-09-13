@@ -7,7 +7,7 @@ import {
 import React from "react";
 import { toast } from "sonner";
 import { useAtom } from "jotai";
-import { notificationAtom } from "~/app/(clientfacing)/events/[id]/(eventComponents)/responses";
+import { notificationAtom } from "~/app/(clientfacing)/[locale]/events/[id]/(eventComponents)/responses";
 
 type schedule = { start: Date; end: Date };
 

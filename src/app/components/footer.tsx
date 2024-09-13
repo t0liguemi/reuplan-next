@@ -1,10 +1,13 @@
 "use client";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "~/components/ui/dialog";
 import React from "react";
-import Link from "next/link";
+import { Link } from "~/i18n/routing";
+import { useTranslations } from "next-intl";
+import LocaleSwitcher from "./localeSwitcher";
 
 export default function Footer() {
   const [windowWidth, setWindowWidth] = React.useState(0);
+  const t = useTranslations("Footer");
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -20,19 +23,20 @@ export default function Footer() {
   return (
     <div className="mb-2 mt-6 flex w-screen items-center justify-between px-4 text-sm font-light text-muted-foreground/60">
       <p>
-        Reuplan by{" "}
+        {t("credits")}
         <a href="https://linktr.ee/t0liguemi" className="font-bold">
           t0liguemi
         </a>
         , 2024.
       </p>
 
-      <div className="flex flex-row gap-4">
-        <Link href="/contact">Contact</Link>
+      <div className="flex flex-row gap-4 items-center">
+        <LocaleSwitcher />
+        <Link href="/contact">{t("contact")}</Link>
         <Dialog>
-          <DialogTrigger>Guide</DialogTrigger>
+          <DialogTrigger>{t("howto")}</DialogTrigger>
           <DialogContent className="min-w-fit max-w-max min-h-fit">
-            <DialogTitle>Using reuplan:</DialogTitle>
+            <DialogTitle>{t("usingReuplan")}</DialogTitle>
             <iframe
               width={windowWidth*0.7}
               height={windowWidth*0.7*9/16}

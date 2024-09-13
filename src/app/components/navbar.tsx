@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "~/i18n/routing";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,9 +24,11 @@ import {
 import React from "react";
 import { toast } from "sonner";
 import { Badge } from "~/components/ui/badge";
+import { useTranslations } from "next-intl";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
+  const t = useTranslations("Navbar");
   const session = useSession();
   const userQueries = useQueries({
     queries: [
@@ -140,7 +142,7 @@ export default function Navbar() {
 
                 <DropdownMenuItem asChild>
                   <Link href="/events" className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4"/> Events
+                  <Calendar className="w-4 h-4"/> {t("events")}
                     {pendingInvitations != 0 && (
                       <Badge variant="destructive" className="mx-2">
                         {pendingInvitations}
@@ -150,29 +152,29 @@ export default function Navbar() {
                 </DropdownMenuItem>
 
                 <DropdownMenuItem asChild>
-                  <Link href="/" className="flex items-center gap-2"><Home className="w-4 h-4"/> Home</Link>
+                  <Link href="/" className="flex items-center gap-2"><Home className="w-4 h-4"/> {t("home")}</Link>
                 </DropdownMenuItem>
 
                 {session.data.user.isAdmin ? (
                   <DropdownMenuItem asChild>
                     <Link href="/users" className="flex items-center gap-2">
-                      <Users className="w-4 h-4"/> Users
+                      <Users className="w-4 h-4"/> {t("users")}
                     </Link>
                   </DropdownMenuItem>
                 ) : null}
 
                 <DropdownMenuItem asChild>
-                  <Link href={"/account"} className="flex items-center gap-2"><User className="w-4 h-4"/> Account</Link>
+                  <Link href={"/account"} className="flex items-center gap-2"><User className="w-4 h-4"/> {t("account")}</Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem asChild>
-                  <Link href={"/contact"} className="flex items-center gap-2"><Mail className="w-4 h-4"/> Contact</Link>
+                  <Link href={"/contact"} className="flex items-center gap-2"><Mail className="w-4 h-4"/> {t("contact")}</Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator className="bg-border" />
 
                 <DropdownMenuItem>
-                  <button onClick={() => signOut()} className="flex items-center gap-2"><LogOut className="w-4 h-4"/>Logout</button>
+                  <button onClick={() => signOut()} className="flex items-center gap-2"><LogOut className="w-4 h-4"/>{t("logout")}</button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -239,7 +241,7 @@ export default function Navbar() {
             <Switch checked={theme === "light"} />
             <SunIcon className="h-4 w-4" />
           </div>
-          <Button onClick={() => signIn()}>Login</Button>
+          <Button onClick={() => signIn()}>{t("signin")}</Button>
         </div>
       </nav>
     );

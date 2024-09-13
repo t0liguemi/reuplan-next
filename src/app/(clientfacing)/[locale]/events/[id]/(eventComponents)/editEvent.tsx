@@ -36,11 +36,11 @@ import { Slider } from "~/components/ui/slider";
 import { deleteEvent, editEvent, revalidateFromServer } from "~/server/actions";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
-import { revalidatePath } from "next/cache";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Label } from "~/components/ui/label";
+import { useTranslations } from "next-intl";
 
 
 const FormSchema = z.object({
@@ -61,6 +61,7 @@ export default function EditEventSheet(props: {
   const [isOpen, setIsOpen] = React.useState(false);
   const [deleteInputValue, setDeleteInputValue] = React.useState(false);
   const { event } = props;
+  const t = useTranslations("EventPage")
   const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -91,15 +92,17 @@ export default function EditEventSheet(props: {
     host_id: event.host_id,
    });
     if (editedEvent) {
-      toast.success("Event updated successfully");
+      toast.success(t("editSuccessToast"));
       await revalidateFromServer("/events/"+event.id);
+    }else{
+      toast.error(t("editErrorToast"));
     }
   }
 
   async function handleDeleteEvent(id: string) {
     const deletedEvent = await deleteEvent(id);
     if (deletedEvent) {
-      toast.success("Event deleted");
+      toast.success(t("deleteSuccess"));
       await queryClient.invalidateQueries({ queryKey: ["userEvents"] });
       await queryClient.invalidateQueries({ queryKey: ["userResponses"] });
       await queryClient.invalidateQueries({ queryKey: ["responses"] });
@@ -113,12 +116,12 @@ export default function EditEventSheet(props: {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="sm:px-8 px-4 py-2 sm:text-xl text-md font-light">Edit event</Button>
+        <Button className="sm:px-8 px-4 py-2 sm:text-xl text-md font-light">{t("edit")}</Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col gap-2 w-[92vw] sm:max-w-screen-sm bg-background/60 dark:bg-muted/30 backdrop-blur-lg overflow-scroll">
         <SheetHeader>
 
-              <SheetTitle>Editing event: {event.name}</SheetTitle>
+              <SheetTitle>{t("editingEvent")}: {event.name}</SheetTitle>
           <SheetDescription></SheetDescription>
         </SheetHeader>
 
@@ -129,7 +132,7 @@ export default function EditEventSheet(props: {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Event Name</FormLabel>
+                  <FormLabel>{t("editSheetNameField")}</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -144,7 +147,7 @@ export default function EditEventSheet(props: {
                 name="from"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>From</FormLabel>
+                    <FormLabel>{t("from")}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Input
@@ -179,7 +182,7 @@ export default function EditEventSheet(props: {
                 name="to"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>To</FormLabel>
+                    <FormLabel>{t("to")}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Input
@@ -216,7 +219,7 @@ export default function EditEventSheet(props: {
                 name="location"
                 render={({ field }) => (
                   <FormItem className="flex grow flex-col gap-2">
-                    <FormLabel>Location</FormLabel>
+                    <FormLabel>{t("location")}</FormLabel>
                     <FormControl>
                       <Input {...field} placeholder="Location" />
                     </FormControl>
@@ -230,7 +233,7 @@ export default function EditEventSheet(props: {
                 name="maps_query"
                 render={({ field }) => (
                   <FormItem className="flex shrink flex-col justify-start gap-2">
-                    <FormLabel>Google Maps search</FormLabel>
+                    <FormLabel>{t("mapsSearch")}</FormLabel>
                     <FormControl>
                       <Switch checked={field.value} onCheckedChange={field.onChange} />
                     </FormControl>
@@ -243,7 +246,7 @@ export default function EditEventSheet(props: {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>{t("description")}</FormLabel>
                   <FormControl>
                     <Textarea {...field} />
                   </FormControl>
@@ -258,22 +261,22 @@ export default function EditEventSheet(props: {
             name="privacy_level"
             render={({ field }) => (
               <FormItem className="space-y-3">
-                <FormLabel>Privacy</FormLabel>
+                <FormLabel>{t("privacy")}</FormLabel>
                 <div className="flex flex-col items-start gap-4">
                   <div className="flex w-full flex-col items-start gap-4">
                     <div className="flex w-full flex-col items-start gap-2">
                       <div className="flex w-full max-w-[800px] justify-between gap-4">
                         <div className="text-center text-sm font-medium text-muted-foreground">
-                          Event Only
+                          {t("privacy0")}
                         </div>
                         <div className="text-center text-sm font-medium text-muted-foreground">
-                          # Invites sent
+                          {t("privacy1")}
                         </div>
                         <div className="text-center text-sm font-medium text-muted-foreground">
-                          Invitees details
+                          {t("privacy2")}
                         </div>
                         <div className="text-center text-sm font-medium text-muted-foreground">
-                          Attendance
+                            {t("privacy3")}
                         </div>
                       </div>
                       <FormControl>
@@ -291,27 +294,14 @@ export default function EditEventSheet(props: {
                   <div className="min-h-[7em]">
                     <div className="max-w-[600px] rounded-lg bg-muted p-4">
                       <p className="text-sm text-muted-foreground">
-                        Your current privacy setting is{" "}
-                        <span className="font-medium text-primary">
-                          {form.getValues("privacy_level") === 0
-                            ? '"Event Only"'
-                            : form.getValues("privacy_level") === 1
-                              ? '"# Invites"'
-                              : form.getValues("privacy_level") === 2
-                                ? '"Invitees details"'
-                                : form.getValues("privacy_level") === 3
-                                  ? '"Attendance"'
-                                  : null}
-                        </span>
-                        . This means your invitees can{" "}
                         {form.getValues("privacy_level") === 0
-                          ? "see your event, answer to it"
+                          ? t("privacy0Description")
                           : form.getValues("privacy_level") === 1
-                            ? "see your event, answer to it, see how many invitees the event has"
+                            ? t("privacy1Description")
                             : form.getValues("privacy_level") === 2
-                              ? "see your event's details, answer to it, see the details of the invitees"
-                              : "see your event, answer to it, see every invitees' attendance or rejection"}{" "}
-                        and see the calendar results.
+                              ? t("privacy2Description")
+                              : t("privacy3Description")}
+
                       </p>
                     </div>
                   </div>
@@ -321,23 +311,23 @@ export default function EditEventSheet(props: {
               
             )}
           />
-          <Button variant="success" type="submit">Save</Button>
+          <Button variant="success" type="submit">{t("save")}</Button>
           </form>
         </Form>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
-            <Button variant="destructive" className="mt-6 mb-4">Delete event</Button>
+            <Button variant="destructive" className="mt-6 mb-4">{t("deleteEvent")}</Button>
             </DialogTrigger>
               <DialogContent className="bg-background/60 dark:bg-muted/30 backdrop-blur-lg">
                 <DialogHeader><DialogTitle>
-                  Delete Event
+                  {t("deleteEvent")}
                 </DialogTitle>
                 <DialogDescription>
-                  This action cannot be undone.
+                  {t("deleteConfirmation")}
                 </DialogDescription></DialogHeader>
-                <Label htmlFor="delete-event-input">Type <span className="font-extrabold">delete event permanently</span> to confirm</Label>
+                <Label htmlFor="delete-event-input">{t.rich("captcha",{strong:(children)=> <strong>{children}</strong>})}</Label>
                 <Input id="delete-event-input" onChange={(e)=>e.target.value==="delete event permanently"?setDeleteInputValue(true):setDeleteInputValue(false)} />
-                <Button disabled={!deleteInputValue} variant="destructive" onClick={()=>handleDeleteEvent(event.id)}>Delete event</Button> 
+                  <Button disabled={!deleteInputValue} variant="destructive" onClick={()=>handleDeleteEvent(event.id)}>{t("deleteEvent")}</Button> 
               </DialogContent>
 
             </Dialog>

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import {
@@ -13,6 +14,7 @@ import { env } from "~/env";
 
 export default function MapsDrawer(props: { location: string }) {
   const locationEncoded = encodeURI(props.location);
+  const t = useTranslations("EventPage");
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -42,8 +44,7 @@ export default function MapsDrawer(props: { location: string }) {
               src={`https://www.google.com/maps/embed/v1/search?q=${locationEncoded}&key=${env.NEXT_PUBLIC_GMAPS_API_KEY}`}
             />{" "}
             <DrawerDescription className="px-4> <p text-sm text-muted-foreground">
-              This map is powered by Google Maps. It may be inaccurate depending
-              on the location inserted by the host.
+              {t("mapsDisclaimer")}
             </DrawerDescription>
           </DrawerHeader>
         </DrawerContent>

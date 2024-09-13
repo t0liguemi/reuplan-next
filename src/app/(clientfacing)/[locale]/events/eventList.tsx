@@ -1,7 +1,8 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import {Link} from "~/i18n/routing"
 import { Badge } from "~/components/ui/badge";
 import { Skeleton } from "~/components/ui/skeleton";
 import {
@@ -12,6 +13,7 @@ import {
 
 export default function EventList(props: { userID: string }) {
   const { userID } = props;
+  const t = useTranslations("EventListPage")
   const userEvents = useQuery({
     queryKey: ["userEvents"],
     queryFn: () => getCurrentUsersEvents(userID),
@@ -37,7 +39,7 @@ export default function EventList(props: { userID: string }) {
     );
 
   if (userEvents.error)
-    return <div className="flex flex-col gap-4">Error loading data</div>;
+    return <div className="flex flex-col gap-4">{t("errorLoadingData")}</div>;
 
   if (userEvents.data)
     return (
@@ -60,7 +62,7 @@ export default function EventList(props: { userID: string }) {
                         variant={"outline"}
                         className="w-fit border-primary"
                       >
-                        Host👑
+                        {t("host")}
                       </Badge>
                     )}
                     {!userResponses.data?.some(
@@ -70,7 +72,7 @@ export default function EventList(props: { userID: string }) {
                       (inv) => inv.invitee_id === userID,
                     ) ? (
                       <Badge variant={"outline"} className="border-destructive">
-                        Pending❗
+                        {t("pending")}
                       </Badge>
                     ) : null}
                     {userResponses.data?.some(
@@ -80,7 +82,7 @@ export default function EventList(props: { userID: string }) {
                         variant={"outline"}
                         className="w-fit border-destructive"
                       >
-                        Rejected❌
+                        {t("declined")}
                       </Badge>
                     )}{" "}
                     {userResponses.data?.some(
@@ -90,7 +92,7 @@ export default function EventList(props: { userID: string }) {
                         variant={"outline"}
                         className="w-fit border-success"
                       >
-                        Answered✅
+                        {t("answered")}
                       </Badge>
                     )}
                   </div>
@@ -106,7 +108,7 @@ export default function EventList(props: { userID: string }) {
             );
           })
         ) : (
-          <p className="text-2xl font-light">No events, create one!</p>
+          <p className="text-2xl font-light">{t("noEvents")}</p>
         )}
       </div>
     );

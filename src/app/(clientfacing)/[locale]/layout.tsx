@@ -2,14 +2,16 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { type Metadata } from "next";
-import Navbar from "../components/navbar";
+import Navbar from "../../components/navbar";
 import { Toaster } from "~/components/ui/sonner";
 import { Toaster as Toaster2 } from "~/components/ui/toaster";
 import { ThemeProvider } from "next-themes";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { getQueryClient } from "../lib/get-query-client";
+import { getQueryClient } from "../../lib/get-query-client";
 import { Providers } from "~/components/ui/providers";
-import Footer from "../components/footer";
+import Footer from "../../components/footer";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Reuplan",
@@ -24,15 +26,22 @@ const inter = Inter({
 
 export const queryClient = getQueryClient();
 
+type Props = {
+  children: React.ReactNode;
+  params: { locale: string };
+};
+
 export default async function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+  children,params:{locale},
+}: Props) {
+  const messages = await getMessages();
 
   return (
 
-      <html lang="en" className={inter.className} suppressHydrationWarning>
+      <html lang={locale} className={inter.className} suppressHydrationWarning>
         <body className="bg-gradient-to-t from-bgcolorbottom to-bgcolortop bg-fixed bg-center bg-no-repeat antialiased">
-        <Providers>
+          
+        <Providers><NextIntlClientProvider messages={messages}>
             <ThemeProvider attribute="class" storageKey="theme">
             <HydrationBoundary state={dehydrate(queryClient)}>
               <div className="flex flex-col justify-between min-h-screen w-screen">
@@ -45,7 +54,7 @@ export default async function RootLayout({
               <Toaster />
               <Toaster2 />
               </HydrationBoundary>
-            </ThemeProvider>
+            </ThemeProvider></NextIntlClientProvider>
           </Providers>
         </body>
       </html>

@@ -32,11 +32,13 @@ import type { event } from "~/server/db/schema";
 import { TimePickerInput } from "~/components/ui/time-picker-input";
 import { postResponse } from "~/server/actions";
 import { useQueryClient } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 
 export default function ResponseInput(props: {
   currentEvent: typeof event.$inferSelect;
 }) {
+  const t = useTranslations("EventPage");
   const { currentEvent } = props;
   const session = useSession()
   const queryClient = useQueryClient()
@@ -65,9 +67,7 @@ export default function ResponseInput(props: {
       return
     }
     else if (session.status != "authenticated"){
-      toast("You need to be logged in to submit a response!");
-      setSubmitting(false)
-      return
+      await signIn()
     }else{
     const response = await postResponse({
       event_id: currentEvent.id,
@@ -80,12 +80,12 @@ export default function ResponseInput(props: {
     if (response) {
      await queryClient.invalidateQueries({queryKey:["responses", currentEvent.id]});
      await queryClient.invalidateQueries({queryKey:["userResponses", session.data.user.id]});
-    toast("Response submitted!");
+    toast(t("responseSubmitSuccessToast"));
       
       setOpen(false)
       setSubmitting(false)
     }else{
-      toast("Failed to submit response, try again later!");
+      toast(t("responseSubmitErrorToast"));
       setSubmitting(false)
     }
   }}
@@ -105,14 +105,13 @@ export default function ResponseInput(props: {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button id="enter-response">Enter a response</Button>
+        <Button id="enter-response">{t("enterResponse")}</Button>
       </DialogTrigger>
       <DialogContent className="bg-background/60 dark:bg-muted/20 backdrop-blur-lg">
         <DialogHeader>
-          <DialogTitle>New response</DialogTitle>
+          <DialogTitle>{t("enterResponse")}</DialogTitle>
           <DialogDescription>
-            Enter the date for which you want to indicate your possibility to
-            attend the event, as well as the time period of your availability.
+            {t("newResponseDescription")}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -160,7 +159,7 @@ export default function ResponseInput(props: {
               )}
             />
             <div className="flex flex-row items-center gap-2">
-              <p>From</p>
+              <p>{t("fromTime")}</p>
               <FormField
                 control={form.control}
                 name="timeStart"
@@ -181,7 +180,7 @@ export default function ResponseInput(props: {
                             {field.value ? (
                               format(field.value, "HH:mm")
                             ) : (
-                              <span>From</span>
+                              <span>{t("fromTime")}</span>
                             )}
                           </Button>
                         </PopoverTrigger>
@@ -203,7 +202,7 @@ export default function ResponseInput(props: {
                   </FormItem>
                 )}
               />
-              <p>To</p>
+              <p>{t("toTime")}</p>
               <FormField
                 control={form.control}
                 name="timeEnd"
@@ -224,7 +223,7 @@ export default function ResponseInput(props: {
                             {field.value ? (
                               format(field.value, "HH:mm")
                             ) : (
-                              <span>From</span>
+                              <span>{t("toTime")}</span>
                             )}
                           </Button>
                         </PopoverTrigger>
@@ -247,7 +246,7 @@ export default function ResponseInput(props: {
                 )}
               />
             </div>
-            <Button type="submit" disabled={submitting}>Submit</Button>
+              <Button type="submit" disabled={submitting}>{t("submitSchedule")}</Button>
           </form>
         </Form>
       </DialogContent>

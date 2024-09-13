@@ -26,10 +26,12 @@ import UserQuery from "./invitationQuery";
 import { atom,useAtom, useAtomValue, useSetAtom } from "jotai";
 import { PlusIcon } from "lucide-react";
 import type { event as eventType } from "~/server/db/schema";
+import { useTranslations } from "next-intl";
 export const invitationDialogOpen = atom(false)
 export const queryValue = atom("")
 
 export default function InvitationForm(props: { eventId: string, event: typeof eventType.$inferSelect }) {
+  const t = useTranslations("EventPage");
   const [isOpen, setIsOpen] = useAtom(invitationDialogOpen);
   const FormSchema = z.object({
     email: z.string(),
@@ -52,15 +54,14 @@ export default function InvitationForm(props: { eventId: string, event: typeof e
     <div className="flex flex-col gap-2">
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button id="invite-button" className="sm:text-xl text-lg">Send new invite <PlusIcon className="ml-2 h-5 w-5" /></Button>
+          <Button id="invite-button" className="sm:text-xl text-lg">{t("invite")} <PlusIcon className="ml-2 h-5 w-5" /></Button>
         </DialogTrigger>
         <DialogContent aria-describedby="invite-modal" className="bg-background/60 dark:bg-muted/20 backdrop-blur-lg">
           <DialogHeader><DialogTitle asChild>
-            <p>Create new invitation</p>
+            <p>{t("sendNewInvite")}</p>
           </DialogTitle>
           <DialogDescription>
-            Invite a user to the event. This user will be able to reject or accept the invitation by adding a response.
-            This user muser be registered in ReuPlan to be able to receive an invitation.
+            {t("invitationExplanation")}
           </DialogDescription></DialogHeader>
           
           <Form {...form}>
@@ -75,7 +76,7 @@ export default function InvitationForm(props: { eventId: string, event: typeof e
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="invitee's email" {...field} />
+                      <Input placeholder={t("emailPlaceholder")} {...field} />
                     </FormControl>
                   </FormItem>
                 )}
