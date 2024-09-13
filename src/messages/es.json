@@ -113,7 +113,8 @@
         "responseSubmitSuccessToast": "Respuesta ingresada.",
         "responseSubmitErrorToast": "Error ingresando respuesta, intenta más tarde.",
         "responseDeletionSuccessToast": "Respuesta eliminada",
-        "responseDeletionErrorToast": "Error eliminando respuesta, intenta más tarde"
+        "responseDeletionErrorToast": "Error eliminando respuesta, intenta más tarde",
+                "sentInvitations": "{count, plural,=0{No hay invitados aún.} =1{1 invitado.} other{# invitados.}}"
     },
     "ContactPage":{
         "title": "Contacto",

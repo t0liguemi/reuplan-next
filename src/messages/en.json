@@ -1,10 +1,10 @@
 {
     "HomePage": {
         "title1": "Welcome to Reuplan",
-        "title2": ", a minimalist web app with a single focus: Ease meeting planning.",
+        "title2": ", a minimalist web app with a single focus: Easing meeting planning.",
         "subtitle1": "With Reuplan you can plan your meetings in record time, without having to personally worry about the availability of your attendees. Just let each invitee enter their availabilities and the app will show the intersection of them all.",
-        "paragraph1": "Based on the core function of the now decadent Doodle app, this app is still in development, it is free to use, but you can contribute or pay a subscription (soon) to use it more powerfully and support its maintenance and improvement 🎉.",
-        "paragraph2": "Translations on the way! A lot of features still to be implemented, but it is already usable. There is a contact form in the footer to report bugs, request new features, or just spam me idk",
+        "paragraph1": "Based on the core function of the now decadent <small>(and expensive)</small> Doodle app, this app is still in development and free to use. You can contribute or pay a subscription (soon) to use it more powerfully and support its maintenance and improvement 🎉.",
+        "paragraph2": "A lot of features are still to be implemented, but it is already usable. There is a contact form in the footer to report bugs, request new features, or just spam me idk",
         "myEvents": "My Events",
         "newEvent": "New Event"
     },
@@ -100,7 +100,8 @@
         "responseSubmitSuccessToast": "Response submitted.",
         "responseSubmitErrorToast": "Error submitting response, please try again later.",
         "responseDeletionSuccessToast": "Response deleted",
-        "responseDeletionErrorToast": "Error deleting response, please try again later"
+        "responseDeletionErrorToast": "Error deleting response, please try again later",
+        "sentInvitations": "{count, plural,=0{No invitations sent.} =1{1 Invitee.} other{# people invited.}}"
     },
     "ContactPage": {
         "title": "Contact",

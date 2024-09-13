@@ -338,11 +338,7 @@ export default function MainEventView(props: {
         {event.privacy_level === 1 ? (
           <div>
             <p className="text-2xl font-light">
-              {eventData[2].data.length}
-              {eventData[2].data.length === 0
-                ? t("invitations")
-                : t("invitation")}{" "}
-              {t("sent")}.
+            {t("sentInvitations",{count: eventData[1].data?.length})}
             </p>
             {currentUser?.id === event.host_id && (
               <InvitationForm eventId={event.id} event={event} />
