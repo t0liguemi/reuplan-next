@@ -140,6 +140,6 @@
     },
     "LocaleSwitcher": {
         "label": "Idioma",
-        "locale": "{locale, select, es {🇪🇸 Español} en {🇬🇧 English} other {Unbekannt}}"
+        "locale": "{locale, select, es {es} en {en} other {Unbekannt}}"
     }
 }
