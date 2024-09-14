@@ -139,11 +139,11 @@ export default function InviteesList(props: {
                           resp.invitee_id === invitation.invitee_id &&
                           resp.is_accepted,
                       ) ? (
-                        <Badge variant={"success"} className="border-success bg-muted w-fit">
+                        <Badge variant={"success"} className="border-success bg-muted w-fit text-foreground">
                           {t("accepted")} 
                         </Badge>
                       ): responses.data?.some(resp=>resp.invitee_id === invitation.invitee_id && !resp.is_accepted)
-                      ? <Badge variant={"destructive"} className="border-destructive bg-muted w-fit">
+                      ? <Badge variant={"destructive"} className="border-destructive bg-muted/40 w-fit text-foreground">
                       {t("declined")} 
                     </Badge>
                       : ""}

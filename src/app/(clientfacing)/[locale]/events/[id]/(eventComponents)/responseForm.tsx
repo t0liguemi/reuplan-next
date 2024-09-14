@@ -27,7 +27,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner"
-import { addHours, addMinutes, format, getHours, getMinutes, getTime, set, setDate, setDay, setDayOfYear } from "date-fns";
+import { addHours, addMinutes, format, getDate, getHours, getMinutes, getMonth, getTime, getYear, set, setDate, setDay, setDayOfYear, setISODay, setMonth, setYear } from "date-fns";
 import type { event } from "~/server/db/schema";
 import { TimePickerInput } from "~/components/ui/time-picker-input";
 import { postResponse } from "~/server/actions";
@@ -97,8 +97,8 @@ export default function ResponseInput(props: {
     const date = form.getValues("date");
     const currentTimeStart = form.getValues("timeStart");
     const currentTimeEnd = form.getValues("timeEnd");
-    const correctedStart = setDate(currentTimeStart, date.getDate())
-    const correctedEnd = setDate(currentTimeEnd, date.getDate())
+    const correctedStart = setYear(setMonth(setDate(currentTimeStart, getDate(date)), getMonth(date)), getYear(date))
+    const correctedEnd = setYear(setMonth(setDate(currentTimeEnd, getDate(date)), getMonth(date)), getYear(date))
     form.setValue("timeStart", correctedStart)
     form.setValue("timeEnd", correctedEnd)
   }

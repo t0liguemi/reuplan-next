@@ -28,7 +28,8 @@
         "location": "Location",
         "accept": "Accept",
         "decline": "Decline",
-        "declined": "Declined ❌",
+        "declinedBadge": "Declined  ❌",
+        "declined": "Declined",
         "accepted": "Accepted ✅",
         "answered": "Answered ✅",
         "pending": "Pending ❗",
@@ -137,6 +138,6 @@
     },
     "LocaleSwitcher": {
         "label": "Language",
-        "locale": "{locale, select, es {🇪🇸 Español} en {🇬🇧 English} other {Unbekannt}}"
+        "locale": "{locale, select, es {es} en {en} other {Unbekannt}}"
     }
 }

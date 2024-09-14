@@ -239,7 +239,7 @@ export default function Navbar() {
             </div>
           </Link>
         </div>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 items-center">
           <LocaleSwitcher/>
           <div
             className="flex items-center gap-2"

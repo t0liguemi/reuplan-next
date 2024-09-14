@@ -52,7 +52,7 @@ export default function CalendarResults(props: {
             <div
               key={interval.start.toString()}
               style={{ top: `${getPercentualTime(interval.start)}%` }}
-              className="absolute left-0 w-full rounded-sm bg-success text-center text-xs text-success-foreground hover:bg-success/80"
+              className="absolute left-0 w-full bg-success text-center text-xs text-success-foreground hover:bg-success/80"
             >
               <div
                 className="text-xs py-[0.1rem]"

@@ -222,7 +222,7 @@ export default function MainEventView(props: {
             )}
             {wasRejected && (
               <Badge variant="outline" className="w-fit border-destructive my-2">
-                {t("declined")}
+                {t("declinedBadge")}
               </Badge>
             )}
             {!wasRejected &&

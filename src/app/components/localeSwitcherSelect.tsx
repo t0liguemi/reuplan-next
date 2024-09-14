@@ -16,7 +16,6 @@ export default function LocaleSwitcherSelect({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
-  const params = useParams();
 
   function onSelectChange(value:string) {
     const nextLocale = value as Locale;
@@ -27,10 +26,10 @@ export default function LocaleSwitcherSelect({
 
   return (
         <Select onValueChange={onSelectChange} disabled={isPending} defaultValue={defaultValue}>
-          <SelectTrigger className="py-1 h-fit min-h-8">
-            <SelectValue className="max-h-fit" />
+          <SelectTrigger className="py-1 h-fit min-h-8 bg-background/40 text-sm md:px-2 px-1">
+            <SelectValue className="max-h-fit px-1" />
           </SelectTrigger>
-          <SelectContent>{children}</SelectContent>
+          <SelectContent className='bg-muted/40 backdrop-blur-lg text-sm'>{children}</SelectContent>
         </Select>
   );
 }

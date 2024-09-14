@@ -38,7 +38,9 @@ export default async function sendInvitationEmail(
             invitedByUsername:host.nickname ?? host.name,
             invitedByImage:host.image ?? undefined,
             username:user.nickname ?? user.name,
-            userImage:user.image ?? undefined})
+            userImage:user.image ?? undefined,
+            eventDescription:event.description ?? undefined
+          })
       });
 
       if (error) {

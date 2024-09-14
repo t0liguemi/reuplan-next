@@ -12,7 +12,7 @@ export default async function Page() {
   if (session) {
     return (
       <div className="flex flex-col px-4 py-4 md:px-8 lg:px-12">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-wrap">
           <h1 className="my-4 text-4xl font-extrabold">{t("title")}</h1>
           {session?.user?.isAdmin && (
             <Link href="/events/admin_all" className="my-2">

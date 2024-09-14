@@ -25,6 +25,7 @@ interface ReuplanInvitationProps {
   invitedByImage?: string;
   inviteLink?: string;
   eventName?: string;
+  eventDescription?: string;
 }
 
 export const ReuPlanInvitationMail = ({
@@ -35,6 +36,7 @@ export const ReuPlanInvitationMail = ({
   invitedByImage,
   inviteLink,
   eventName,
+  eventDescription
 }: ReuplanInvitationProps) => {
   const previewText = `Invitation to event: "${eventName}"`;
 
@@ -58,9 +60,6 @@ export const ReuPlanInvitationMail = ({
               You have been invited, <strong>{username}</strong>!
             </Heading>
             <Text className="text-[14px] leading-[24px] text-black">
-              Hello {username}, this is an automated message from ReuPlan.
-            </Text>
-            <Text className="text-[14px] leading-[24px] text-black">
               <strong>{invitedByUsername}</strong> (
               <Link
                 href={`mailto:${invitedByEmail}`}
@@ -70,6 +69,9 @@ export const ReuPlanInvitationMail = ({
               </Link>
               ) has invited you to the event <strong>{eventName}</strong> on{" "}
               <strong>Reuplan</strong>.
+            </Text>
+            <Text className="text-[12px] leading-[24px] text-black">
+              {eventDescription}
             </Text>
             <Section>
               <Row>

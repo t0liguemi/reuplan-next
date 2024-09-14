@@ -52,13 +52,6 @@ export default function Responses(props: {
   const parsedStart = new Date(currentEvent.from.setHours(0, 0, 0, 0));
   const parsedEnd = new Date(currentEvent.to.setHours(0, 0, 0, 0));
 
-  const availableDays: Date[] = [];
-  availableDays.push(parsedStart);
-
-  while ((availableDays.at(-1) ?? parsedStart) < parsedEnd) {
-    availableDays.push(addDays(availableDays.at(-1) ?? parsedStart, 1));
-  }
-
   async function handleDeleteResponse(id: string) {
     const deletedResponse = await deleteResponse(id);
     if (deletedResponse) {
@@ -71,8 +64,15 @@ export default function Responses(props: {
     }
   }
 
+  //generate all days between the start and end of the event, inclusive
+  const availableDays: Date[] = [];
+  availableDays.push(parsedStart);
+  while ((availableDays.at(-1) ?? parsedStart) < parsedEnd) {
+    availableDays.push(addDays(availableDays.at(-1) ?? parsedStart, 1));
+  }
+
   const attendingPeople = new Set<string>();
-  const overlappingTimes = new Map<number, ScheduleInResponses[]>();
+  const overlappingTimes = new Map<string, ScheduleInResponses[]>();
 
   if (responses.data && invitations.data) {
     for (const response of responses.data) {
@@ -85,12 +85,12 @@ export default function Responses(props: {
 
     for (const day of availableDays) {
       const responsesForDay = responses.data?.filter(
-        (response) => response.date?.getDate() === day.getDate(),
+        (response) => response.date?.getDate() === day.getDate() && response.date?.getMonth() === day.getMonth() && response.date?.getFullYear() === day.getFullYear(),
       );
       const overlappingTimesForDay: ScheduleInResponses[] =
         findOverlappingTimes(responsesForDay ?? [], attendingPeople.size);
 
-      overlappingTimes.set(day.getDate(), overlappingTimesForDay);
+      overlappingTimes.set(`${day.getDate()}-${day.getMonth()}-${day.getFullYear()}`, overlappingTimesForDay);
     }
 
     if (responses.isLoading || invitations.isLoading || invitees.isLoading) {
@@ -115,7 +115,7 @@ export default function Responses(props: {
               <CalendarResults
                 key={"drawing" + day.toString()}
                 start={day}
-                schedules={overlappingTimes.get(day.getDate()) ?? []}
+                schedules={overlappingTimes.get(`${day.getDate()}-${day.getMonth()}-${day.getFullYear()}` ) ?? []}
               />
             ))}
           </div>
@@ -224,8 +224,8 @@ export default function Responses(props: {
                         {format(response.date, "PPPP")}
                       </p>
                       <p className="text-md flex flex-row gap-2 font-light">
-                        {format(response.start_time, "HH:mm")} -{" "}
-                        {format(response.end_time, "HH:mm")}
+                        {format(response.start_time, "Pp")} -{" "}
+                        {format(response.end_time, "Pp")}
                         <Trash2
                           onClick={() => handleDeleteResponse(response.id)}
                           className="h-5 w-5 border-none bg-none text-destructive"
