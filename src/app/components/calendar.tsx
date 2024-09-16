@@ -8,6 +8,7 @@ import React from "react";
 import { toast } from "sonner";
 import { useAtom } from "jotai";
 import { notificationAtom } from "~/app/(clientfacing)/[locale]/events/[id]/(eventComponents)/responses";
+import { useTranslations } from "next-intl";
 
 type schedule = { start: Date; end: Date };
 
@@ -20,6 +21,7 @@ export default function CalendarResults(props: {
   const [timesRendered, setTimesRendered] = React.useState<number>(0);
   const { schedules } = props;
   const start = new Date(props.start.setHours(0, 0, 0, 0));
+  const t = useTranslations("EventPage")
 
   function getPercentualTime(targetTime: Date) {
     //calculates the percentage of the day that time corresponds to, where dayStart is 0 and dayStart+24h is 100}
@@ -34,7 +36,7 @@ export default function CalendarResults(props: {
     const height = (getPercentualTime(end) - getPercentualTime(start)) * 5;
     if (height < 20 && !wasNotified && timesRendered === 0) {
       setNotification(true);
-      toast("Click on a small unlabeled schedule to see its details");
+      toast(t("calendarToast"));
       setTimesRendered(timesRendered+1);
     }
     return height;

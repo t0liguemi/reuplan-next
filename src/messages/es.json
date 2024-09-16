@@ -8,17 +8,6 @@
         "myEvents": "Mis Eventos",
         "newEvent": "Nuevo Evento"
     },
-    "Navbar": {
-        "home": "Inicio",
-        "account": "Cuenta",
-        "users": "Usuarios",
-        "contact": "Contacto",
-        "logout": "Cerrar sesión",
-        "signin": "Ingresar",
-        "events": "Eventos",
-                "pendingToast": "Tienes {count,plural,=1{una invitación pendiente} other{# invitaciones pendientes}}"
-        
-    },
     "EventListPage": {
         "title": "Eventos",
         "newEvent": "Nuevo Evento",
@@ -114,9 +103,10 @@
         "responseSubmitErrorToast": "Error ingresando respuesta, intenta más tarde.",
         "responseDeletionSuccessToast": "Respuesta eliminada",
         "responseDeletionErrorToast": "Error eliminando respuesta, intenta más tarde",
-                "sentInvitations": "{count, plural,=0{No hay invitados aún.} =1{1 invitado.} other{# invitados.}}"
+        "calendarToast": "Puedes ver los detalles de los horarios pequeños sin etiquetar con un click",
+        "sentInvitations": "{count, plural,=0{No hay invitados aún.} =1{1 invitado.} other{# invitados.}}"
     },
-    "ContactPage":{
+    "ContactPage": {
         "title": "Contacto",
         "description": "¿Tienes preguntas? ¿Quieres reportar un error? ¿Quieres sugerir una función? ¿Quieres saludarme? ¿Quieres colaborar? ¿Quieres contratarme? ¿Quieres darme un besito? <br></br> Por favor, sé amable y respetuosx. Puede que no pueda tolerarlo de otra manera.",
         "name": "Nombre",
@@ -132,6 +122,28 @@
         "formErrorMessage": "Muy corto! Un mensaje decente no puede tener tan poca información 😡",
         "checkMessage": "Escribe <strong>send contact message</strong> para poder enviar el mensaje"
     },
+    "AccountPage": {
+        "title": "Cuenta",
+        "nickname": "Apodo",
+        "nicknameDescription": "Nombre que se mostrará en la mayoría de los lugares",
+        "name": "Nombre",
+        "nameDescription": "Tu nombre real para que las personas te identifiquen",
+        "showEmail": "Mostrar correo electrónico",
+        "showEmailDescription": "Visibilidad del correo electrónico (No aplica para los anfitriones)",
+        "updateSuccessToast": "Usuario actualizado con éxito",
+        "updateErrorToast": "Error al actualizar el usuario, por favor intenta de nuevo más tarde",
+        "saveButton": "Guardar"
+    },
+    "Navbar": {
+        "home": "Inicio",
+        "account": "Cuenta",
+        "users": "Usuarios",
+        "contact": "Contacto",
+        "logout": "Cerrar sesión",
+        "signin": "Ingresar",
+        "events": "Eventos",
+        "pendingToast": "Tienes {count,plural,=1{una invitación pendiente} other{# invitaciones pendientes}}"
+    },
     "Footer": {
         "credits": "Reuplan por ",
         "contact": "Contacto",
@@ -140,6 +152,6 @@
     },
     "LocaleSwitcher": {
         "label": "Idioma",
-        "locale": "{locale, select, es {es} en {en} other {Unbekannt}}"
+        "locale": "{locale, select, es {es} en {en} de {de} other {Unbekannt}}"
     }
 }

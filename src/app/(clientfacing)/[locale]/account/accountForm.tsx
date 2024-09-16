@@ -1,5 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -34,26 +35,28 @@ export default function AccountForm(user: {
   show_email: boolean;
   email: string;
 }) {
-
+  const t = useTranslations("AccountPage");
   const nameForm = useForm<z.infer<typeof NameSchema>>({
     resolver: zodResolver(NameSchema),
     defaultValues: {
       nickname: user.nickname ?? "",
       name: user.name,
-      show_email: user.show_email
+      show_email: user.show_email,
     },
   });
 
-   async function handleNameSubmit(){
+  async function handleNameSubmit() {
     const data = await updateUserNames({
-        id: user.id,
-        nickname: nameForm.getValues("nickname") ?? user.nickname,
-        name: nameForm.getValues("name"),
-        show_email: nameForm.getValues("show_email"),
-    })
-    if (data){
-      toast.success("User updated successfully")
-    }else{"Error updating data"}
+      id: user.id,
+      nickname: nameForm.getValues("nickname") ?? user.nickname,
+      name: nameForm.getValues("name"),
+      show_email: nameForm.getValues("show_email"),
+    });
+    if (data) {
+      toast.success(t("updateSuccessToast"));
+    } else {
+      toast.error(t("updateErrorToast"));
+    }
   }
 
   return (
@@ -68,8 +71,8 @@ export default function AccountForm(user: {
             name="nickname"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nickname</FormLabel>
-                <FormDescription>Name that will be displayed in most places</FormDescription>
+                <FormLabel>{t("nickname")}</FormLabel>
+                <FormDescription>{t("nicknameDescription")}</FormDescription>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -82,8 +85,8 @@ export default function AccountForm(user: {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormDescription>Your actual name for people to identify you</FormDescription>
+                <FormLabel>{t("name")}</FormLabel>
+                <FormDescription>{t("nameDescription")}</FormDescription>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -96,15 +99,23 @@ export default function AccountForm(user: {
             name="show_email"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2">
-                <FormLabel>Show Email</FormLabel>
-                <div className="flex gap-2"><FormDescription>Allow other users to see your email address</FormDescription>
-                <FormControl>
-                  <Switch checked={field.value} onCheckedChange={field.onChange} />
-                </FormControl></div>
+                <FormLabel>{t("showEmail")}</FormLabel>
+                <div className="flex gap-4 flex-wrap">
+                  <FormDescription className="max-w-screen-sm text-wrap">
+                    {t("showEmailDescription")}
+                  </FormDescription>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </div>
               </FormItem>
-            )}/>
+            )}
+          />
           <Button variant="success" type="submit">
-            Save name changes
+            {t("saveButton")}
           </Button>
         </form>
       </Form>

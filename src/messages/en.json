@@ -102,23 +102,36 @@
         "responseSubmitErrorToast": "Error submitting response, please try again later.",
         "responseDeletionSuccessToast": "Response deleted",
         "responseDeletionErrorToast": "Error deleting response, please try again later",
+        "calendarToast": "Click on a smaller unlabeled schedule to see its details",
         "sentInvitations": "{count, plural,=0{No invitations sent.} =1{1 Invitee.} other{# people invited.}}"
     },
-    "ContactPage": {
+ "ContactPage":{
         "title": "Contact",
-        "description": "You have questions? You want to report a bug? You want to suggest a feature? You want to say hi? You want to collaborate? You want to hire me? You want to... live forever? <br></br> Please be kind and respectful. I might not be able to tolerate it otherwise.",
+        "description": "Do you have questions? Want to report a bug? Want to suggest a feature? Want to say hello? Want to collaborate? Want to hire me? Or just spam me?<br></br> Please be kind and respectful. I may not be able to tolerate it otherwise.",
         "name": "Name",
         "email": "Email",
-        "subject": "Subject",
         "message": "Message",
+        "subject": "Subject",
         "send": "Send",
-        "successToast": "Contact form submitted succesfully! 🎉",
-        "errorToast": "Error submitting contact form, send an email to merengueconjamon@gmail.com instead",
+        "successToast": "Message sent successfully! 🎉",
+        "errorToast": "Error sending the contact form, please send an email to merengueconjamon@gmail.com instead.",
         "formErrorName": "Too short!",
-        "formErrorEmail": "I couldn't answer with such an address!",
+        "formErrorEmail": "I couldn't respond to you with an email like that!",
         "formErrorSubject": "Too short!",
-        "formErrorMessage": "Be educated and explain yourself properly, write more! 😡",
-        "checkMessage": "Type <strong>send contact message</strong> to be able to send your message"
+        "formErrorMessage": "Too short! A decent message can't have so little information 😡",
+        "checkMessage": "Type <strong>send contact message</strong> to be able to send the message"
+    },
+    "AccountPage": {
+        "title": "Account",
+        "nickname": "Nickname",
+        "nicknameDescription": "Name that will be displayed in most places",
+        "name": "Name",
+        "nameDescription": "Your actual name for people to identify you",
+        "showEmail": "Show email",
+        "showEmailDescription": "Allow other users to see your email address (Does not apply to hosts)",
+        "updateSuccessToast": "User updated successfully",
+        "updateErrorToast": "Error updating user, please try again later",
+        "saveButton": "Save"    
     },
     "Navbar": {
         "home": "Home",
@@ -138,6 +151,6 @@
     },
     "LocaleSwitcher": {
         "label": "Language",
-        "locale": "{locale, select, es {es} en {en} other {Unbekannt}}"
+        "locale": "{locale, select, es {es} en {en} de {de} other {Unbekannt}}"
     }
 }

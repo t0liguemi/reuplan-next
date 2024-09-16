@@ -1,6 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { format } from "date-fns";
+import { format, setDefaultOptions } from "date-fns";
 import { useTranslations } from "next-intl";
 import {Link} from "~/i18n/routing"
 import { Badge } from "~/components/ui/badge";
@@ -10,8 +10,11 @@ import {
   getCurrentUserResponses,
   getCurrentUsersEvents,
 } from "~/server/actions";
+import { es } from 'date-fns/locale'
+
 
 export default function EventList(props: { userID: string }) {
+  setDefaultOptions({ locale: es })
   const { userID } = props;
   const t = useTranslations("EventListPage")
   const userEvents = useQuery({

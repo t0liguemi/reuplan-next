@@ -28,22 +28,23 @@ import { useRouter } from "next/navigation";
 import { Badge } from "~/components/ui/badge";
 import InvitationForm from "./(eventComponents)/invitationForm";
 import { useTranslations } from "next-intl";
+import { format, setDefaultOptions } from "date-fns";
+import { es,enGB,de } from 'date-fns/locale'
+import { useLocale } from "next-intl";
+
+
 
 export default function MainEventView(props: {
   event: typeof eventType.$inferSelect;
   organizer: typeof users.$inferSelect;
 }) {
+  const currentLocale = useLocale();
+  setDefaultOptions({ locale: currentLocale==="es" ? es : currentLocale==="en" ? enGB : de })
   const router = useRouter();
   const { event, organizer } = props;
   const currentUser = useSession()?.data?.user;
   const t = useTranslations("EventPage");
   const queryClient = useQueryClient();
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  } as const;
 
   const eventData = useQueries({
     queries: [
@@ -312,11 +313,11 @@ export default function MainEventView(props: {
         <p className="my-4 text-2xl font-light" id="event-date">
           {t("from")}{" "}
           <span className="font-bold">
-            {new Date(event.from).toLocaleDateString("en-US", options)}
+            {format(event.from,"PPPP")}
           </span>{" "}
           {t("to")}{" "}
           <span className="font-bold">
-            {new Date(event.to).toLocaleDateString("en-US", options)}
+            {format(event.to,"PPPP")} 
           </span>
         </p>
 
