@@ -1,10 +1,10 @@
 {
     "HomePage": {
-        "title1": "Willkommen bei Reuplan",
+        "title1": "Willkommen bei",
         "title2": ", eine minimalistische Web-App mit einem einzigen Fokus: Die Planung von Meetings zu erleichtern.",
-        "subtitle1": "Mit Reuplan können Sie Ihre Meetings in Rekordzeit planen, ohne sich persönlich um die Verfügbarkeit Ihrer Teilnehmer kümmern zu müssen. Lassen Sie einfach jeden Eingeladenen seine Verfügbarkeiten eingeben, und die App zeigt die passende Zeit aller an.",
-        "paragraph1": "Inspiriert von der dekadenten <small>(und teuren)</small> Doodle-App, dieser kostenlose App wird noch Entwickelt. Sie können für die App spenden, um sie leistungsfähiger nutzen zu können und ihre Wartung und Verbesserung zu unterstützen (soon...) 🎉.",
-        "paragraph2": "Viele Funktionen müssen noch implementiert werden, aber sie ist bereits nutzbar. Es gibt ein Kontaktformular in der Fußzeile, um Fehler zu melden, neue Funktionen zu vorschlagen usw.",
+        "subtitle1": "Mit Reuplan werden Meetings in Rekordzeit geplannt. Kümmert dich nicht um die Verfügbarkeit deiner Teilnehmern, lass einfach jeder seine/ihre Verfügbarkeiten eingeben, und die App zeigt die passende Zeit für alle an.",
+        "paragraph1": "Inspiriert von der dekadenten <small>(und teuren)</small> Doodle-App, Reuplan ist eine kostenlose App und wird noch Entwickelt. Spenden sind willkommen, um die App leistungsfähiger nutzen zu können und ihre Wartung und Verbesserung zu unterstützen (soon...) 🎉.",
+        "paragraph2": "Viele Funktionen müssen noch implementiert werden, aber Reuplan ist bereits nutzbar. Es gibt ein Kontaktformular in der Fußzeile, um Fehler zu melden, neue Funktionen zu vorschlagen usw.",
         "myEvents": "Meine Termine",
         "newEvent": "Neue Termine"
     },
