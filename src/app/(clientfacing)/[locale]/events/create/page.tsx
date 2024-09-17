@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { promise, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -271,12 +271,12 @@ export default function NewEventPage() {
                     <div className="max-w-[600px] rounded-lg bg-muted p-4">
                       <p className="text-sm text-muted-foreground"> 
                         {form.getValues("privacyLevel") === 0
-                          ? t("formPrivacy0Description")
+                          ? t.rich("formPrivacy0Description", {primary: (chunks) => <span className="font-bold font-primary">{chunks}</span>})
                           : form.getValues("privacyLevel") === 1
-                            ? t("formPrivacy1Description")
+                            ? t.rich("formPrivacy1Description", {primary: (chunks) => <span className="font-bold font-primary">{chunks}</span>})
                             : form.getValues("privacyLevel") === 2
-                              ? t("formPrivacy2Description")
-                              : t("formPrivacy3Description")}
+                              ? t.rich("formPrivacy2Description", {primary: (chunks) => <span className="font-bold font-primary">{chunks}</span>})
+                              : t.rich("formPrivacy3Description", {primary: (chunks) => <span className="font-bold font-primary">{chunks}</span>})}
                       </p>
                     </div>
                   </div>
