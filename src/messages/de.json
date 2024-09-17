@@ -116,7 +116,7 @@
         "formPrivacy": "Datenschutz",
         "formPrivacy0": "Termin",
         "mapsSearch": "Karten Suche",
-        "mapsDescription": "Zeigen Sie eine Google Maps-Suche für den Standort an. Sei so genau wie möglich, um sicherzustellen, dass der genaue Ort gefunden wird.",
+        "mapsDescription": "Zeigt eine Google Maps-Suche für den Standort an. Sei so genau wie möglich, um sicherzustellen, dass der genaue Ort gefunden wird.",
         "formPrivacy0Description": "Ihre aktuelle Datenschutzeinstellung ist <primary>\"Nur Termin\"</primary>. Ihre Eingeladenen können Ihren Termin sehen, darauf antworten und die Kalenderergebnisse sehen.",
         "formPrivacy1": "Anzahl der Einladungen",
         "formPrivacy1Description": "Ihre aktuelle Datenschutzeinstellung ist <primary>\"Anzahl der Einladungen\"</primary>. Ihre Eingeladenen können Ihren Termindetails sowie der Anzahl den Einladungen sehen, darauf antworten und die Kalenderergebnisse sehen.",
