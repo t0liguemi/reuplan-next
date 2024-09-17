@@ -271,12 +271,12 @@ export default function NewEventPage() {
                     <div className="max-w-[600px] rounded-lg bg-muted p-4">
                       <p className="text-sm text-muted-foreground"> 
                         {form.getValues("privacyLevel") === 0
-                          ? t.rich("formPrivacy0Description", {primary: (chunks) => <span className="font-bold font-primary">{chunks}</span>})
+                          ? t.rich("formPrivacy0Description", {primary: (chunks) => <span className="font-bold text-primary">{chunks}</span>})
                           : form.getValues("privacyLevel") === 1
-                            ? t.rich("formPrivacy1Description", {primary: (chunks) => <span className="font-bold font-primary">{chunks}</span>})
+                            ? t.rich("formPrivacy1Description", {primary: (chunks) => <span className="font-bold text-primary">{chunks}</span>})
                             : form.getValues("privacyLevel") === 2
-                              ? t.rich("formPrivacy2Description", {primary: (chunks) => <span className="font-bold font-primary">{chunks}</span>})
-                              : t.rich("formPrivacy3Description", {primary: (chunks) => <span className="font-bold font-primary">{chunks}</span>})}
+                              ? t.rich("formPrivacy2Description", {primary: (chunks) => <span className="font-bold text-primary">{chunks}</span>})
+                              : t.rich("formPrivacy3Description", {primary: (chunks) => <span className="font-bold text-primary">{chunks}</span>})}
                       </p>
                     </div>
                   </div>
