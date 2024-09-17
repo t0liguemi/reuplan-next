@@ -105,7 +105,7 @@
         "calendarToast": "Click on a smaller unlabeled schedule to see its details",
         "sentInvitations": "{count, plural,=0{No invitations sent.} =1{1 Invitee.} other{# people invited.}}"
     },
- "ContactPage":{
+    "ContactPage": {
         "title": "Contact",
         "description": "Do you have questions? Want to report a bug? Want to suggest a feature? Want to say hello? Want to collaborate? Want to hire me? Or just spam me?<br></br> Please be kind and respectful. I may not be able to tolerate it otherwise.",
         "name": "Name",
@@ -121,6 +121,32 @@
         "formErrorMessage": "Too short! A decent message can't have so little information 😡",
         "checkMessage": "Type <strong>send contact message</strong> to be able to send the message"
     },
+    "CreateEventPage": {
+        "title": "New Event",
+        "formName": "Event Name",
+        "formDescription": "Event Description", 
+        "formDescriptionPlaceholder": "Additional details of the event",
+        "formLocation": "Event Location",
+        "formDateRange": "Event Start",
+        "formPrivacy": "Privacy",
+        "formPrivacy0": "Event only",
+        "mapsSearch": "Maps Search",
+        "formDateRangePick": "Pick a date",
+        "mapsDescription": "Show a Google Maps' search for for the location. Be as precise as possible to ensure the exact place is found.",
+        "formPrivacy0Description": "Your current privacy setting is <primary>\"Event only\"</primary>. Your invitees can see your event, answer to it and see the calendar results",
+        "formPrivacy1": "# of invitations",
+        "formPrivacy1Description": "Your current privacy setting is <primary>\"Number of invitations\"</primary>. Your invitees can see your event, answer to it, see how many invitees the event has and see the calendar results",
+        "formPrivacy2": "Invitee details",
+        "formPrivacy2Description": "Your current privacy setting is <primary>\"Invitee details\"</primary>. Your invitees can see your event, answer to it, see the details of the invitees and see the calendar results",
+        "formPrivacy3": "Attendance",
+        "formPrivacy3Description": "Your current privacy setting is <primary>\"Attendance\"</primary>. Your invitees can see your event, answer to it, see every invitees' attendance or rejection and see the calendar results",
+        "formSubmit": "Create Event",
+        "submitLoading": "Creating...",
+        "formErrorName": "Too short",
+        "formErrorDateRange": "Date is required",
+        "submitSuccessToast": "Event created successfully",
+        "submitErrorToast": "Error creating event, try again later..."
+    },
     "AccountPage": {
         "title": "Account",
         "nickname": "Nickname",
@@ -131,7 +157,7 @@
         "showEmailDescription": "Allow other users to see your email address (Does not apply to hosts)",
         "updateSuccessToast": "User updated successfully",
         "updateErrorToast": "Error updating user, please try again later",
-        "saveButton": "Save"    
+        "saveButton": "Save"
     },
     "Navbar": {
         "home": "Home",

@@ -31,25 +31,29 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 
-const formSchema = z.object({
-  name: z.string().min(4, { message: "Name is too short" }).max(100),
-  location: z.string().max(100).optional(),
-  dateRange: z.object(
-    {
-      from: z.date({ message: "Date is required" }),
-      to: z.date({ message: "Date is required" }),
-    },
-    { required_error: "Date is required", message: "Date is required" },
-  ),
-  description: z.optional(z.string().min(0).max(2000)),
-  privacyLevel: z.number().int().min(0).max(3),
-  mapsQuery: z.boolean(),
-});
+
 
 export default function NewEventPage() {
   const router = useRouter();
   const session = useSession();
+  const t = useTranslations("CreateEventPage");
+
+  const formSchema = z.object({
+    name: z.string().min(4, { message:t("formErrorName") }).max(100),
+    location: z.string().max(100).optional(),
+    dateRange: z.object(
+      {
+        from: z.date({ message: t("formErrorDateRange") }),
+        to: z.date({ message: t("formErrorDateRange") }),
+      },
+      { required_error: t("formErrorDateRange"), message: t("formErrorDateRange") },
+    ),
+    description: z.optional(z.string().min(0).max(2000)),
+    privacyLevel: z.number().int().min(0).max(3),
+    mapsQuery: z.boolean(),
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -91,9 +95,9 @@ export default function NewEventPage() {
       const newEvent = await submitMutation.mutateAsync(values);
       if (newEvent[0]){eventID=newEvent[0].id}
     } catch {
-      toast.error("Error creating event, try again later...");
+      toast.error(t("submitErrorToast"));
     } finally {
-      toast.success("Event created successfully");
+      toast.success(t("submitSuccessToast"));
       router.push(`/events/${eventID}`);
     }
   }
@@ -101,7 +105,7 @@ export default function NewEventPage() {
   return (
     <div className="mb-8 flex flex-col px-4 md:px-12 lg:my-4">
       <div className="my-4 flex gap-4">
-        <h1 className="text-4xl font-extrabold">New Event</h1>
+        <h1 className="text-4xl font-extrabold">{t("title")}</h1>
       </div>
       <Form {...form}>
         <form
@@ -114,7 +118,7 @@ export default function NewEventPage() {
               control={form.control}
               render={({ field }) => (
                 <FormItem className="min-h-[6.5em]">
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t("formName")}</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="Name" />
                   </FormControl>
@@ -128,7 +132,7 @@ export default function NewEventPage() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Date range</FormLabel>
+                  <FormLabel>{t("formDateRange")}</FormLabel>
                   <FormControl>
                     <div className={"grid gap-2"}>
                       <Popover>
@@ -152,7 +156,7 @@ export default function NewEventPage() {
                                 format(field.value.from, "LLL dd, y")
                               )
                             ) : (
-                              <span>Pick a date</span>
+                              <span>{t("formDateRangePick")}</span>
                             )}
                           </Button>
                         </PopoverTrigger>
@@ -178,7 +182,7 @@ export default function NewEventPage() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Location</FormLabel>
+                  <FormLabel>{t("formLocation")}</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="Location" />
                   </FormControl>
@@ -191,11 +195,10 @@ export default function NewEventPage() {
               name="mapsQuery"
               render={({ field }) => (
                 <FormItem className="flex flex-col justify-end">
-                  <FormLabel>Maps Search</FormLabel>
+                  <FormLabel>{t("mapsSearch")}</FormLabel>
                   <div className="flex items-center justify-between">
                     <FormDescription>
-                      Search location on Google Maps. Be as precise as possible
-                      to ensure the exact place is shown.
+                      {t("mapsDescription")}
                     </FormDescription>
 
                     <FormControl>
@@ -216,9 +219,9 @@ export default function NewEventPage() {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel>{t("formDescription")}</FormLabel>
                 <FormControl>
-                  <Textarea {...field} placeholder="Description" />
+                  <Textarea {...field} placeholder={t("formDescriptionPlaceholder")} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -230,22 +233,22 @@ export default function NewEventPage() {
             name="privacyLevel"
             render={({ field }) => (
               <FormItem className="space-y-3">
-                <FormLabel>Privacy</FormLabel>
+                <FormLabel>{t("formPrivacy")}</FormLabel>
                 <div className="flex flex-col items-start gap-4">
                   <div className="flex w-full flex-col items-start gap-4">
                     <div className="flex w-full flex-col items-start gap-2">
                       <div className="flex w-full max-w-[800px] justify-between gap-4">
                         <div className="text-center text-sm font-medium text-muted-foreground">
-                          Event Only
+                          {t("formPrivacy0")}
                         </div>
                         <div className="text-center text-sm font-medium text-muted-foreground">
-                          # Invites sent
+                          {t("formPrivacy1")}
                         </div>
                         <div className="text-center text-sm font-medium text-muted-foreground">
-                          Invitees details
+                          {t("formPrivacy2")}
                         </div>
                         <div className="text-center text-sm font-medium text-muted-foreground">
-                          Attendance
+                          {t("formPrivacy3")}
                         </div>
                       </div>
                       <FormControl>
@@ -266,28 +269,14 @@ export default function NewEventPage() {
                   </div>
                   <div className="min-h-[7em]">
                     <div className="max-w-[600px] rounded-lg bg-muted p-4">
-                      <p className="text-sm text-muted-foreground">
-                        Your current privacy setting is{" "}
-                        <span className="font-medium text-primary">
-                          {form.getValues("privacyLevel") === 0
-                            ? '"Event Only"'
-                            : form.getValues("privacyLevel") === 1
-                              ? '"# Invites"'
-                              : form.getValues("privacyLevel") === 2
-                                ? '"Invitees details"'
-                                : form.getValues("privacyLevel") === 3
-                                  ? '"Attendance"'
-                                  : null}
-                        </span>
-                        . This means your invitees can{" "}
+                      <p className="text-sm text-muted-foreground"> 
                         {form.getValues("privacyLevel") === 0
-                          ? "see your event, answer to it"
+                          ? t("formPrivacy0Description")
                           : form.getValues("privacyLevel") === 1
-                            ? "see your event, answer to it, see how many invitees the event has"
+                            ? t("formPrivacy1Description")
                             : form.getValues("privacyLevel") === 2
-                              ? "see your event's details, answer to it, see the details of the invitees"
-                              : "see your event, answer it, see every invitees' attendance or rejection"}{" "}
-                        and see the calendar results.
+                              ? t("formPrivacy2Description")
+                              : t("formPrivacy3Description")}
                       </p>
                     </div>
                   </div>
@@ -298,11 +287,11 @@ export default function NewEventPage() {
           />
           {submitMutation.isPending && (
             <Button type="submit" disabled>
-              Creating...
+              {t("submitLoading")}
             </Button>
           )}
           {(submitMutation.isError || submitMutation.isIdle) && (
-            <Button type="submit">Create</Button>
+            <Button type="submit">{t("formSubmit")}</Button>
           )}
         </form>
       </Form>
