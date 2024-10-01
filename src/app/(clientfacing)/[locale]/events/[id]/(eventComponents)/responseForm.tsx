@@ -44,6 +44,7 @@ export default function ResponseInput(props: {
   const queryClient = useQueryClient()
   const [open, setOpen] = React.useState(false);
   const [submitting, setSubmitting] = React.useState(false);
+  const [datePickerOpen, setDatePickerOpen] = React.useState(false);
 
   const formSchema = z.object({
     date: z.date(),
@@ -127,7 +128,7 @@ export default function ResponseInput(props: {
               defaultValue={new Date()} 
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <Popover>
+                  <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                     <FormControl>
                       <PopoverTrigger asChild>
                         <Button

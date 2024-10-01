@@ -41,10 +41,10 @@ export default function EventList(props: { userID: string }) {
       </div>
     );
 
-  if (userEvents.error)
+  else if (userEvents.error)
     return <div className="flex flex-col gap-4">{t("errorLoadingData")}</div>;
 
-  if (userEvents.data)
+  else if (userEvents.data)
     return (
       <div className="flex flex-col gap-4">
         {userEvents.data?.length > 0 ? (

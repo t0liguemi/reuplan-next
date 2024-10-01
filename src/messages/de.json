@@ -4,7 +4,7 @@
         "title2": ", eine minimalistische Web-App mit einem einzigen Fokus: Die Planung von Meetings zu erleichtern.",
         "subtitle1": "Mit Reuplan werden Meetings in Rekordzeit geplannt. Kümmert dich nicht um die Verfügbarkeit deiner Teilnehmern, lass einfach jeder seine/ihre Verfügbarkeiten eingeben, und die App zeigt die passende Zeit für alle an.",
         "paragraph1": "Inspiriert von der dekadenten <small>(und teuren)</small> Doodle-App, Reuplan ist eine kostenlose App und wird noch Entwickelt. Spenden sind willkommen, um die App leistungsfähiger nutzen zu können und ihre Wartung und Verbesserung zu unterstützen (soon...) 🎉.",
-        "paragraph2": "Viele Funktionen müssen noch implementiert werden, aber Reuplan ist bereits nutzbar. Es gibt ein Kontaktformular in der Fußzeile, um Fehler zu melden, neue Funktionen zu vorschlagen usw.",
+        "paragraph2": "Viele Funktionen müssen noch implementiert werden, trotzdem ist Reuplan bereits nutzbar. Es gibt ein Kontaktformular in der Fußzeile, um Fehler zu melden, neue Funktionen zu vorschlagen usw.",
         "myEvents": "Meine Termine",
         "newEvent": "Neue Termine"
     },
@@ -112,7 +112,7 @@
         "formDescriptionPlaceholder": "Zusätzliche Details des Termins",
         "formLocation": "Location",
         "formDateRange": "Zeitspanne",
-        "formDateRangePick": "Datum auswählen", 
+        "formDateRangePick": "Datum auswählen",
         "formPrivacy": "Datenschutz",
         "formPrivacy0": "Termin",
         "mapsSearch": "Karten Suche",
@@ -123,7 +123,7 @@
         "formPrivacy2": "Details der Eingeladenen",
         "formPrivacy2Description": "Ihre aktuelle Datenschutzeinstellung ist <primary>\"Details der Eingeladenen\"</primary>. Ihre Eingeladenen können Ihren Termindetails sowie die Details der Eingeladenen sehen, darauf antworten und die Kalenderergebnisse sehen.",
         "formPrivacy3": "Teilnahme",
-        "formPrivacy3Description": "Ihre aktuelle Datenschutzeinstellung ist <primary>\"Teilnahme\"</primary>. Ihre Eingeladenen können Ihren Termindetails sowie die Teilnahme oder Ablehnung jedes Eingeladenen sehen, darauf antworten und die Kalenderergebnisse sehen.",   
+        "formPrivacy3Description": "Ihre aktuelle Datenschutzeinstellung ist <primary>\"Teilnahme\"</primary>. Ihre Eingeladenen können Ihren Termindetails sowie die Teilnahme oder Ablehnung jedes Eingeladenen sehen, darauf antworten und die Kalenderergebnisse sehen.",
         "formSubmit": "Termin erstellen",
         "submitLoading": "Erstellen...",
         "formErrorName": "Zu kurz!",
@@ -131,7 +131,7 @@
         "submitSuccessToast": "Termin erfolgreich erstellt",
         "submitErrorToast": "Fehler beim Erstellen des Termins, bitte versuchen Sie es später erneut..."
     },
-    "ContactPage":{
+    "ContactPage": {
         "title": "Kontakt",
         "description": "Haben Sie Fragen? Möchten Sie einen Fehler melden? Möchten Sie eine Funktion vorschlagen? Möchten Sie mich begrüßen? Möchten Sie mich einstellen? Oder einfach nur spammen? Schreiben Sie mir einfach eine Nachricht.<br></br> Bitte seien Sie freundlich und respektvoll. Ich könnte anders es halt nicht vertragen.",
         "name": "Name",
@@ -157,7 +157,7 @@
         "showEmailDescription": "Erlauben Sie anderen Benutzern, Ihre E-Mail-Adresse zu sehen (Gilt nicht für Gastgebern)",
         "updateSuccessToast": "Benutzer erfolgreich aktualisiert",
         "updateErrorToast": "Fehler beim aktualisieren des Kontos, bitte versuchen Sie es später erneut",
-        "saveButton": "Speichern"    
+        "saveButton": "Speichern"
     },
     "Navbar": {
         "home": "Startseite",
