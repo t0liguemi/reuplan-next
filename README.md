@@ -1,8 +1,8 @@
 # Reuplan remake test based on the t3stack plus other stuff
 -TS
--NextJS
+-Next.js
 -Drizzle
--Auth0
+-Auth.js
 -Tailwind/Shadcn
 -Tanstack Query (React query)
 -Axios
