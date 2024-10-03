@@ -37,6 +37,7 @@ import {
   getMonth,
   getYear,
   setDate,
+  setDefaultOptions,
   setMonth,
   setYear,
 } from "date-fns";
@@ -45,11 +46,14 @@ import { TimePickerInput } from "~/components/ui/time-picker-input";
 import { postResponse } from "~/server/actions";
 import { useQueryClient } from "@tanstack/react-query";
 import { signIn, useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { de, enGB, es } from "date-fns/locale";
 
 export default function ResponseInput(props: {
   currentEvent: typeof event.$inferSelect;
 }) {
+  const currentLocale = useLocale();
+  setDefaultOptions({ locale: currentLocale==="es" ? es : currentLocale==="en" ? enGB : de })
   const t = useTranslations("EventPage");
   const { currentEvent } = props;
   const session = useSession();
@@ -134,14 +138,14 @@ export default function ResponseInput(props: {
       <DialogTrigger asChild>
         <Button id="enter-response">{t("enterResponse")}</Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[90vh] min-w-fit bg-background/60 backdrop-blur-lg dark:bg-muted/20 overflow-scroll">
+      <DialogContent className="max-h-[90vh] min-w-fit overflow-scroll bg-background/60 backdrop-blur-lg dark:bg-muted/20">
         <DialogHeader>
           <DialogTitle>{t("enterResponse")}</DialogTitle>
           <DialogDescription>{t("newResponseDescription")}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
-            className="flex xl:flex-row flex-col items-center justify-center gap-4"
+            className="flex flex-col items-center justify-center gap-4 xl:flex-row"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <FormField
@@ -150,7 +154,7 @@ export default function ResponseInput(props: {
               defaultValue={new Date()}
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormControl className="border-2 border-border-20 rounded-lg">
+                  <FormControl className="border-border-20 rounded-lg border-2">
                     {/* <Button
                       variant="outline"
                       className="w-[280px] justify-start text-left font-normal"
@@ -175,99 +179,100 @@ export default function ResponseInput(props: {
                   </FormControl>
                 </FormItem>
               )}
-            /><div className="flex flex-col items-center justify-center gap-4">
-            <div className="flex flex-row items-center gap-2">
-              <p>{t("fromTime")}</p>
-              <FormField
-                control={form.control}
-                name="timeStart"
-                defaultValue={new Date()}
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <Popover>
-                      <FormControl>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className={cn(
-                              "w-[100px] justify-start text-left font-normal",
-                              !field.value && "text-muted-foreground",
-                            )}
-                          >
-                            <ClockIcon className="mr-2 h-4 w-4" />
-                            {field.value ? (
-                              format(field.value, "HH:mm")
-                            ) : (
-                              <span>{t("fromTime")}</span>
-                            )}
-                          </Button>
-                        </PopoverTrigger>
-                      </FormControl>
-                      <PopoverContent className="flex w-auto flex-row items-center gap-1 bg-muted/40 p-2">
-                        <TimePickerInput
-                          picker="hours"
-                          date={field.value}
-                          setDate={field.onChange}
-                        />
-                        :
-                        <TimePickerInput
-                          picker="minutes"
-                          date={field.value}
-                          setDate={field.onChange}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </FormItem>
-                )}
-              />
-              <p>{t("toTime")}</p>
-              <FormField
-                control={form.control}
-                name="timeEnd"
-                defaultValue={addHours(new Date(), 2)}
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <Popover>
-                      <FormControl>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className={cn(
-                              "w-[100px] justify-start text-left font-normal",
-                              !field.value && "text-muted-foreground",
-                            )}
-                          >
-                            <ClockIcon className="mr-2 h-4 w-4" />
-                            {field.value ? (
-                              format(field.value, "HH:mm")
-                            ) : (
-                              <span>{t("toTime")}</span>
-                            )}
-                          </Button>
-                        </PopoverTrigger>
-                      </FormControl>
-                      <PopoverContent className="flex w-auto flex-row items-center gap-1 bg-muted/40 p-2">
-                        <TimePickerInput
-                          picker="hours"
-                          date={field.value}
-                          setDate={field.onChange}
-                        />
-                        :
-                        <TimePickerInput
-                          picker="minutes"
-                          date={field.value}
-                          setDate={field.onChange}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </FormItem>
-                )}
-              />
-              
+            />
+            <div className="flex flex-col items-center justify-center gap-4">
+              <div className="flex flex-row items-center gap-2">
+                <p>{t("fromTime")}</p>
+                <FormField
+                  control={form.control}
+                  name="timeStart"
+                  defaultValue={new Date()}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <Popover>
+                        <FormControl>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "w-[100px] justify-start text-left font-normal",
+                                !field.value && "text-muted-foreground",
+                              )}
+                            >
+                              <ClockIcon className="mr-2 h-4 w-4" />
+                              {field.value ? (
+                                format(field.value, "HH:mm")
+                              ) : (
+                                <span>{t("fromTime")}</span>
+                              )}
+                            </Button>
+                          </PopoverTrigger>
+                        </FormControl>
+                        <PopoverContent className="flex w-auto flex-row items-center gap-1 bg-muted/40 p-2">
+                          <TimePickerInput
+                            picker="hours"
+                            date={field.value}
+                            setDate={field.onChange}
+                          />
+                          :
+                          <TimePickerInput
+                            picker="minutes"
+                            date={field.value}
+                            setDate={field.onChange}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
+                <p>{t("toTime")}</p>
+                <FormField
+                  control={form.control}
+                  name="timeEnd"
+                  defaultValue={addHours(new Date(), 2)}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <Popover>
+                        <FormControl>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "w-[100px] justify-start text-left font-normal",
+                                !field.value && "text-muted-foreground",
+                              )}
+                            >
+                              <ClockIcon className="mr-2 h-4 w-4" />
+                              {field.value ? (
+                                format(field.value, "HH:mm")
+                              ) : (
+                                <span>{t("toTime")}</span>
+                              )}
+                            </Button>
+                          </PopoverTrigger>
+                        </FormControl>
+                        <PopoverContent className="flex w-auto flex-row items-center gap-1 bg-muted/40 p-2">
+                          <TimePickerInput
+                            picker="hours"
+                            date={field.value}
+                            setDate={field.onChange}
+                          />
+                          :
+                          <TimePickerInput
+                            picker="minutes"
+                            date={field.value}
+                            setDate={field.onChange}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Button type="submit" disabled={submitting}>
+                {t("submitSchedule")}
+              </Button>
             </div>
-            <Button type="submit" disabled={submitting}>
-              {t("submitSchedule")}
-            </Button></div>
           </form>
         </Form>
       </DialogContent>
