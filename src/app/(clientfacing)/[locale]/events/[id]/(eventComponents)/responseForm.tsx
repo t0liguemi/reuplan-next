@@ -26,8 +26,20 @@ import { cn } from "~/lib/utils";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { toast } from "sonner"
-import { addHours, addMinutes, format, getDate, getHours, getMinutes, getMonth, getYear, setDate, setMonth, setYear } from "date-fns";
+import { toast } from "sonner";
+import {
+  addHours,
+  addMinutes,
+  format,
+  getDate,
+  getHours,
+  getMinutes,
+  getMonth,
+  getYear,
+  setDate,
+  setMonth,
+  setYear,
+} from "date-fns";
 import type { event } from "~/server/db/schema";
 import { TimePickerInput } from "~/components/ui/time-picker-input";
 import { postResponse } from "~/server/actions";
@@ -40,127 +52,130 @@ export default function ResponseInput(props: {
 }) {
   const t = useTranslations("EventPage");
   const { currentEvent } = props;
-  const session = useSession()
-  const queryClient = useQueryClient()
+  const session = useSession();
+  const queryClient = useQueryClient();
   const [open, setOpen] = React.useState(false);
   const [submitting, setSubmitting] = React.useState(false);
-  const [datePickerOpen, setDatePickerOpen] = React.useState(false);
 
   const formSchema = z.object({
     date: z.date(),
     timeStart: z.date(),
-    timeEnd: z.date(), 
+    timeEnd: z.date(),
   });
 
   type FormSchemaType = z.infer<typeof formSchema>;
 
   const form = useForm<FormSchemaType>({
-    resolver: zodResolver(formSchema),defaultValues:{
-      date:currentEvent.from,
-      timeStart:currentEvent.from,
-      timeEnd:addMinutes(addHours(currentEvent.from, 23),59)
-    }
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      date: currentEvent.from,
+      timeStart: currentEvent.from,
+      timeEnd: addMinutes(addHours(currentEvent.from, 23), 59),
+    },
   });
 
   async function onSubmit(data: FormSchemaType) {
-    setSubmitting(true)
-    if (getHours(data.timeStart)+getMinutes(data.timeStart) >= getHours(data.timeEnd)+getMinutes(data.timeEnd)){
+    setSubmitting(true);
+    if (
+      getHours(data.timeStart) + getMinutes(data.timeStart) >=
+      getHours(data.timeEnd) + getMinutes(data.timeEnd)
+    ) {
       toast("End time must be after start time!");
-      setSubmitting(false)
-      return
-    }
-    else if (session.status != "authenticated"){
-      await signIn()
-    }else{
-    const response = await postResponse({
-      event_id: currentEvent.id,
-      invitee_id: session.data.user.id,
-      date: data.date,
-      start_time: data.timeStart,
-      end_time: data.timeEnd,
-      is_accepted: true,
-    })
-    if (response) {
-     await queryClient.invalidateQueries({queryKey:["responses", currentEvent.id]});
-     await queryClient.invalidateQueries({queryKey:["userResponses", session.data.user.id]});
-    toast(t("responseSubmitSuccessToast"));
-      
-      setOpen(false)
-      setSubmitting(false)
-    }else{
-      toast(t("responseSubmitErrorToast"));
-      setSubmitting(false)
-    }
-  }}
+      setSubmitting(false);
+      return;
+    } else if (session.status != "authenticated") {
+      await signIn();
+    } else {
+      const response = await postResponse({
+        event_id: currentEvent.id,
+        invitee_id: session.data.user.id,
+        date: data.date,
+        start_time: data.timeStart,
+        end_time: data.timeEnd,
+        is_accepted: true,
+      });
+      if (response) {
+        await queryClient.invalidateQueries({
+          queryKey: ["responses", currentEvent.id],
+        });
+        await queryClient.invalidateQueries({
+          queryKey: ["userResponses", session.data.user.id],
+        });
+        toast(t("responseSubmitSuccessToast"));
 
-  function handleCalendarSelect(e:Date) {
-    form.setValue("date",e)
+        setOpen(false);
+        setSubmitting(false);
+      } else {
+        toast(t("responseSubmitErrorToast"));
+        setSubmitting(false);
+      }
+    }
+  }
+
+  function handleCalendarSelect(e: Date) {
+    form.setValue("date", e);
     const date = form.getValues("date");
     const currentTimeStart = form.getValues("timeStart");
     const currentTimeEnd = form.getValues("timeEnd");
-    const correctedStart = setYear(setMonth(setDate(currentTimeStart, getDate(date)), getMonth(date)), getYear(date))
-    const correctedEnd = setYear(setMonth(setDate(currentTimeEnd, getDate(date)), getMonth(date)), getYear(date))
-    form.setValue("timeStart", correctedStart)
-    form.setValue("timeEnd", correctedEnd)
+    const correctedStart = setYear(
+      setMonth(setDate(currentTimeStart, getDate(date)), getMonth(date)),
+      getYear(date),
+    );
+    const correctedEnd = setYear(
+      setMonth(setDate(currentTimeEnd, getDate(date)), getMonth(date)),
+      getYear(date),
+    );
+    form.setValue("timeStart", correctedStart);
+    form.setValue("timeEnd", correctedEnd);
   }
-
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button id="enter-response">{t("enterResponse")}</Button>
       </DialogTrigger>
-      <DialogContent className="bg-background/60 dark:bg-muted/20 backdrop-blur-lg">
+      <DialogContent className="max-h-[90vh] min-w-fit bg-background/60 backdrop-blur-lg dark:bg-muted/20 overflow-scroll">
         <DialogHeader>
           <DialogTitle>{t("enterResponse")}</DialogTitle>
-          <DialogDescription>
-            {t("newResponseDescription")}
-          </DialogDescription>
+          <DialogDescription>{t("newResponseDescription")}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
-            className="flex flex-col items-center justify-center gap-4"
+            className="flex xl:flex-row flex-col items-center justify-center gap-4"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <FormField
               control={form.control}
               name="date"
-              defaultValue={new Date()} 
+              defaultValue={new Date()}
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
-                    <FormControl>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-[280px] justify-start text-left font-normal",
-                            !field.value && "text-muted-foreground",
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                    </FormControl>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={(e)=>e?handleCalendarSelect(e):null}
-                        fromDate={currentEvent.from}
-                        toDate={currentEvent.to}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <FormControl className="border-2 border-border-20 rounded-lg">
+                    {/* <Button
+                      variant="outline"
+                      className="w-[280px] justify-start text-left font-normal"
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button> */}
+
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={(e) => (e ? handleCalendarSelect(e) : null)}
+                      fromDate={currentEvent.from}
+                      toDate={currentEvent.to}
+                      initialFocus
+                      defaultMonth={field.value}
+                    />
+                  </FormControl>
                 </FormItem>
               )}
-            />
+            /><div className="flex flex-col items-center justify-center gap-4">
             <div className="flex flex-row items-center gap-2">
               <p>{t("fromTime")}</p>
               <FormField
@@ -188,7 +203,7 @@ export default function ResponseInput(props: {
                           </Button>
                         </PopoverTrigger>
                       </FormControl>
-                      <PopoverContent className="flex w-auto flex-row items-center gap-1 bg-white p-2">
+                      <PopoverContent className="flex w-auto flex-row items-center gap-1 bg-muted/40 p-2">
                         <TimePickerInput
                           picker="hours"
                           date={field.value}
@@ -231,7 +246,7 @@ export default function ResponseInput(props: {
                           </Button>
                         </PopoverTrigger>
                       </FormControl>
-                      <PopoverContent className="flex w-auto flex-row items-center gap-1 bg-white p-2">
+                      <PopoverContent className="flex w-auto flex-row items-center gap-1 bg-muted/40 p-2">
                         <TimePickerInput
                           picker="hours"
                           date={field.value}
@@ -248,8 +263,11 @@ export default function ResponseInput(props: {
                   </FormItem>
                 )}
               />
+              
             </div>
-              <Button type="submit" disabled={submitting}>{t("submitSchedule")}</Button>
+            <Button type="submit" disabled={submitting}>
+              {t("submitSchedule")}
+            </Button></div>
           </form>
         </Form>
       </DialogContent>
