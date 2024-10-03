@@ -175,6 +175,7 @@ export default function ResponseInput(props: {
                       toDate={currentEvent.to}
                       initialFocus
                       defaultMonth={field.value}
+                      locale={currentLocale==="es" ? es : currentLocale==="en" ? enGB : de}
                     />
                   </FormControl>
                 </FormItem>
