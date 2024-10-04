@@ -29,11 +29,6 @@ import {
 import { useTranslations } from "next-intl";
 
 type ScheduleInResponses = { start: Date; end: Date };
-type AcceptedResponse = typeof response.$inferSelect & {
-  date: Date;
-  start_time: Date;
-  end_time: Date;
-};
 
 export const notificationAtom = atom(false);
 
@@ -46,7 +41,6 @@ export default function Responses(props: {
   const t = useTranslations("EventPage");
   const queryClient = useQueryClient();
   const currentUser = useSession()?.data?.user;
-  const [selectedDay, setSelectedDay] = React.useState<Date>();
   const { invitations, responses, currentEvent, invitees } = props;
 
   const parsedStart = new Date(currentEvent.from.setHours(0, 0, 0, 0));

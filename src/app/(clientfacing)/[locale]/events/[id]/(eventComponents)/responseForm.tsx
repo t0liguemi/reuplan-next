@@ -168,6 +168,7 @@ export default function ResponseInput(props: {
                     </Button> */}
 
                     <Calendar
+                      className="bg-background/40"
                       mode="single"
                       selected={field.value}
                       onSelect={(e) => (e ? handleCalendarSelect(e) : null)}

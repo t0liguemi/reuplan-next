@@ -39,7 +39,7 @@ export default async function RootLayout({
   return (
 
       <html lang={locale} className={inter.className} suppressHydrationWarning>
-        <body className="bg-gradient-to-t from-bgcolorbottom to-bgcolortop bg-fixed bg-center bg-no-repeat antialiased">
+        <body className="bg-gradient-to-t from-bgcolorbottom to-bgcolortop bg-fixed bg-center bg-no-repeat">
           
         <Providers><NextIntlClientProvider messages={messages}>
             <ThemeProvider attribute="class" storageKey="theme">
