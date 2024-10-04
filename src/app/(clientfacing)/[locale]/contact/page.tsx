@@ -3,6 +3,11 @@ import ContactForm from "./contactForm";
 import { auth } from "auth";
 import { getTranslations } from "next-intl/server";
 
+export async function generateMetadata() {
+  const t = await getTranslations("ContactPage");
+  return { title: t("title") };
+}
+
 export default async function Page() {
   const t = await getTranslations("ContactPage");
   const session = await auth();

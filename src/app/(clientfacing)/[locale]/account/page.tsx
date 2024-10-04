@@ -6,6 +6,11 @@ import { auth, signIn } from "auth";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { getTranslations } from "next-intl/server";
 
+export async function generateMetadata() {
+  const t = await getTranslations("AccountPage");
+  return { title: `Reuplan - ${t("title")}` };
+}
+
 export default async function AccountPage() {
   const session = await auth();
   const t = await getTranslations("AccountPage");

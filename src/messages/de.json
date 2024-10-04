@@ -154,7 +154,7 @@
         "name": "Name",
         "nameDescription": "Ihr tatsächlicher Name, damit die Leute Sie identifizieren können",
         "showEmail": "E-Mail anzeigen",
-        "showEmailDescription": "Erlauben Sie anderen Benutzern, Ihre E-Mail-Adresse zu sehen (Gilt nicht für Gastgebern)",
+        "showEmailDescription": "Erlauben Sie anderen Benutzern, Ihre E-Mail-Adresse zu sehen (Gastgebern können Ihre E-Mail-Adresse immer sehen)",
         "updateSuccessToast": "Benutzer erfolgreich aktualisiert",
         "updateErrorToast": "Fehler beim aktualisieren des Kontos, bitte versuchen Sie es später erneut",
         "saveButton": "Speichern"

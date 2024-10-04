@@ -155,7 +155,7 @@
         "name": "Nombre",
         "nameDescription": "Tu nombre real para que las personas te identifiquen",
         "showEmail": "Mostrar correo electrónico",
-        "showEmailDescription": "Visibilidad del correo electrónico (No aplica para los anfitriones)",
+        "showEmailDescription": "Visibilidad del correo electrónico (Los anfitriones siempre pueden ver tu correo electrónico)",
         "updateSuccessToast": "Usuario actualizado con éxito",
         "updateErrorToast": "Error al actualizar el usuario, por favor intenta de nuevo más tarde",
         "saveButton": "Guardar"

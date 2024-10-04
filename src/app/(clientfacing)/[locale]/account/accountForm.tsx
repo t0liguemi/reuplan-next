@@ -71,7 +71,7 @@ export default function AccountForm(user: {
             name="nickname"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("nickname")}</FormLabel>
+                <FormLabel className="font-bold text-xl">{t("nickname")}</FormLabel>
                 <FormDescription>{t("nicknameDescription")}</FormDescription>
                 <FormControl>
                   <Input {...field} />
@@ -85,7 +85,7 @@ export default function AccountForm(user: {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("name")}</FormLabel>
+                <FormLabel className="font-bold text-xl">{t("name")}</FormLabel>
                 <FormDescription>{t("nameDescription")}</FormDescription>
                 <FormControl>
                   <Input {...field} />
@@ -99,7 +99,7 @@ export default function AccountForm(user: {
             name="show_email"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2">
-                <FormLabel>{t("showEmail")}</FormLabel>
+                <FormLabel className="font-bold text-xl">{t("showEmail")}</FormLabel>
                 <div className="flex gap-4 flex-wrap">
                   <FormDescription className="max-w-screen-sm text-wrap">
                     {t("showEmailDescription")}

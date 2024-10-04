@@ -6,12 +6,22 @@ import { auth } from "auth";
 import { getCurrentUsersEvents, getCurrentUserResponses } from "~/server/actions";
 import { queryClient } from "./layout";
 import { getTranslations } from "next-intl/server";
+import { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+): Promise<Metadata> {
+  const session = await auth();
+  if(session){return {title: `Reuplan - ${session?.user?.nickname ?? session?.user?.name}`}
+  }else {return {title: "Reuplan"}}
+}
 
 export default async function HomePage() {
   const session = await auth();
   const t = await getTranslations("HomePage")
   await queryClient.prefetchQuery({queryKey:["userEvents"], queryFn:() => getCurrentUsersEvents(session?.user?.id??"")})
   await queryClient.prefetchQuery({queryKey:["userResponses"], queryFn:() => getCurrentUserResponses(session?.user?.id??"")})
+
+
 
 
   return (

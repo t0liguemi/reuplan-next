@@ -5,6 +5,11 @@ import { auth } from "auth";
 import { signIn } from "auth";
 import { getTranslations } from "next-intl/server";
 
+export async function generateMetadata() {
+  const t = await getTranslations("EventListPage");
+  return { title: `Reuplan - ${t("title")}` };  
+}
+
 export default async function Page() {
   const session = await auth();
   const t = await getTranslations("EventListPage")
