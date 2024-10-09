@@ -5,7 +5,7 @@ import { event, users  } from "~/server/db/schema";
 import MainEventView from "./mainEventView";
 
 import { permanentRedirect } from "next/navigation";
-import { Metadata } from "next";
+import { type Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata({

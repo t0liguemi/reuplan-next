@@ -3,8 +3,11 @@
         "title1": "Willkommen bei ",
         "title2": ", eine minimalistische Web-App mit einem einzigen Fokus: Die Planung von Meetings zu erleichtern.",
         "subtitle1": "Mit Reuplan werden Meetings in Rekordzeit geplannt. Kümmert dich nicht um die Verfügbarkeit deiner Teilnehmern, lass einfach jeder seine/ihre Verfügbarkeiten eingeben, und die App zeigt die passende Zeit für alle an.",
-        "paragraph1": "Inspiriert von der dekadenten <small>(und teuren)</small> Doodle-App, Reuplan ist eine kostenlose App und wird noch Entwickelt. Spenden sind willkommen, um die App leistungsfähiger nutzen zu können und ihre Wartung und Verbesserung zu unterstützen (soon...) 🎉.",
-        "paragraph2": "Viele Funktionen müssen noch implementiert werden, trotzdem ist Reuplan bereits nutzbar. Es gibt ein Kontaktformular in der Fußzeile, um Fehler zu melden, neue Funktionen zu vorschlagen usw.",
+        "paragraph1": "Inspiriert von der dekadenten <small>(und teuren)</small> Doodle-App, Reuplan ist eine kostenlose App und wird noch Entwickelt. <donate>Spenden</donate> sind willkommen, um die App leistungsfähiger nutzen zu können und ihre Wartung und Verbesserung zu unterstützen (soon...) 🎉.",
+        "paragraph2": "Viele Funktionen müssen noch implementiert werden. Es gibt ein Kontaktformular in der Fußzeile, um Fehler zu melden, neue Funktionen zu vorschlagen usw.",
+        "title3":"Wann ist Reuplan für mich nicht nützlich?",
+        "paragraph3":"Wenn du ein Kalender brauchst, üm persönliche Termine zu organisieren: Google Calendar reicht. Wenn du einladungen schicken willst, für einen Termin, den schon einen bekannten Zeitplan hat: E-Mail, WhatsApp, Google Calendar.",
+        "paragraph4":"Wenn dein Termin kein Zeiplan hat, und brauchst, dass sie für alle Eingeladenen passt, dann Reuplan ist dass Richtige für dich! Machst du eine Probe und deine ganze Crew muss anwesend sein? Reuplan!",
         "myEvents": "Meine Termine",
         "newEvent": "Neue Termine"
     },
@@ -173,7 +176,8 @@
         "credits": "Reuplan erstellt von ",
         "contact": "Kontakt",
         "howto": "Anleitung",
-        "usingReuplan": "Reuplan verwenden:"
+        "usingReuplan": "Reuplan verwenden:",
+        "donate":"Spenden"
     },
     "LocaleSwitcher": {
         "label": "Sprache",

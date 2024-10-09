@@ -1,10 +1,13 @@
 {
     "HomePage": {
         "title1": "Welcome to Reuplan",
-        "title2": ", a minimalist web app with a single focus: Easing meeting planning.",
+        "title2": ", a minimalist web app with a single goal: To ease meeting planning.",
         "subtitle1": "With Reuplan you can plan your meetings in record time, without having to personally worry about the availability of your attendees. Just let each invitee enter their availabilities and the app will show the intersection of them all.",
-        "paragraph1": "Based on the core function of the now decadent <small>(and expensive)</small> Doodle app, this app is still in development and free to use. You can contribute or pay a subscription (soon) to use it more powerfully and support its maintenance and improvement 🎉.",
-        "paragraph2": "A lot of features are still to be implemented, but it is already usable. There is a contact form in the footer to report bugs, request new features, or just spam me idk",
+        "paragraph1": "Based on the core function of the now decadent <small>(and expensive)</small> Doodle app, this app is still in development and free to use. You can <donate>contribute</donate> to use it more powerfully and support its maintenance and improvement 🎉.", 
+        "paragraph2": "A lot of features must still be implemented. There is a contact form in the footer to report bugs, suggest new features, or just spam me idk",
+        "title3":"When do I not need Reuplan?",
+        "paragraph3":"If you need a calendar to add your personal events: Google Calendar or similar. If you want to invite people to an event with a pre-defined schedule: E-Mail, Whatsapp, Google Calendar.",
+        "paragraph4":"If your event doesn't have a schedule yet and you need to find it considering your invitees, then Reuplan is for you. Do you want to make a rehearsal and need your whole crew to attend? Here it is, you're welcome!",
         "myEvents": "My Events",
         "newEvent": "New Event"
     },
@@ -173,7 +176,8 @@
         "credits": "Reuplan by ",
         "contact": "Contact",
         "howto": "Guide",
-        "usingReuplan": "Using Reuplan:"
+        "usingReuplan": "Using Reuplan:",
+        "donate":"Donate"   
     },
     "LocaleSwitcher": {
         "label": "Language",

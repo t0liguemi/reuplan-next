@@ -47,7 +47,7 @@ export default function Navbar() {
       },
     ],
   });
-
+  
   const pendingInvitations = React.useMemo(() => {
     let counter = 0;
     if (userQueries[1].data) {

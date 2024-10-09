@@ -3,8 +3,11 @@
         "title1": "Bienvenidx a ",
         "title2": ", una app web minimalista con un solo enfoque: Facilitar los encuentros.",
         "subtitle1": "Con Reuplan puedes organizar tus reuniones en tiempo record, despreocupate del tiempo de cada invitado. Cada uno ingresa su disponibilidad y la app te muestra el horario en común para todos.",
-        "paragraph1": "Inspirado en la función de la decadente <small>(y cara)</small> Doodle, esta app sigue en desarrollo y es de libre uso, pero puedes contribuir o pagar una suscripción (pronto) para sacarle mayor profecho y aportar a su mantenimiento y mejora 🎉.",
-        "paragraph2": "Traducciones en camino! Muchas funcionalidades todavía están implementándose, pero ya es usable. Hay un formulario de contacto en el pie de página para reportar errores, solicitar nuevas funciones o simplemente molestar, no se.",
+        "paragraph1": "Inspirada en la función de la decadente <small>(y cara)</small> Doodle, esta app sigue en desarrollo y es de libre uso, pero puedes <donate>contribuir</donate> para sacarle mayor provecho y aportar a su mantenimiento y mejora 🎉.",
+        "paragraph2": "Muchas funcionalidades todavía están implementándose. Hay un formulario de contacto en el pie de página para reportar errores, recomendar nuevas funciones o simplemente molestar, no se.",
+        "title3":"¿Cuándo no necesito Reuplan?",
+        "paragraph3":"Si tienes un calendario en que quieres agregar tus eventos personales: Google Calendar o similares. Si quieres invitar gente a un evento con horario ya definido: E-Mail, Whatsapp, Google Calendar.",
+        "paragraph4":"Si tu evento aún no tiene un horario y necesitas encontrarlo considerando a tus invitados, entonces Reuplan es para ti. Tienes un ensayo y necesitas que toda tu banda/compañía asista? Reuplan!",
         "myEvents": "Mis Eventos",
         "newEvent": "Nuevo Evento"
     },
@@ -174,7 +177,8 @@
         "credits": "Reuplan por ",
         "contact": "Contacto",
         "howto": "Guía",
-        "usingReuplan": "Usando Reuplan:"
+        "usingReuplan": "Usando Reuplan:",
+        "donate":"Aportar"
     },
     "LocaleSwitcher": {
         "label": "Idioma",

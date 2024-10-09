@@ -31,6 +31,8 @@ export default function Footer() {
       </p>
 
       <div className="flex flex-row gap-4 items-center">
+        <Link href={"https://www.paypal.com/donate/?business=KLME7PL6858QG&no_recurring=0&item_name=Support+Reuplan%21&currency_code=USD"}
+        className="text-foreground dark:text-primary underline">{t("donate")}</Link>
         <Link href="/contact">{t("contact")}</Link>
         <Dialog>
           <DialogTrigger>{t("howto")}</DialogTrigger>
