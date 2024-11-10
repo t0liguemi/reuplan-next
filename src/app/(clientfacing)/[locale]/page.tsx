@@ -1,14 +1,14 @@
 import Image from "next/image";
 import { Separator } from "~/components/ui/separator";
 import MainActionButtons from "./action";
-import { auth } from "auth";
+import { auth, signIn } from "auth";
 import {
   getCurrentUsersEvents,
   getCurrentUserResponses,
 } from "~/server/actions";
 import { queryClient } from "./layout";
 import { getTranslations } from "next-intl/server";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
   const session = await auth();
@@ -48,6 +48,13 @@ export default async function HomePage() {
           </p>
           {session?.user && <MainActionButtons />}
           <Separator className="w-full" />
+          <form
+                  action={async () => {
+                    "use server";
+                    await signIn();
+                  }}
+                  
+                >
           <p className="text-muted-foreground">
             {t.rich("paragraph1", {
               small: (chunks) => (
@@ -57,7 +64,7 @@ export default async function HomePage() {
               ),
               donate: (chunks) => (
                 <a
-                  className="text-primary underline font-bold"
+                  className="font-bold text-primary underline"
                   href="https://www.paypal.com/donate/?business=KLME7PL6858QG&no_recurring=0&item_name=Support+Reuplan%21&currency_code=USD"
                 >
                   {chunks}
@@ -66,8 +73,15 @@ export default async function HomePage() {
             })}
             <br />
             <br />
-            {t("paragraph2")}
+            {t.rich("paragraph2", {
+              login: (chunks) => (
+                <button type="submit" className="font-bold text-primary underline">
+                  {chunks}</button>
+                
+              ),
+            })}
           </p>
+          </form>
         </div>
         <Image
           src="/assets/Calendarios.svg"
@@ -78,10 +92,12 @@ export default async function HomePage() {
         />
       </div>
       <Separator className="max-w-[964px]" />
-      <div className="flex-col flex gap-2 items-center justify-center max-w-[964px] py-3 text-muted-foreground">
+      <div className="flex max-w-[964px] flex-col items-center justify-center gap-2 py-3 text-muted-foreground">
         <h3 className="my-2 text-2xl font-bold">{t("title3")}</h3>
         <p className="my-2">{t("paragraph3")}</p>
-        <p className="my-6 rounded-md border-2 bg-background/60 p-2 text-foreground">{t("paragraph4")}</p>
+        <p className="my-6 rounded-md border-2 bg-background/60 p-2 text-foreground">
+          {t("paragraph4")}
+        </p>
       </div>
     </div>
   );
