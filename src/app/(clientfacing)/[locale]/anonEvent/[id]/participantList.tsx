@@ -105,7 +105,7 @@ export default function ParticipantList({
               <Button
               disabled={deletingParticipant}
                 variant={"destructive"}
-                onClick={() => {setDeletingParticipant(true);handleDeleteAnonParticipant(participant.id)}}
+                onClick={async() => {setDeletingParticipant(true);await handleDeleteAnonParticipant(participant.id)}}
               >
                 {t("delete")}
               </Button></div>
