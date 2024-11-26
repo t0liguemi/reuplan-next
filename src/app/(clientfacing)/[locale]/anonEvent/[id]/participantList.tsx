@@ -9,7 +9,7 @@ import { anon_participant } from "~/server/db/schema";
 import { currentParticipant as currentAtom } from "./participantOptions";
 import { storedParticipant as storedAtom } from "./participantOptions";
 import { currentParticipantID as currentParticipantIDAtom } from "./participantOptions";
-import { atom, useAtom } from "jotai";
+import { atom, useAtom, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 
 export default function ParticipantList({
@@ -24,18 +24,18 @@ export default function ParticipantList({
   const queryClient = useQueryClient();
   const t = useTranslations("AnonEventPage");
 
-  let [currentParticipant, setCurrentParticipant] = useAtom(currentAtom);
-  let [storedParticipant, setStoredParticipant] = useAtom(storedAtom);
-  let [currentParticipantID, setCurrentParticipantID] = useAtom(currentParticipantIDAtom);
+  const [currentParticipant, setCurrentParticipant] = useAtom(currentAtom);
+  const [storedParticipant, setStoredParticipant] = useAtom(storedAtom);
+  const setCurrentParticipantID = useSetAtom(currentParticipantIDAtom);
 
   async function handleDeleteAnonParticipant(participantId: string) {
     const deletedParticipant = await deleteAnonParticipant(participantId);
     if (deletedParticipant) {
       toast("Participant deleted");
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: ["anonParticipants", eventCode],
       });
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: [eventId, "anonEventSchedules"],
       });
       setCurrentParticipant("");

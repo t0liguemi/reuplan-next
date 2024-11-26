@@ -5,8 +5,19 @@ import { useTranslations } from "next-intl";
 import { signIn } from "next-auth/react";
 import { createAnonEvent } from "~/server/actions";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function MainActionButtons() {
+  const router = useRouter()
+  const handleCreateAnonEvent = async () => {
+    const newAnonEvent = await createAnonEvent();
+    if (newAnonEvent) {
+      toast(newAnonEvent[0]?.code);
+      router.push(`/anonEvent/${newAnonEvent[0]?.code}`)
+    } else {
+      toast("Error creating anon event");
+    }
+  };
   const t = useTranslations("HomePage");
   return (
     <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:gap-4">
@@ -24,25 +35,27 @@ export default function MainActionButtons() {
             {t("newEvent")}
           </Button>
         </Link>
-        <Link href="/events/anonymous" className="my-2">
-          <Button
-            variant={"success"}
-            className="rounded-none py-6 pe-8 text-2xl font-light"
-          >
-            {t("anonEvent")}
-          </Button>
-        </Link>
+
+        <Button
+          variant={"success"}
+          className="rounded-none py-6 pe-8 text-2xl font-light"
+          onClick={() => handleCreateAnonEvent()}
+        >
+          {t("anonEvent")}
+        </Button>
       </div>
     </div>
   );
 }
 
 export function LoggedOutMainButtons() {
+  const router = useRouter()
   const handleCreateAnonEvent = async () => {
+    
     const newAnonEvent = await createAnonEvent();
     if (newAnonEvent) {
       toast(newAnonEvent[0]?.code);
-      console.log(newAnonEvent);
+      router.push(`/anonEvent/${newAnonEvent[0]?.code}`)
     } else {
       toast("Error creating anon event");
     }

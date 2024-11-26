@@ -1,7 +1,7 @@
 "use client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { addDays, format } from "date-fns";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { deleteAnonResponse, getAnonResponses } from "~/server/actions";
@@ -36,7 +36,7 @@ export default function ScheduleList({
     const deletedResponse = await deleteAnonResponse(responseId);
     if (deletedResponse) {
       toast("Response deleted");
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: [eventId, "anonEventSchedules"],
       });
     } else {

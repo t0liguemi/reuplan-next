@@ -26,6 +26,7 @@ import {
 import { TimePickerInput } from "~/components/ui/time-picker-input";
 import { cn } from "~/lib/utils";
 import { createAnonSchedule } from "~/server/actions";
+import { event } from "~/server/db/schema";
 
 const formSchema = z.object({
   date: z.date(),
@@ -45,6 +46,7 @@ export default function ScheduleInput({
   const currentLocale = useLocale();
   setDefaultOptions({ locale: currentLocale==="es" ? es : currentLocale==="en" ? enGB : de })
   const queryClient = useQueryClient();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -108,9 +110,10 @@ export default function ScheduleInput({
             className="my-6 flex flex-col items-center"
             onSubmit={form.handleSubmit(handleNewSchedule)}
           >
-
             <FormField
+            control={form.control}
               name="date"
+              defaultValue={eventFrom}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>

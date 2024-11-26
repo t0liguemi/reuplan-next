@@ -299,10 +299,10 @@ export async function deleteRejection(id: string, invitee_id: string) {
 export async function createAnonEvent() {
   function randomString(len: number) {
     const p = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    return [...Array(len)].reduce(
-      (a) => a + p[~~(Math.random() * p.length)],
+    return [...Array<string>(len)].reduce(
+      (a:string) => a + p[~~(Math.random() * p.length)],
       "",
-    ) as string;
+    );
   }
   const today = new Date();
   const newString = (randomString(4) + "-" + randomString(4)).toUpperCase();

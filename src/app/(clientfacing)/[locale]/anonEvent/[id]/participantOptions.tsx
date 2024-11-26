@@ -55,7 +55,7 @@ export default function ParticipantOptions({
     });
     if (newParticipant) {
       localStorage.setItem("anonParticipant", participantName);
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: ["anonParticipants", eventCode],
       });
       setCurrent(participantName);
@@ -81,7 +81,7 @@ export default function ParticipantOptions({
           </p>
         ) : (
           <div className="w-full max-w-3xl rounded-xl border-2 border-border p-4">
-            <div className="flex flex-row justify-between items-center gap-4">
+            <div className="flex flex-row items-center justify-between gap-4">
               <h3 className="text-light text-2xl">{t("participants")}</h3>
               <form
                 className="my-4 flex max-w-[500px] flex-row gap-2"
@@ -89,7 +89,6 @@ export default function ParticipantOptions({
                   await handleCreateParticipant(
                     e.get("participantName")?.toString() ?? "",
                   );
-                  e.delete;
                 }}
               >
                 <Input name="participantName"></Input>
