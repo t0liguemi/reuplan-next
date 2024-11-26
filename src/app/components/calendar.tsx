@@ -43,11 +43,11 @@ export default function CalendarResults(props: {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col overflow-clip">
       <p className="text-ellipsis text-center text-xs font-light my-1">
         {format(start, "E dd/MM/y")}
       </p>
-      <div className="relative h-[500px] w-[100px] rounded-md bg-zinc-300 dark:bg-zinc-800 my-1 border-2 border-card">
+      <div className="relative h-[500px] w-[100px] rounded-md bg-zinc-300 dark:bg-zinc-800 my-1 border-2 border-card overflow-clip">
         {schedules.map((interval) =>
           calculateHeight(interval.end, interval.start) >= 20 
           ? (

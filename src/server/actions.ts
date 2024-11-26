@@ -1,10 +1,20 @@
 "use server";
 import { db } from "./db/index";
 import { and, eq } from "drizzle-orm";
-import { event, invitation, response, users } from "./db/schema";
+import {
+  anon_event,
+  anon_participant,
+  anon_response,
+  event,
+  invitation,
+  response,
+  users,
+} from "./db/schema";
 import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "auth";
 import sendInvitationEmail from "./send-invitation";
+import { addDays } from "date-fns";
+import { get } from "http";
 
 export async function loginAttempt(provider: string) {
   await signIn(provider);
@@ -118,7 +128,7 @@ export async function postEvent(targetEvent: {
     .insert(event)
     .values(targetEvent)
     .returning({ id: event.id });
-    return newEvent
+  return newEvent;
 }
 
 export async function postInvitation(
@@ -286,4 +296,109 @@ export async function deleteRejection(id: string, invitee_id: string) {
   } else {
     return undefined;
   }
+}
+
+export async function createAnonEvent() {
+  function randomString(len: number) {
+    var p = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    return [...Array(len)].reduce(
+      (a) => a + p[~~(Math.random() * p.length)],
+      "",
+    );
+  }
+  const today = new Date();
+  const newString = (randomString(4) + "-" + randomString(4)).toUpperCase();
+  const event: typeof anon_event.$inferInsert = {
+    code: newString,
+    from: new Date(today.setHours(0, 0, 0, 0)),
+    to: addDays(new Date(today.setHours(0, 0, 0, 0)), 1),
+    created_at: new Date(),
+    expires_at: addDays(new Date(), 7),
+  };
+  const newEvent = await db
+    .insert(anon_event)
+    .values(event)
+    .returning({ code: anon_event.code });
+  return newEvent;
+}
+
+export async function getAnonEvent(code: string) {
+  const event = await db.query.anon_event.findFirst({
+    where: eq(anon_event.code, code),
+  });
+  return event;
+}
+
+export async function editAnonEvent(code: string, from: Date, to: Date) {
+  const updatedEvent = await db
+    .update(anon_event)
+    .set({
+      from: from,
+      to: to,
+      expires_at: addDays(new Date(), 7),
+    })
+    .where(eq(anon_event.code, code))
+    .returning({ code: anon_event.code });
+  return updatedEvent;
+}
+
+export async function createAnonParticipant(
+  newParticipant: typeof anon_participant.$inferInsert,
+) {
+  const participant = await db
+    .insert(anon_participant)
+    .values(newParticipant)
+    .returning({ name: anon_participant.name });
+  return participant;
+}
+
+export async function getAnonParticipants(eventId: string) {
+  const participants = await db.query.anon_participant.findMany({
+    where: eq(anon_participant.anon_event_id, eventId),
+  });
+  return participants;
+}
+
+export async function deleteAnonParticipant(participantId: string) {
+  const deletedParticipant = await db
+    .delete(anon_participant)
+    .where(eq(anon_participant.id, participantId))
+    .returning({ id: anon_participant.id });
+  if (deletedParticipant[0]) {
+    return deletedParticipant[0].id;
+  } else {
+    return undefined;
+  }
+}
+
+export async function createAnonSchedule(
+  code: string,
+  date: Date,
+  from: Date,
+  to: Date,
+  userId: string,
+) {
+  const newSchedule = await db
+    .insert(anon_response)
+    .values({
+      event_id: code,
+      date: date,
+      start_time: from,
+      end_time: to,
+      participant_id: userId,
+    })
+    .returning({ id: anon_response.id });
+  return newSchedule;
+}
+
+export async function getAnonResponses(eventId: string) {
+  const responses = await db.query.anon_response.findMany({
+    where: eq(anon_response.event_id, eventId),
+  });
+  return responses;
+}
+
+export async function deleteAnonResponse(responseID: string){
+  const response = await db.delete(anon_response).where(eq(anon_response.id, responseID)).returning({ id: anon_response.id });
+  return response;
 }

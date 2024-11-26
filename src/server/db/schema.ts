@@ -146,6 +146,46 @@ export const response = pgTable("response", {
   created_at: timestamp("created_at").defaultNow(),
 });
 
+export const anon_event = pgTable("anon_event", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID())
+    .notNull(),
+  code: text("code").notNull().unique(),
+  from: timestamp("from").notNull(),
+  to: timestamp("to").notNull(),
+  created_at: timestamp("created_at").notNull(),
+  expires_at: timestamp("expires_at").notNull(),
+});
+
+export const anon_participant = pgTable("anon_participant", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  anon_event_id: text("anon_event_id")
+    .notNull()
+    .references(() => anon_event.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  created_at: timestamp("created_at").defaultNow(),
+});
+
+export const anon_response = pgTable("anon_response", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  event_id: text("anon_event_id")
+    .notNull()
+    .references(() => anon_event.id, { onDelete: "cascade" }),
+  participant_id: text("invitee_id")
+    .notNull()
+    .references(() => anon_participant.id, { onDelete: "cascade" }),
+  date: timestamp("date").notNull(),
+  start_time: timestamp("start_time").notNull(),
+  end_time: timestamp("end_time").notNull(),
+  created_at: timestamp("created_at").defaultNow(),
+});
+
+
 export const userRelations = relations(users, ({ many }) => ({
   events: many(event),
   invitations: many(invitation),
@@ -155,6 +195,15 @@ export const userRelations = relations(users, ({ many }) => ({
 export const eventRelations = relations(event, ({ many }) => ({
   invitations: many(invitation),
   responses: many(response),
+}));
+
+export const anon_eventRelations = relations(anon_event, ({ many }) => ({
+  participants: many(anon_participant),
+  responses: many(anon_response),
+}));
+
+export const anon_participantRelations = relations(anon_participant, ({ many }) => ({
+  responses: many(anon_response),
 }));
 
 export const invitationRelations = relations(invitation, ({ one }) => ({
