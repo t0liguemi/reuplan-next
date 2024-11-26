@@ -25,7 +25,7 @@ export default function UserQuery(props: {
 
   const { isLoading, data } = useQuery({
     queryKey: ["users", props.userEmail, props.eventId],
-    queryFn: () => queryUsers(props.userEmail.toLowerCase(), "email"),
+    queryFn: () => queryUsers(props.userEmail.toLowerCase()),
   });
 
   async function executeInvite(
