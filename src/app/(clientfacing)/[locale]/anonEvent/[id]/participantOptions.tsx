@@ -7,9 +7,9 @@ import { Input } from "~/components/ui/input";
 import { createAnonParticipant, getAnonParticipants } from "~/server/actions";
 import ParticipantList from "./participantList";
 import { atom, useSetAtom } from "jotai";
-import { set } from "date-fns";
 import { Skeleton } from "~/components/ui/skeleton";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 export const currentParticipant = atom("");
 export const storedParticipant = atom("");
@@ -26,6 +26,8 @@ export default function ParticipantOptions({
   const setCurrent = useSetAtom(currentParticipant);
   const setStored = useSetAtom(storedParticipant);
 
+  const [creatingParticipant, setCreatingParticipant] = useState(false);
+
   const queryClient = useQueryClient();
   const participantsQuery = useQuery({
     queryKey: ["anonParticipants", eventCode],
@@ -35,10 +37,12 @@ export default function ParticipantOptions({
   async function handleCreateParticipant(participantName: string) {
     if (participantName.length < 6) {
       toast(t("newParticipantNameTooShort"));
+      setCreatingParticipant(false);
       return;
     }
     if (participantName.length > 27) {
       toast(t("newParticipantNameTooLong"));
+      setCreatingParticipant(false);
       return;
     }
     if (
@@ -47,6 +51,7 @@ export default function ParticipantOptions({
       )
     ) {
       toast("Participant already exists!");
+      setCreatingParticipant(false);
       return;
     }
     const newParticipant = await createAnonParticipant({
@@ -60,8 +65,10 @@ export default function ParticipantOptions({
       });
       setCurrent(participantName);
       setStored(participantName);
+      setCreatingParticipant(false);
     } else {
       toast("Error creating participant");
+      setCreatingParticipant(false);
     }
   }
 
@@ -81,18 +88,23 @@ export default function ParticipantOptions({
           </p>
         ) : (
           <div className="w-full max-w-3xl rounded-xl border-2 border-border p-4">
-            <div className="flex flex-row items-center justify-between gap-4">
+            <div className="flex flex-row flex-wrap items-center justify-between gap-4">
               <h3 className="text-light text-2xl">{t("participants")}</h3>
               <form
                 className="my-4 flex max-w-[500px] flex-row gap-2"
+                onSubmit={() => setCreatingParticipant(true)}
                 action={async (e) => {
-                  await handleCreateParticipant(
-                    e.get("participantName")?.toString() ?? "",
-                  );
+                  if (!creatingParticipant) {
+                    await handleCreateParticipant(
+                      e.get("participantName")?.toString() ?? "",
+                    );
+                  }
                 }}
               >
                 <Input name="participantName"></Input>
-                <Button type="submit">{t("createParticipant")}</Button>
+                <Button type="submit" disabled={creatingParticipant}>
+                  {t("createParticipant")}
+                </Button>
               </form>
             </div>
             <ParticipantList

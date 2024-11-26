@@ -213,6 +213,7 @@
     "noMatchingSchedules": "Los horarios actuales no se superponen para todos los participantes",
     "delete": "Eliminar",
     "select": "Seleccionar",
+    "noParticipant": "Ningún participante seleccionado",
     "newParticipantNameTooShort": "El nombre del participante es demasiado corto",
     "newParticipantNameTooLong": "El nombre del participante es demasiado largo",
     "errorLoadingPaticipants": "Error al cargar los participantes, intenta más tarde."

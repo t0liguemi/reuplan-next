@@ -6,16 +6,21 @@ import { signIn } from "next-auth/react";
 import { createAnonEvent } from "~/server/actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function MainActionButtons() {
-  const router = useRouter()
+  const router = useRouter();
+  const [mutating, setMutating] = useState(false);
   const handleCreateAnonEvent = async () => {
+    if (mutating) return;
+    setMutating(true);
     const newAnonEvent = await createAnonEvent();
     if (newAnonEvent) {
       toast(newAnonEvent[0]?.code);
-      router.push(`/anonEvent/${newAnonEvent[0]?.code}`)
+      router.push(`/anonEvent/${newAnonEvent[0]?.code}`);
     } else {
       toast("Error creating anon event");
+      setMutating(false)
     }
   };
   const t = useTranslations("HomePage");
@@ -37,6 +42,7 @@ export default function MainActionButtons() {
         </Link>
 
         <Button
+          disabled={mutating}
           variant={"success"}
           className="rounded-none py-6 pe-8 text-2xl font-light"
           onClick={() => handleCreateAnonEvent()}
@@ -49,16 +55,18 @@ export default function MainActionButtons() {
 }
 
 export function LoggedOutMainButtons() {
-  const router = useRouter()
+  const router = useRouter();
+  const [mutating, setMutating] = useState(false);
   const handleCreateAnonEvent = async () => {
-    
+    setMutating(true);
     const newAnonEvent = await createAnonEvent();
     if (newAnonEvent) {
       toast(newAnonEvent[0]?.code);
-      router.push(`/anonEvent/${newAnonEvent[0]?.code}`)
+      router.push(`/anonEvent/${newAnonEvent[0]?.code}`);
     } else {
       toast("Error creating anon event");
     }
+    setMutating(false);
   };
   const t = useTranslations("HomePage");
   return (
@@ -71,6 +79,7 @@ export function LoggedOutMainButtons() {
       </Button>
 
       <Button
+        disabled={mutating}
         variant="success"
         className="rounded-2xl px-8 py-6 text-2xl font-light"
         onClick={() => handleCreateAnonEvent()}

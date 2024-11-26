@@ -212,6 +212,7 @@
     "noMatchingSchedules": "Current schedules do not overlap for all participants",
     "delete": "Delete",
     "select": "Select",
+    "noParticipant": "No participant selected",
     "errorLoadingSchedules": "Error loading schedules, please try again later.",
     "newParticipantNameTooShort": "Participant's name is too short",
     "newParticipantNameTooLong": "Participant's name is too long",

@@ -207,6 +207,7 @@
     "newScheduleTitle":"Neuer verfügbarkeitszeitraum",
     "save": "Speichern",
     "select": "Auswählen",
+    "noParticipant": "Kein Teilnehmer ausgewählt",
     "newScheduleSuccessToast": "Verfügbarkeitszeitraum erfolgreich erstellt",
     "newScheduleErrorToast": "Fehler beim Erstellen des Verfügbarkeitszeitraums, bitte versuchen Sie es später erneut",
     "surveyResults": "Umfrageergebnisse",

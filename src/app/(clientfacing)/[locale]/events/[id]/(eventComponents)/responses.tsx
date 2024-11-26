@@ -11,7 +11,13 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { Skeleton } from "~/components/ui/skeleton";
-import { type users, type event, type response, type invitation, responseRelations } from "~/server/db/schema";
+import {
+  type users,
+  type event,
+  type response,
+  type invitation,
+  responseRelations,
+} from "~/server/db/schema";
 import { findOverlappingTimes } from "~/lib/findOverlap";
 import { Trash2 } from "lucide-react";
 import { deleteResponse } from "~/server/actions";
@@ -53,7 +59,7 @@ export default function Responses(props: {
       await queryClient.invalidateQueries({ queryKey: ["userResponses"] });
       await queryClient.invalidateQueries({ queryKey: ["userInvitations"] });
       toast.success(t("responseDeletionSuccessToast"));
-    } else{
+    } else {
       toast.error(t("responseDeletionErrorToast"));
     }
   }
@@ -79,12 +85,18 @@ export default function Responses(props: {
 
     for (const day of availableDays) {
       const responsesForDay = responses.data?.filter(
-        (response) => response.date?.getDate() === day.getDate() && response.date?.getMonth() === day.getMonth() && response.date?.getFullYear() === day.getFullYear(),
+        (response) =>
+          response.date?.getDate() === day.getDate() &&
+          response.date?.getMonth() === day.getMonth() &&
+          response.date?.getFullYear() === day.getFullYear(),
       );
       const overlappingTimesForDay: ScheduleInResponses[] =
         findOverlappingTimes(responsesForDay ?? [], attendingPeople.size);
 
-      overlappingTimes.set(`${day.getDate()}-${day.getMonth()}-${day.getFullYear()}`, overlappingTimesForDay);
+      overlappingTimes.set(
+        `${day.getDate()}-${day.getMonth()}-${day.getFullYear()}`,
+        overlappingTimesForDay,
+      );
     }
 
     if (responses.isLoading || invitations.isLoading || invitees.isLoading) {
@@ -109,12 +121,20 @@ export default function Responses(props: {
               <CalendarResults
                 key={"drawing" + day.toString()}
                 start={day}
-                schedules={overlappingTimes.get(`${day.getDate()}-${day.getMonth()}-${day.getFullYear()}` ) ?? []}
+                schedules={
+                  overlappingTimes.get(
+                    `${day.getDate()}-${day.getMonth()}-${day.getFullYear()}`,
+                  ) ?? []
+                }
               />
             ))}
           </div>
           <p className="text-sm font-light text-muted-foreground">
-            {t.rich("calendarExplanation", {strong: (chunks) => <span className="font-extrabold">{chunks}</span>})}
+            {t.rich("calendarExplanation", {
+              strong: (chunks) => (
+                <span className="font-extrabold">{chunks}</span>
+              ),
+            })}
           </p>
           <p className="text-sm font-extrabold text-muted-foreground">
             {t("attendees")} ≠ {t("invitees")}
@@ -202,13 +222,23 @@ export default function Responses(props: {
 
           <Separator orientation="horizontal" className="my-4 w-full" />
 
-          {(invitations.data.some(inv=>inv.invitee_id===currentUser?.id) || responses.data.some(resp=>resp.invitee_id===currentUser?.id)) && <h3 className="mb-4 text-3xl font-light">{t("yourResponses")}</h3>}
+          {(invitations.data.some(
+            (inv) => inv.invitee_id === currentUser?.id,
+          ) ||
+            responses.data.some(
+              (resp) => resp.invitee_id === currentUser?.id,
+            )) && (
+            <h3 className="mb-4 text-3xl font-light">{t("yourResponses")}</h3>
+          )}
 
           <div className="my-4 flex flex-row gap-2 md:gap-4">
             {responses.data
               .filter((response) => response.invitee_id === currentUser?.id)
               .map((response) =>
-                response.is_accepted && response.date && response.start_time && response.end_time ? (
+                response.is_accepted &&
+                response.date &&
+                response.start_time &&
+                response.end_time ? (
                   <Popover key={response.id}>
                     <PopoverTrigger className="text-light rounded-md bg-muted px-2 py-2">
                       {format(response.date, "iii dd/MM")}
@@ -239,7 +269,9 @@ export default function Responses(props: {
     }
     if (responses.error ?? invitations.error ?? invitees.error) {
       return (
-        <div className="my-4 text-2xl font-light">{t("genericErrorLoading")} {t("responses")}</div>
+        <div className="my-4 text-2xl font-light">
+          {t("genericErrorLoading")} {t("responses")}
+        </div>
       );
     }
   }

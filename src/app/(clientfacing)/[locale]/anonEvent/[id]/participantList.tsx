@@ -27,6 +27,7 @@ export default function ParticipantList({
   const [currentParticipant, setCurrentParticipant] = useAtom(currentAtom);
   const [storedParticipant, setStoredParticipant] = useAtom(storedAtom);
   const setCurrentParticipantID = useSetAtom(currentParticipantIDAtom);
+  const [deletingParticipant, setDeletingParticipant] = useState(false);
 
   async function handleDeleteAnonParticipant(participantId: string) {
     const deletedParticipant = await deleteAnonParticipant(participantId);
@@ -39,10 +40,12 @@ export default function ParticipantList({
         queryKey: [eventId, "anonEventSchedules"],
       });
       setCurrentParticipant("");
+      setCurrentParticipantID("");
       localStorage.removeItem("anonParticipant");
     } else {
       toast("Error deleting participant");
     }
+    setDeletingParticipant(false);
   }
 
   useEffect(() => {
@@ -100,8 +103,9 @@ export default function ParticipantList({
                {t("select")}
               </Button>
               <Button
+              disabled={deletingParticipant}
                 variant={"destructive"}
-                onClick={() => handleDeleteAnonParticipant(participant.id)}
+                onClick={() => {setDeletingParticipant(true);handleDeleteAnonParticipant(participant.id)}}
               >
                 {t("delete")}
               </Button></div>

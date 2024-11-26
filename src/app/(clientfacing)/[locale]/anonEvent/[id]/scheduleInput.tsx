@@ -1,8 +1,20 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
-import { addHours, addMinutes, format, getDate, getMonth, getYear, setDate, setDefaultOptions, setMonth, setYear } from "date-fns";
+import {
+  addHours,
+  addMinutes,
+  format,
+  getDate,
+  getMonth,
+  getYear,
+  setDate,
+  setDefaultOptions,
+  setMonth,
+  setYear,
+} from "date-fns";
 import { de, enGB, es } from "date-fns/locale";
+import { useAtomValue } from "jotai";
 import { ClockIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
@@ -26,7 +38,8 @@ import {
 import { TimePickerInput } from "~/components/ui/time-picker-input";
 import { cn } from "~/lib/utils";
 import { createAnonSchedule } from "~/server/actions";
-import { event } from "~/server/db/schema";
+import { currentParticipantID } from "./participantOptions";
+import { useState } from "react";
 
 const formSchema = z.object({
   date: z.date(),
@@ -43,8 +56,13 @@ export default function ScheduleInput({
   eventFrom: Date;
   eventTo: Date;
 }) {
+  const t = useTranslations("AnonEventPage");
   const currentLocale = useLocale();
-  setDefaultOptions({ locale: currentLocale==="es" ? es : currentLocale==="en" ? enGB : de })
+  const currentUserID = useAtomValue(currentParticipantID)
+  const [isOpen, setIsOpen] = useState(false);
+  setDefaultOptions({
+    locale: currentLocale === "es" ? es : currentLocale === "en" ? enGB : de,
+  });
   const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -56,27 +74,26 @@ export default function ScheduleInput({
     },
   });
 
-  const t = useTranslations("AnonEventPage");
-
   async function handleNewSchedule(data: z.infer<typeof formSchema>) {
     const newSchedule = await createAnonSchedule(
       code,
       data.date,
       data.from,
       data.to,
-      localStorage.getItem("anonParticipantId") ?? "",
+      currentUserID,
     );
     if (newSchedule) {
       toast.success(t("newScheduleSuccessToast"));
       await queryClient.invalidateQueries({
-        queryKey: ["anonResponses", code]
+        queryKey: ["anonResponses", code],
       });
       await queryClient.invalidateQueries({
-        queryKey: [code, "anonEventSchedules"]
+        queryKey: [code, "anonEventSchedules"],
       });
     } else {
       toast.error(t("newScheduleErrorToast"));
     }
+    setIsOpen(false);
   }
 
   function handleCalendarSelect(e: Date) {
@@ -97,11 +114,11 @@ export default function ScheduleInput({
   }
 
   return (
-    <Drawer>
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
         <Button>{t("newScheduleTitle")}</Button>
       </DrawerTrigger>
-      <DrawerContent className="bg-muted/40 dark:bg-background/20">
+      <DrawerContent className="bg-muted/60 dark:bg-background/40">
         <DrawerHeader>
           <DrawerTitle>{t("newScheduleTitle")}</DrawerTitle>
         </DrawerHeader>
@@ -111,7 +128,7 @@ export default function ScheduleInput({
             onSubmit={form.handleSubmit(handleNewSchedule)}
           >
             <FormField
-            control={form.control}
+              control={form.control}
               name="date"
               defaultValue={eventFrom}
               render={({ field }) => (
@@ -127,7 +144,13 @@ export default function ScheduleInput({
                       toDate={eventTo}
                       initialFocus
                       defaultMonth={field.value}
-                      locale={currentLocale==="es" ? es : currentLocale==="en" ? enGB : de}
+                      locale={
+                        currentLocale === "es"
+                          ? es
+                          : currentLocale === "en"
+                            ? enGB
+                            : de
+                      }
                     />
                   </FormControl>
                 </FormItem>
@@ -225,10 +248,11 @@ export default function ScheduleInput({
                   )}
                 />
               </div>
-              <Button type="submit" className="m-0 rounded-3xl">
+           
+            </div>
+            <Button type="submit" className="my-2" disabled={currentUserID?false:true}>
                 {t("submit")}
               </Button>
-            </div>
           </form>
         </Form>
       </DrawerContent>

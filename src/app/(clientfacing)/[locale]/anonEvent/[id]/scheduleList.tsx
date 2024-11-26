@@ -48,7 +48,10 @@ export default function ScheduleList({
     return (
       <div className="flex flex-col gap-4">
         <Skeleton aria-orientation="horizontal" className="h-[640px] w-full" />
-        <Skeleton aria-orientation="horizontal" className="h-[240px] w-full max-w-3xl" />
+        <Skeleton
+          aria-orientation="horizontal"
+          className="h-[240px] w-full max-w-3xl"
+        />
       </div>
     );
   }
@@ -110,50 +113,58 @@ export default function ScheduleList({
             ))}
           </div>
         </div>
-        <div className="border-boder my-4 w-full max-w-3xl rounded-xl border-2 p-4">
-          <div className="flex flex-row flex-wrap items-center gap-2">
-            <h3 className="my-2 text-2xl font-light">
-              {t("currentParticipantSchedules")}
-            </h3>
-            <ScheduleInput
-              code={eventId}
-              eventFrom={eventFrom}
-              eventTo={eventTo}
-            />
-          </div>
-          <div className="my-4 flex w-full flex-col gap-1">
-            {schedulesQuery.data.filter(
-              (sch) => sch.participant_id === currentParticipantID,
-            ).length === 0 && (
-              <p className="my-2 text-muted-foreground/70">
-                {t("noSchedulesParticipant")}
-              </p>
-            )}
-            {schedulesQuery.data
-              .filter((sch) => sch.participant_id === currentParticipantID)
-              .map((sch) => {
-                return (
-                  <div
-                    key={sch.id}
-                    className="flex flex-row items-center justify-between px-2 text-sm"
-                  >
-                    <p>
-                      {format(sch.start_time, "Pp") +
-                        "-" +
-                        format(sch.end_time, "Pp")}
-                    </p>
-                    <Button
-                      variant={"destructive"}
-                      onClick={() => handleDeleteAnonResponse(sch.id)}
-                      className="h-min px-1 py-1 text-sm"
+        {currentParticipantID ? (
+          <div className="border-boder my-4 w-full max-w-3xl rounded-xl border-2 p-4">
+            <div className="flex flex-row flex-wrap items-center gap-2">
+              <h3 className="my-2 text-2xl font-light">
+                {t("currentParticipantSchedules")}
+              </h3>
+              <ScheduleInput
+                code={eventId}
+                eventFrom={eventFrom}
+                eventTo={eventTo}
+              />
+            </div>
+            <div className="my-4 flex w-full flex-col gap-1">
+              {schedulesQuery.data.filter(
+                (sch) => sch.participant_id === currentParticipantID,
+              ).length === 0 && (
+                <p className="my-2 text-muted-foreground/70">
+                  {t("noSchedulesParticipant")}
+                </p>
+              )}
+              {schedulesQuery.data
+                .filter((sch) => sch.participant_id === currentParticipantID)
+                .map((sch) => {
+                  return (
+                    <div
+                      key={sch.id}
+                      className="flex flex-row items-center justify-between px-2 text-sm"
                     >
-                      {t("delete")}
-                    </Button>
-                  </div>
-                );
-              })}
+                      <p>
+                        {format(sch.start_time, "Pp") +
+                          "-" +
+                          format(sch.end_time, "Pp")}
+                      </p>
+                      <Button
+                        variant={"destructive"}
+                        onClick={() => handleDeleteAnonResponse(sch.id)}
+                        className="h-min px-1 py-1 text-sm"
+                      >
+                        {t("delete")}
+                      </Button>
+                    </div>
+                  );
+                })}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="border-boder my-4 w-full max-w-3xl rounded-xl border-2 p-4">
+                         <h3 className="my-2 text-2xl font-light">
+                {t("currentParticipantSchedules")}
+              </h3><p>No participant selected</p> 
+          </div>
+        )}
       </div>
     );
   }
