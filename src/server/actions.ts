@@ -12,9 +12,8 @@ import {
 } from "./db/schema";
 import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "auth";
-import sendInvitationEmail from "./send-invitation";
+
 import { addDays } from "date-fns";
-import { get } from "http";
 
 export async function loginAttempt(provider: string) {
   await signIn(provider);
@@ -299,8 +298,8 @@ export async function deleteRejection(id: string, invitee_id: string) {
 }
 
 export async function createAnonEvent() {
-  function randomString(len: number) {
-    var p = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  function randomString(len: number):string {
+    let p = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     return [...Array(len)].reduce(
       (a) => a + p[~~(Math.random() * p.length)],
       "",
@@ -398,7 +397,10 @@ export async function getAnonResponses(eventId: string) {
   return responses;
 }
 
-export async function deleteAnonResponse(responseID: string){
-  const response = await db.delete(anon_response).where(eq(anon_response.id, responseID)).returning({ id: anon_response.id });
+export async function deleteAnonResponse(responseID: string) {
+  const response = await db
+    .delete(anon_response)
+    .where(eq(anon_response.id, responseID))
+    .returning({ id: anon_response.id });
   return response;
 }
