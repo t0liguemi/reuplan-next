@@ -73,7 +73,7 @@ export default function ParticipantOptions({
   }
 
   return (
-    <div className="my-8">
+    <div className="my-6">
       {participantsQuery.isLoading ? (
         <>
           <Skeleton
@@ -87,11 +87,11 @@ export default function ParticipantOptions({
             {t("errorLoadingPaticipants")}
           </p>
         ) : (
-          <div className="w-full max-w-3xl rounded-xl border-2 border-border p-4">
+          <div className="w-full max-w-3xl rounded-xl border-2 border-border px-4 py-4">
             <div className="flex flex-row flex-wrap items-center justify-between gap-4">
               <h3 className="text-light text-2xl">{t("participants")}</h3>
               <form
-                className="my-4 flex max-w-[500px] flex-row gap-2"
+                className="flex max-w-[500px] flex-row gap-2"
                 onSubmit={() => setCreatingParticipant(true)}
                 action={async (e) => {
                   if (!creatingParticipant) {

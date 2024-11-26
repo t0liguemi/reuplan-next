@@ -162,7 +162,7 @@ export default function ScheduleList({
           <div className="border-boder my-4 w-full max-w-3xl rounded-xl border-2 p-4">
                          <h3 className="my-2 text-2xl font-light">
                 {t("currentParticipantSchedules")}
-              </h3><p>No participant selected</p> 
+              </h3><p>{t("noParticipant")}</p>
           </div>
         )}
       </div>
