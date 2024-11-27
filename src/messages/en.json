@@ -191,6 +191,7 @@
   },
   "AnonEventPage": {
     "title": "Event",
+    "modify": "Change",
     "participants": "Participants",
     "notFound": "No event found",
     "dateChangeTitle": "Change date range",

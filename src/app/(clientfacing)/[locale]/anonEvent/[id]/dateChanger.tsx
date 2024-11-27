@@ -78,7 +78,7 @@ export default function DateChanger({
     <div>
       <Drawer>
         <DrawerTrigger className="flex flex-row gap-2 items-center" asChild>
-          <div>{t("from")}: {format(from, "PPPP")} - {t("to")}: {format(to, "PPPP")}<Button>Modificar</Button></div>
+          <div>{t("from")}: {format(from, "PPPP")} - {t("to")}: {format(to, "PPPP")}<Button>{t("modify")}</Button></div>
         </DrawerTrigger>
         <DrawerContent className="bg-background/60 dark:bg-muted/30 backdrop-blur-lg flex flex-col gap-2 justify-center items-center">
 
