@@ -88,7 +88,7 @@ export default function ParticipantOptions({
           </p>
         ) : (
           <div className="w-full max-w-3xl rounded-xl border-2 border-border px-4 py-4">
-            <div className="flex flex-row flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-row flex-wrap items-center justify-between gap-4 mb-4">
               <h3 className="text-light text-2xl">{t("participants")}</h3>
               <form
                 className="flex max-w-[500px] flex-row gap-2"

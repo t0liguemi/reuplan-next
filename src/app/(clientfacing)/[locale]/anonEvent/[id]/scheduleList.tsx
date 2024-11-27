@@ -93,8 +93,6 @@ export default function ScheduleList({
       );
     }
 
-    console.log(overlappingTimes);
-
     return (
       <div>
         <div className="my-6 flex flex-col items-center gap-4">

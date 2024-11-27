@@ -24,7 +24,7 @@ export default async function AnonEvent({
           <h1 className="text-4xl font-bold">{t("title")}</h1>
           <h2 className="text-2xl font-light">{id}</h2>
         </div>
-        <DateChanger eventCode={id} from={eventQuery.from} to={eventQuery.to} />
+        <DateChanger expiresAt={eventQuery.expires_at} eventCode={id} from={eventQuery.from} to={eventQuery.to} />
         <ParticipantOptions eventId={eventQuery.id} eventCode={id} />
         <ScheduleList eventId={eventQuery.id} eventFrom={eventQuery.from} eventTo={eventQuery.to} />
       </div>

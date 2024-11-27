@@ -217,6 +217,8 @@
     "delete": "Löschen",
     "newParticipantNameTooShort": "Der Teilnehmername ist zu kurz",
     "newParticipantNameTooLong": "Der Teilnehmername ist zu lang",
-    "errorLoadingPaticipants": "Fehler beim Laden der Teilnehmer, bitte versuchen Sie es später erneut."
+    "errorLoadingPaticipants": "Fehler beim Laden der Teilnehmer, bitte versuchen Sie es später erneut.",
+    "expiresAt":"Läuft ab am ",
+    "expiresTip":"Um das Event zu verlängern, ändern Sie das Datumbereich des Events."
   }
 }

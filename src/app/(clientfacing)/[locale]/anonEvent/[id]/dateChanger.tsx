@@ -3,9 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, setDefaultOptions } from "date-fns";
 import { de, enGB, es } from "date-fns/locale";
-import { X } from "lucide-react";
+import { Info } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { revalidatePath } from "next/cache";
+
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -21,7 +21,7 @@ import {
   DrawerTrigger,
 } from "~/components/ui/drawer";
 import {
-    Form,
+  Form,
   FormControl,
   FormField,
   FormItem,
@@ -33,6 +33,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { editAnonEvent, revalidateFromServer } from "~/server/actions";
 
 const FormSchema = z.object({
@@ -44,10 +50,12 @@ export default function DateChanger({
   eventCode,
   from,
   to,
+  expiresAt,
 }: {
   eventCode: string;
   from: Date;
   to: Date;
+  expiresAt: Date;
 }) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -67,84 +75,107 @@ export default function DateChanger({
     const editedEvent = await editAnonEvent(eventCode, data.from, data.to);
     if (editedEvent) {
       toast.success(t("editSuccessToast"));
-      await revalidateFromServer("/anonEvent/"+eventCode);
-    }else{
+      await revalidateFromServer("/anonEvent/" + eventCode);
+    } else {
       toast.error(t("editErrorToast"));
-
     }
   }
 
   return (
     <div>
       <Drawer>
-        <DrawerTrigger className="flex flex-row gap-2 items-center" asChild>
-          <div>{t("from")}: {format(from, "PPPP")} - {t("to")}: {format(to, "PPPP")}<Button>{t("modify")}</Button></div>
-        </DrawerTrigger>
-        <DrawerContent className="bg-background/60 dark:bg-muted/30 backdrop-blur-lg flex flex-col gap-2 justify-center items-center">
+        <div className="flex flex-row items-center gap-2">
+        <DrawerTrigger className="flex flex-row items-center gap-2" asChild>
+          <div>
+            {t("from")}: {format(from, "PPPP")} - {t("to")}:{" "}
+            {format(to, "PPPP")}
+            <Button>{t("modify")}</Button>
 
-            <DrawerTitle>{t("dateChangeTitle")}</DrawerTitle>
-            <DrawerDescription>{t("dateChangeDescription")}</DrawerDescription>
+          </div>
+        </DrawerTrigger>
+        <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Info />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-sm bg-background/60 backdrop-blur-lg dark:bg-muted/30 text-wrap">
+                {t("expiresAt")}
+                {format(expiresAt, "PPPP")}<br/>
+                {t("expiresTip")}
+
+              </TooltipContent>
+            </Tooltip></TooltipProvider></div>
+        <DrawerContent className="px-2 flex flex-col items-center justify-center gap-2 bg-background/60 backdrop-blur-lg dark:bg-muted/30">
+          <DrawerTitle>{t("dateChangeTitle")}</DrawerTitle>
+          <DrawerDescription>{t("dateChangeDescription")}</DrawerDescription>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleAnonUpdate)} className="flex flex-col gap-2 justify-center items-center py-6"><div className="flex flex-row gap-6">
-              <FormField
-                control={form.control}
-                name="from"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row gap-2 items-baseline">
-                    <FormLabel>{t("from")}</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Input
-                          className="hover:cursor-pointer"
-                          value={format(field.value, "eee dd/MM/y")}
-                        />
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <FormControl>
-                          <Calendar
-                            {...field}
-                            title="From"
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
+            <form
+              onSubmit={form.handleSubmit(handleAnonUpdate)}
+              className="flex flex-col items-center justify-center gap-2 py-4"
+            >
+              <div className="flex flex-row gap-6">
+                <FormField
+                  control={form.control}
+                  name="from"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-baseline gap-2">
+                      <FormLabel>{t("from")}</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Input
+                            className="hover:cursor-pointer"
+                            value={format(field.value, "eee dd/MM/y")}
                           />
-                        </FormControl>
-                      </PopoverContent>
-                    </Popover>
-                  </FormItem>
-                )}
-              />
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <FormControl>
+                            <Calendar
+                              {...field}
+                              title="From"
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                            />
+                          </FormControl>
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="to"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row gap-2 items-baseline">
-                    <FormLabel>{t("to")}</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Input
-                          className="hover:cursor-pointer"
-                          value={format(field.value, "eee dd/MM/y")}
-                        />
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <FormControl>
-                          <Calendar
-                            {...field}
-                            title="To"
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
+                <FormField
+                  control={form.control}
+                  name="to"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-baseline gap-2">
+                      <FormLabel>{t("to")}</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Input
+                            className="hover:cursor-pointer"
+                            value={format(field.value, "eee dd/MM/y")}
                           />
-                        </FormControl>
-                      </PopoverContent>
-                    </Popover>
-                  </FormItem>
-                )}
-              /></div>
-              <Button variant="success" type="submit">{t("submit")}</Button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <FormControl>
+                            <Calendar
+                              {...field}
+                              title="To"
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                            />
+                          </FormControl>
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Button variant="success" type="submit">
+                {t("submit")}
+              </Button>
             </form>
           </Form>
         </DrawerContent>

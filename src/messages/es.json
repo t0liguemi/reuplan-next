@@ -217,6 +217,8 @@
     "noParticipant": "Ningún participante seleccionado",
     "newParticipantNameTooShort": "El nombre del participante es demasiado corto",
     "newParticipantNameTooLong": "El nombre del participante es demasiado largo",
-    "errorLoadingPaticipants": "Error al cargar los participantes, intenta más tarde."
+    "errorLoadingPaticipants": "Error al cargar los participantes, intenta más tarde.",
+    "expiresAt":"Expira el ",
+    "expiresTip":"Para extender el evento, cambia el rango de fechas."
   }
 }
