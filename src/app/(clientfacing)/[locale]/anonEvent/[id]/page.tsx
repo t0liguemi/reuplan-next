@@ -41,7 +41,7 @@ export default async function AnonEvent({
                   }
                 />
               </div>
-              <PopoverContent className="min-w-80 bg-background/60 py-2 backdrop-blur-xl">
+              <PopoverContent className="min-w-80 max-w-screen bg-background/60 p-4 backdrop-blur-xl text-sm">
                 <div>
                   <p>{t("codeTip")}</p>{" "}
                 </div>

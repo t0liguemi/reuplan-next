@@ -90,7 +90,7 @@ export default function DateChanger({
               <PopoverTrigger>
                 <Info />
               </PopoverTrigger>
-              <PopoverContent className="w-fit max-w-md bg-background/60 backdrop-blur-lg text-wrap">
+              <PopoverContent className="w-fit max-w-md bg-background/60 backdrop-blur-lg text-wrap text-sm">
                 {t("expiresAt")}
                 {format(expiresAt, "PPPP")}<br/>
                 {t("expiresTip")}

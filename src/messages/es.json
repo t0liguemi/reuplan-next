@@ -220,6 +220,7 @@
     "errorLoadingPaticipants": "Error al cargar los participantes, intenta más tarde.",
     "expiresAt":"Expira el ",
     "expiresTip":"Para extender el evento, cambia el rango de fechas.",
-    "codeTip":"Este es el código que puedes compartir con otros para unirte al evento. Tambien puedes compartir el enlace."
+    "codeTip":"Este es el código que puedes compartir con otros para unirse al evento. Tambien puedes compartir el enlace.",
+    "clipboardToast":"Enlace copiado al portapapeles."
   }
 }

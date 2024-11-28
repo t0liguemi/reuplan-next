@@ -220,6 +220,7 @@
     "errorLoadingPaticipants": "Error loading participants, please try again later.",
     "expiresAt":"Expires at ",
     "expiresTip":"To extend the event, change it's date range.",
-    "codeTip":"This is the code you can share with others to join the event. You can also just share the link"
+    "codeTip":"This is the code you can share with others to join the event. You can also just share the link.",
+    "clipboardToast":"Link copied to clipboard."
   }
 }
