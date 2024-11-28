@@ -13,10 +13,8 @@ import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "~/components/ui/drawer";
@@ -33,12 +31,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
+
 import { editAnonEvent, revalidateFromServer } from "~/server/actions";
 
 const FormSchema = z.object({
@@ -97,11 +90,10 @@ export default function DateChanger({
               <PopoverTrigger>
                 <Info />
               </PopoverTrigger>
-              <PopoverContent className="w-fit max-w-md bg-background/60 backdrop-blur-lg dark:bg-muted/30 text-wrap">
+              <PopoverContent className="w-fit max-w-md bg-background/60 backdrop-blur-lg text-wrap">
                 {t("expiresAt")}
                 {format(expiresAt, "PPPP")}<br/>
                 {t("expiresTip")}
-
               </PopoverContent>
             </Popover></div>
         <DrawerContent className="px-2 flex flex-col items-center justify-center gap-2 bg-background/60 backdrop-blur-lg dark:bg-muted/30">

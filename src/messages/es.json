@@ -3,7 +3,7 @@
     "title1": "",
     "title2": ", una webapp minimalista con una meta: Facilitar los encuentros.",
     "subtitle1": "Despreocupate de la disponibilidad de cada invitado. Cada uno ingresa su disponibilidad y Reuplan te muestra el horario en común para todos.",
-    "paragraph1": "Esta app es de libre uso, puedes <donate>contribuir</donate> para aportar a su mantenimiento y mejora 🎉.",
+    "paragraph1": "Esta app es de libre uso, puedes <donate>aportar</donate> a su mantenimiento y mejora 🎉.",
     "paragraph2": "Puedes <login>iniciar sesión</login> para tener varios eventos y hacer seguimiento de los resultados, o puedes crear un evento anónimo.",
     "title3": "¿Cuándo no necesito Reuplan?",
     "paragraph3": "Si tienes un calendario en que quieres agregar tus eventos personales: Google Calendar o similares. Si quieres invitar gente a un evento con horario ya definido: E-Mail, Whatsapp, Google Calendar.",
@@ -219,6 +219,7 @@
     "newParticipantNameTooLong": "El nombre del participante es demasiado largo",
     "errorLoadingPaticipants": "Error al cargar los participantes, intenta más tarde.",
     "expiresAt":"Expira el ",
-    "expiresTip":"Para extender el evento, cambia el rango de fechas."
+    "expiresTip":"Para extender el evento, cambia el rango de fechas.",
+    "codeTip":"Este es el código que puedes compartir con otros para unirte al evento. Tambien puedes compartir el enlace."
   }
 }
