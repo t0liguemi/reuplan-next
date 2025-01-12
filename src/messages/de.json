@@ -219,6 +219,8 @@
     "newParticipantNameTooLong": "Der Teilnehmername ist zu lang",
     "errorLoadingPaticipants": "Fehler beim Laden der Teilnehmer, bitte versuchen Sie es später erneut.",
     "expiresAt":"Läuft ab am ",
-    "expiresTip":"Um das Event zu verlängern, ändern Sie das Datumbereich des Events."
+    "expiresTip":"Um das Event zu verlängern, ändern Sie das Datumbereich des Events.",
+    "codeTip":"Dies ist der Code, den Sie mit anderen teilen können, um dem Event beizutreten. Sie können auch einfach den Link teilen.",
+    "clipboardToast":"Link in die Zwischenablage kopiert."
   }
 }

@@ -3,7 +3,6 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "~/components/
 import React from "react";
 import { Link } from "~/i18n/routing";
 import { useTranslations } from "next-intl";
-import LocaleSwitcher from "./localeSwitcher";
 
 export default function Footer() {
   const [windowWidth, setWindowWidth] = React.useState(0);

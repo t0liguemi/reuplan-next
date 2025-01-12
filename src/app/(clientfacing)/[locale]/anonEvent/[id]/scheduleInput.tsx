@@ -118,9 +118,9 @@ export default function ScheduleInput({
       <DrawerTrigger asChild>
         <Button>{t("newScheduleTitle")}</Button>
       </DrawerTrigger>
-      <DrawerContent className="bg-muted/60 dark:bg-background/40">
+      <DrawerContent className="bg-background/60 dark:bg-muted/40 backdrop-blur-lg">
         <DrawerHeader>
-          <DrawerTitle>{t("newScheduleTitle")}</DrawerTitle>
+          <DrawerTitle className="w-full text-center">{t("newScheduleTitle")}</DrawerTitle>
         </DrawerHeader>
         <Form {...form}>
           <form
