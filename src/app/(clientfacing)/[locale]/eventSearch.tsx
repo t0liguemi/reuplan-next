@@ -14,7 +14,7 @@ export default function EventSearchBar() {
   const codeRegex = /^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}$/
   const router = useRouter();
   return (
-    <div className="grid w-full justify-center">
+    <div className="grid w-full justify-center my-8">
       <form
         action={async (e) => {
           if (codeRegex.test(e.get("search")?.toString()??"")) {

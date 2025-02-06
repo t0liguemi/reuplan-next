@@ -26,7 +26,7 @@ export default function Footer() {
         <a href="https://linktr.ee/t0liguemi" className="font-bold">
           t0liguemi
         </a>
-        , 2024.
+        , 2025.
       </p>
 
       <div className="flex flex-row gap-4 items-center">

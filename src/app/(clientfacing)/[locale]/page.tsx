@@ -37,9 +37,9 @@ export default async function HomePage() {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 py-4 px-2 sm:py-8 md:px-8 lg:px-12">
+    <div className="flex flex-col items-center justify-center gap-4 px-2 md:py-4 lg:px-8 xl:px-12">
       <div className="flex flex-col items-center gap-6">
-        <div className="flex max-w-[900px] flex-col items-start justify-center gap-4 text-foreground my-16 md:mt-20 md:mb-40"> 
+        <div className="my-10 md:my-16 lg:my-24 flex max-w-[900px] flex-col items-start justify-center gap-4 text-foreground">
           <div className="text-center text-5xl">
             <span className="font-extrabold">{t("title1")}</span>
             <span className="font-extrabold text-primary">Reu</span>
@@ -49,45 +49,44 @@ export default async function HomePage() {
           <p className="my-4 text-center">{t("subtitle1")}</p>
           {session?.user ? <MainActionButtons /> : <LoggedOutMainButtons />}
           <EventSearchBar />
+        </div>
+        <form
+          action={async () => {
+            "use server";
+            await signIn();
+          }}
+        >
+          <p className="text-muted-foreground">
+            {t.rich("paragraph1", {
+              small: (chunks) => (
+                <small className="font-light text-muted-foreground/60">
+                  {chunks}
+                </small>
+              ),
+              donate: (chunks) => (
+                <a
+                  className="font-bold text-primary underline"
+                  href="https://www.paypal.com/donate/?business=KLME7PL6858QG&no_recurring=0&item_name=Support+Reuplan%21&currency_code=USD"
+                >
+                  {chunks}
+                </a>
+              ),
+            })}
+            <br />
+            <br />
+            {t.rich("paragraph2", {
+              login: (chunks) => (
+                <button
+                  type="submit"
+                  className="font-bold text-primary underline"
+                >
+                  {chunks}
+                </button>
+              ),
+            })}
+          </p>
+        </form>
 
-          </div>
-          <form
-            action={async () => {
-              "use server";
-              await signIn();
-            }}
-          >
-            <p className="text-muted-foreground">
-              {t.rich("paragraph1", {
-                small: (chunks) => (
-                  <small className="font-light text-muted-foreground/60">
-                    {chunks}
-                  </small>
-                ),
-                donate: (chunks) => (
-                  <a
-                    className="font-bold text-primary underline"
-                    href="https://www.paypal.com/donate/?business=KLME7PL6858QG&no_recurring=0&item_name=Support+Reuplan%21&currency_code=USD"
-                  >
-                    {chunks}
-                  </a>
-                ),
-              })}
-              <br />
-              <br />
-              {t.rich("paragraph2", {
-                login: (chunks) => (
-                  <button
-                    type="submit"
-                    className="font-bold text-primary underline"
-                  >
-                    {chunks}
-                  </button>
-                ),
-              })}
-            </p>
-          </form>
-        
         {/* <Image
           src="/assets/Calendarios.svg"
           alt="Calendarios"

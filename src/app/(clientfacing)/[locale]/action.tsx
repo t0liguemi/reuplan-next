@@ -25,17 +25,17 @@ export default function MainActionButtons() {
   };
   const t = useTranslations("HomePage");
   return (
-    <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:gap-4">
+    <div className="flex w-full max-md:flex-col flex-row items-center justify-center sm:gap-4">
       <Link href="/events" className="my-2">
         <Button className="rounded-2xl px-8 py-6 text-2xl font-light">
           {t("myEvents")}
         </Button>
       </Link>
-      <div className="overflow-clip rounded-2xl">
+      <div className="md:overflow-clip md:rounded-2xl max-md:flex max-md:flex-col max-md:gap-2 items-center">
         <Link href="/events/create" className="my-2">
           <Button
             variant={"success"}
-            className="rounded-none border-e-2 border-black border-opacity-20 py-6 ps-8 text-2xl font-light"
+            className="max-md:rounded-2xl md:rounded-none md:border-e-2 border-black border-opacity-20 py-6 md:ps-8 text-2xl font-light"
           >
             {t("newEvent")}
           </Button>
@@ -44,7 +44,7 @@ export default function MainActionButtons() {
         <Button
           disabled={mutating}
           variant={"success"}
-          className="rounded-none py-6 pe-8 text-2xl font-light"
+          className="max-md:rounded-2xl md:rounded-none py-6 md:pe-8 text-2xl font-light"
           onClick={() => handleCreateAnonEvent()}
         >
           {t("anonEvent")}
