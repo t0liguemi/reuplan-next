@@ -11,7 +11,16 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { Button } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { Calendar, Home, LogOut, Mail, MoonIcon, SunIcon, User, Users } from "lucide-react";
+import {
+  Calendar,
+  Home,
+  LogOut,
+  Mail,
+  MoonIcon,
+  SunIcon,
+  User,
+  Users,
+} from "lucide-react";
 import { signIn, useSession, signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { Switch } from "~/components/ui/switch";
@@ -47,7 +56,7 @@ export default function Navbar() {
       },
     ],
   });
-  
+
   const pendingInvitations = React.useMemo(() => {
     let counter = 0;
     if (userQueries[1].data) {
@@ -68,7 +77,7 @@ export default function Navbar() {
 
   React.useEffect(() => {
     if (pendingInvitations > 0) {
-      toast(t("pendingToast", {count: pendingInvitations}));
+      toast(t("pendingToast", { count: pendingInvitations }));
     }
   }, [pendingInvitations]);
 
@@ -107,7 +116,6 @@ export default function Navbar() {
 
             <Switch checked={theme === "light"} />
             <SunIcon className="h-4 w-4" />
-
           </div>
           <div>
             <DropdownMenu>
@@ -142,7 +150,7 @@ export default function Navbar() {
 
                 <DropdownMenuItem asChild>
                   <Link href="/events" className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4"/> {t("events")}
+                    <Calendar className="h-4 w-4" /> {t("events")}
                     {pendingInvitations != 0 && (
                       <Badge variant="destructive" className="mx-2">
                         {pendingInvitations}
@@ -152,33 +160,53 @@ export default function Navbar() {
                 </DropdownMenuItem>
 
                 <DropdownMenuItem asChild>
-                  <Link href="/" className="flex items-center gap-2"><Home className="w-4 h-4"/> {t("home")}</Link>
+                  <Link href="/" className="flex items-center gap-2">
+                    <Home className="h-4 w-4" /> {t("home")}
+                  </Link>
                 </DropdownMenuItem>
 
                 {session.data.user.isAdmin ? (
                   <DropdownMenuItem asChild>
                     <Link href="/users" className="flex items-center gap-2">
-                      <Users className="w-4 h-4"/> {t("users")}
+                      <Users className="h-4 w-4" /> {t("users")}
+                    </Link>
+                  </DropdownMenuItem>
+                ) : null}
+
+                {session.data.user.isAdmin ? (
+                  <DropdownMenuItem asChild>
+                    <Link href="/anonEventList" className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4" /> {t("anonEventList")}
                     </Link>
                   </DropdownMenuItem>
                 ) : null}
 
                 <DropdownMenuItem asChild>
-                  <Link href={"/account"} className="flex items-center gap-2"><User className="w-4 h-4"/> {t("account")}</Link>
+                  <Link href={"/account"} className="flex items-center gap-2">
+                    <User className="h-4 w-4" /> {t("account")}
+                  </Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem asChild>
-                  <Link href={"/contact"} className="flex items-center gap-2"><Mail className="w-4 h-4"/> {t("contact")}</Link>
+                  <Link href={"/contact"} className="flex items-center gap-2">
+                    <Mail className="h-4 w-4" /> {t("contact")}
+                  </Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem asChild>
-                  <LocaleSwitcher/>
+                  <LocaleSwitcher />
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator className="bg-border" />
 
                 <DropdownMenuItem>
-                  <button onClick={() => signOut()} className="flex items-center gap-2"><LogOut className="w-4 h-4"/>{t("logout")}</button>
+                  <button
+                    onClick={() => signOut()}
+                    className="flex items-center gap-2"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    {t("logout")}
+                  </button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -207,16 +235,17 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="flex flex-row gap-2">
-                  <LocaleSwitcher/>
-                
-        <div
-          className="flex items-center gap-2"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        >
-          <MoonIcon className="h-4 w-4" />
-          <Switch checked={theme === "light"} />
-          <SunIcon className="h-4 w-4" />
-        </div></div>
+          <LocaleSwitcher />
+
+          <div
+            className="flex items-center gap-2"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            <MoonIcon className="h-4 w-4" />
+            <Switch checked={theme === "light"} />
+            <SunIcon className="h-4 w-4" />
+          </div>
+        </div>
       </nav>
     );
   } else {
@@ -239,8 +268,8 @@ export default function Navbar() {
             </div>
           </Link>
         </div>
-        <div className="flex flex-row gap-2 items-center">
-          <LocaleSwitcher/>
+        <div className="flex flex-row items-center gap-2">
+          <LocaleSwitcher />
           <div
             className="flex items-center gap-2"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

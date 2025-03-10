@@ -176,7 +176,8 @@
     "logout": "Logout",
     "events": "Events",
     "signin": "Login",
-    "pendingToast": "You have {count,plural,=1{a pending invitation} other{# pending invitations}}"
+    "pendingToast": "You have {count,plural,=1{a pending invitation} other{# pending invitations}}",
+    "anonEventList": "Anon Events"
   },
   "Footer": {
     "credits": "Reuplan by ",

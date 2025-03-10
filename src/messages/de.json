@@ -176,7 +176,8 @@
     "logout": "Abmelden",
     "events": "Termine",
     "signin": "Anmelden",
-    "pendingToast": "Sie haben {count,plural,=1{eine ausstehende Einladung} other{# ausstehende Einladungen}}"
+    "pendingToast": "Sie haben {count,plural,=1{eine ausstehende Einladung} other{# ausstehende Einladungen}}",
+    "anonEventList": "Anonyme Termine"
   },
   "Footer": {
     "credits": "Reuplan erstellt von ",

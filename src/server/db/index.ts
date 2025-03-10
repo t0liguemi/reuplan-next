@@ -12,7 +12,6 @@ const globalForDb = globalThis as unknown as {
   conn: postgres.Sql | undefined;
 };
 
-const conn = globalForDb.conn ?? postgres(env.AUTH_DRIZZLE_URL);
-if (env.NODE_ENV !== "production") globalForDb.conn = conn;
+const conn =  postgres(env.AUTH_DRIZZLE_URL, { prepare: false })
 
 export const db = drizzle(conn, { schema });

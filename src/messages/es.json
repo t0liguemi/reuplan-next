@@ -177,7 +177,8 @@
     "logout": "Cerrar sesión",
     "signin": "Ingresar",
     "events": "Eventos",
-    "pendingToast": "Tienes {count,plural,=1{una invitación pendiente} other{# invitaciones pendientes}}"
+    "pendingToast": "Tienes {count,plural,=1{una invitación pendiente} other{# invitaciones pendientes}}",
+    "anonEventList": "Eventos Anónimos"
   },
   "Footer": {
     "credits": "Reuplan por ",
