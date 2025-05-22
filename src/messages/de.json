@@ -9,7 +9,7 @@
     "paragraph3": "Wenn du ein Kalender brauchst, üm persönliche Termine zu organisieren: Google Calendar reicht. Wenn du einladungen schicken willst, für einen Termin, den schon einen bekannten Zeitplan hat: E-Mail, WhatsApp, Google Calendar.",
     "paragraph4": "Wenn dein Termin kein Zeiplan hat, und brauchst, dass sie für alle Eingeladenen passt, dann Reuplan ist dass Richtige für dich! Machst du eine Probe und deine ganze Crew muss anwesend sein? Reuplan!",
     "myEvents": "Meine Termine",
-    "newEvent": "Neue Termine",
+    "newEvent": "Neuer Termin",
     "anonEvent": "Anonymer Termin",
     "signIn": "Anmelden",
     "seachAnonEventTooltip": "Anonymer Termincode eingeben zum Teilnehmen",
@@ -221,7 +221,9 @@
     "errorLoadingPaticipants": "Fehler beim Laden der Teilnehmer, bitte versuchen Sie es später erneut.",
     "expiresAt":"Läuft ab am ",
     "expiresTip":"Um das Event zu verlängern, ändern Sie das Datumbereich des Events.",
-    "codeTip":"Dies ist der Code, den Sie mit anderen teilen können, um dem Event beizutreten. Sie können auch einfach den Link teilen.",
-    "clipboardToast":"Link in die Zwischenablage kopiert."
+    "codeTip":"Dies ist der Code, den Sie teilen können, um dem Event beizutreten. Sie können auch einfach den Link teilen.",
+    "clipboardToast":"Link in die Zwischenablage kopiert.",
+    "participatingAsToast": "Sie nehmen als {name} teil",
+    "enterNameToast":"Geben Sie einen Name ein, um teilzunehmen"
   }
 }

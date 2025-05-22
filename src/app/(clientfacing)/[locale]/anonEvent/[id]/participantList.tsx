@@ -57,13 +57,13 @@ export default function ParticipantList({
         setCurrentParticipant(localStorage.getItem("anonParticipant") ?? "");
         setStoredParticipant(participant.name);
         setCurrentParticipantID(participant.id);
-        toast("Participating as " + localStorage.getItem("anonParticipant"));
+        toast(t("participatingAsToast",{name: localStorage.getItem("anonParticipant")}));
         localStorage.setItem("anonParticipantId", participant.id ?? "");
         break;
       } else {
         counter++
         if (counter === totalParticipants) {
-          toast("Enter your name to participate!");
+          toast(t("enterNameToast"));
         }
       }
     }

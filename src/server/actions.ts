@@ -1,6 +1,6 @@
 "use server";
 import { db } from "./db/index";
-import { and, eq } from "drizzle-orm";
+import { and, eq, lt } from "drizzle-orm";
 import {
   anon_event,
   anon_participant,
@@ -300,7 +300,7 @@ export async function createAnonEvent() {
   function randomString(len: number) {
     const p = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     return [...Array<string>(len)].reduce(
-      (a:string) => a + p[~~(Math.random() * p.length)],
+      (a: string) => a + p[~~(Math.random() * p.length)],
       "",
     );
   }
@@ -402,4 +402,13 @@ export async function deleteAnonResponse(responseID: string) {
     .where(eq(anon_response.id, responseID))
     .returning({ id: anon_response.id });
   return response;
+}
+
+export async function deleteExpiredEvents() {
+  const today = new Date();
+  const deletedEvents = await db
+    .delete(anon_event)
+    .where(lt(anon_event.expires_at, today))
+    .returning({ id: anon_event.id });
+    return deletedEvents;
 }
